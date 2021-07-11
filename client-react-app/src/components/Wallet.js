@@ -1,9 +1,14 @@
 import React, {useState} from 'react';
 
-// import Model from "./Modal";
+
 import WalletBox from "./WalletBox";
 import InstallMetaMask from './InstallMetaMask';
 import { Button, Modal } from 'react-bootstrap';
+
+import ReactTooltip from 'react-tooltip';
+
+
+import "./Wallet.css";
 
 function Wallet(props) {
     const [isMetaMaskFound, setIsMetaMaskFound] = useState(false);
@@ -22,35 +27,36 @@ function Wallet(props) {
         }
     }
 
-    
-    
-
     return (
-        <div>
-            <Button variant="primary" onClick={() => {
-                handleShow();
-                checkForWallet();
-            }}>
-                {props.button_name}
-            </Button>
-                <Modal size="lg" show={show} onHide={handleClose} aria-labelledby="contained-modal-title-vcenter">
+        <div className="wallet">
+            <div className="connectButton" data-tip="Connect to a wallet in order to use this DApp" data-for="button-connect">
+                <Button variant="primary" size="lg" onClick={() => {
+                    handleShow();
+                    checkForWallet();
+                }}>
+                   {props.button_name}
+                    <ReactTooltip
+                        id="button-connect"
+                        multiline={true}
+                    />
+                </Button>
+            </div>
 
-                    <Modal.Body>
-
+            <Modal size="lg" show={show} onHide={handleClose} aria-labelledby="contained-modal-title-vcenter">
+                <Modal.Body>
                     {isMetaMaskFound ? <WalletBox
-                                        walletImg="https://cdn.iconscout.com/icon/free/png-512/metamask-2728406-2261817.png"
-                                        walletName="MetaMask"
-                                        walletDescription="Connect to your MetaMask Wallet"
-                                    /> : <InstallMetaMask />}
+                                    walletImg="https://cdn.iconscout.com/icon/free/png-512/metamask-2728406-2261817.png"
+                                    walletName="MetaMask"
+                                    walletDescription="Connect to your MetaMask Wallet"
+                                /> : <InstallMetaMask />}
+                </Modal.Body>
 
-                    </Modal.Body>
-
-                    <Modal.Footer>
+                <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    </Modal.Footer>
-                </Modal>  
+                </Modal.Footer>
+            </Modal>  
       </div> 
     );
 }

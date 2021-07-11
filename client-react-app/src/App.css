@@ -22,3 +22,11 @@ input {
 .container {
   margin-top: 20px;
 }
+
+.connect {
+  text-align: center;
+  width: 50%;
+  margin:100px auto;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: bold;
+}
