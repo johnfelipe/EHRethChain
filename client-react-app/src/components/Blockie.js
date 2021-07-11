@@ -5,7 +5,7 @@ function Blockie(props) {
 
   return (
     <div>
-      <Blockies seed={props.address.toLowerCase()} /> {props.address}
+      <Blockies seed={props.address.toLowerCase()} size={8} scale={4} /> 
     </div>
   );
 
