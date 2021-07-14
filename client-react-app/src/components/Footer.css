@@ -1,0 +1,29 @@
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #effbff;
+  text-align: center;
+  height: 100px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.copyright {
+  margin-top: 35px;
+}
+
+.copyrightIcon {
+  margin: 0px 10px;
+}
+
+.github {
+  margin-left: 30px;
+  color: black;
+  font-size: 20px;
+}
+
+.github:hover {
+  cursor: pointer;
+  color: black;
+}
