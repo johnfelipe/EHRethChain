@@ -15,7 +15,7 @@
 .header {
   background-color: #effbff;
   padding: 25px 25px 0 25px;
-  position: fixed;
+  position: relative;
   width: 100%;
   height: 100px;
 }
