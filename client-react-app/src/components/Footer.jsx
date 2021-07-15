@@ -1,6 +1,7 @@
 import React from "react";
 import Container from "react-bootstrap/esm/Container";
 import "./Footer.css";
+
 function Footer() {
   return (
     <footer className="footer">

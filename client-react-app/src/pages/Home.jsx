@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 // ? This page is protected, users can access once signed in with Metamask.
 // ? the app starts here
 // ? This is the Home page
+import "antd/dist/antd.css";
+import { Tooltip } from "antd";
 
 import Web3 from "web3";
 
@@ -78,10 +80,11 @@ const ClipboardCopy = styled.div`
   ${"" /* border: 1px solid red; */}
   display: inline-block;
   position: relative;
-  width: 50px;
-  height: 50px;
+  width: 36px;
+  height: 36px;
   left: 490px;
   bottom: 5px;
+  cursor: pointer;
 `;
 
 function Home(props) {
@@ -93,70 +96,6 @@ function Home(props) {
 
   async function getUserData() {
     // ? Connect to Ethereum: Metamask
-
-    // ? WEb3 way of connecting
-    // let accounts = await window.ethereum
-    //   .request({ method: "eth_requestAccounts" })
-    //   .catch((err) => console.log(err));
-
-    // const addr = provider.resolveName();
-    // console.log(addr);
-    // let ENSa = await provider.lookupAddress(as[0]);
-    // console.log(ENSa);
-    // const balance = await provider.getBalance(ENSa);
-    // console.log(balance);
-    // const net = await provider.getNetwork();
-    // console.log(net);
-
-    // let accounts = await window.ethereum
-    //   .request({ method: "eth_requestAccounts" })
-    //   .catch((err) => console.log(err));
-
-    // setUserAddress(accounts[0]);
-    // console.log("Address: " + userAddress);
-
-    // // ? get connected network
-    // const chainId = await window.ethereum
-    //   .request({ method: "eth_chainId" })
-    //   .catch((err) => console.log(err));
-
-    // switch (chainId) {
-    //   case "0x1":
-    //     setConnectedToNet("Ethereum Mainnet");
-    //     break;
-    //   case "0x3":
-    //     setConnectedToNet("Ropsten Test Network");
-    //     break;
-    //   case "0x4":
-    //     setConnectedToNet("Rinkeby Test Network");
-    //     break;
-    //   case "0x5":
-    //     setConnectedToNet("Goerli Test Network");
-    //     break;
-    //   case "0x2a":
-    //     setConnectedToNet("Kovan Test Network");
-    //     break;
-    //   default:
-    //     setConnectedToNet("localhost Network");
-    //     break;
-    // }
-
-    // console.log("Connected to " + connectedToNet);
-
-    // // ? instance of web3 with provided information
-    // const web3 = new Web3(window.ethereum);
-
-    // if (userAddress !== "") {
-    //   web3.eth
-    //     .getBalance(userAddress)
-    //     .then((value) => {
-    //       setUserBalance(value);
-    //       console.log("Balance: " + userBalance);
-    //     })
-    //     .catch((err) => console.log(err));
-    // }
-
-    // alert(chainId);
 
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send("eth_requestAccounts", []);
@@ -217,18 +156,20 @@ function Home(props) {
         <Blockies seed={userAddress} size={15} scale={3} className="avatar" />
       </Avatar>
 
-      <ClipboardCopy>
-        <CopyToClipboard text={userAddress}>
-          <UseAnimations
-            animation={copy}
-            size={35}
-            strokeColor={"#258fe6"}
-            wrapperStyle={{
-              color: "#258fe6",
-            }}
-          />
-        </CopyToClipboard>
-      </ClipboardCopy>
+      <Tooltip placement="rightTop" title="Copy value to clipboard">
+        <ClipboardCopy>
+          <CopyToClipboard text={userAddress}>
+            <UseAnimations
+              animation={copy}
+              size={35}
+              strokeColor={"#258fe6"}
+              wrapperStyle={{
+                color: "#258fe6",
+              }}
+            />
+          </CopyToClipboard>
+        </ClipboardCopy>
+      </Tooltip>
     </Container>
   );
 }
