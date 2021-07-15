@@ -17,6 +17,12 @@ import Blockies from "react-blockies";
 
 import "./Home.css";
 
+// ? TESTIING
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import UseAnimations from "react-useanimations";
+// EVERY ANIMATION NEEDS TO BE IMPORTED FIRST -> YOUR BUNDLE WILL INCLUDE ONLY WHAT IT NEEDS
+import copy from "react-useanimations/lib/copy";
+
 const Network = styled.div`
   position: relative;
   display: inline-block;
@@ -51,6 +57,7 @@ const DisconnectBtn = styled.button`
   left: 520px;
   top: 17px;
   border: 1px solid lightgray;
+  background-color: #fff;
 
   :hover {
     background-color: #f8f8f8;
@@ -65,6 +72,16 @@ const Avatar = styled.div`
 
   left: 260px;
   top: 10px;
+`;
+
+const ClipboardCopy = styled.div`
+  ${"" /* border: 1px solid red; */}
+  display: inline-block;
+  position: relative;
+  width: 50px;
+  height: 50px;
+  left: 490px;
+  bottom: 5px;
 `;
 
 function Home(props) {
@@ -146,7 +163,15 @@ function Home(props) {
     const signer = provider.getSigner();
 
     setUserAddress(await signer.getAddress());
+
+    console.log(userAddress);
     console.log(typeof userAddress);
+    let accounts = provider
+      .listAccounts()
+      .then((result) => console.log(result))
+      .catch((error) => console.log(error));
+    console.log(accounts);
+
     setUserBalance(ethers.utils.formatEther(await signer.getBalance()));
     let n = await provider.getNetwork();
     let name = n.name;
@@ -160,7 +185,7 @@ function Home(props) {
 
   useEffect(() => {
     getUserData();
-  }, [userAddress, connectedToNet, userBalance]);
+  }, []);
 
   function disconnect() {
     auth.logout(() => {
@@ -189,16 +214,21 @@ function Home(props) {
       <DisconnectBtn onClick={disconnect}>Logout</DisconnectBtn>
 
       <Avatar>
-        <Blockies
-          seed={userAddress}
-          // color="#dfe"
-          // bgColor="#b5edab"
-          // spotColor="#abc"
-          size={15}
-          scale={3}
-          className="avatar"
-        />
+        <Blockies seed={userAddress} size={15} scale={3} className="avatar" />
       </Avatar>
+
+      <ClipboardCopy>
+        <CopyToClipboard text={userAddress}>
+          <UseAnimations
+            animation={copy}
+            size={35}
+            strokeColor={"#258fe6"}
+            wrapperStyle={{
+              color: "#258fe6",
+            }}
+          />
+        </CopyToClipboard>
+      </ClipboardCopy>
     </Container>
   );
 }

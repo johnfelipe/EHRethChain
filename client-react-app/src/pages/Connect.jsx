@@ -68,7 +68,7 @@ function MetaMaskConnect(props) {
 
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     provider
-      .send("eth_requestAccounts", []) // prompt the user for account connections
+      .send("eth_requestAccounts", [{ eth_accounts: {} }]) // prompt the user for account connections
       .then(() => {
         //? redirect to protected route home
         auth.login(() => history.push("/home"));
