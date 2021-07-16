@@ -1,31 +1,35 @@
 import React from "react";
-import Container from "react-bootstrap/esm/Container";
+
+import { Container, Row, Col } from "react-bootstrap";
+import { AiOutlineCopyrightCircle, AiFillGithub } from "react-icons/ai";
+
 import "./Footer.css";
 
+{
+  /* <Row className="footer">
+<Col>
+  <Container className="footer-box">
+    <span>Copyright</span>
+    <span className="copyright-icon">
+      <AiOutlineCopyrightCircle />
+    </span>
+    <span>2021 All Rights Reserved</span>
+    <a
+      className="github-icon"
+      href="https://github.com/mohammedfajer/EHRethChain"
+      target="_blank"
+      rel="noreferrer"
+    >
+      <AiFillGithub />
+    </a>
+  </Container>
+</Col> 
+</Row>
+*/
+}
+
 function Footer() {
-  return (
-    <footer className="footer">
-      <Container className="copyright">
-        <p>
-          Copyright
-          <span className="copyrightIcon">
-            <i class="far fa-copyright"></i>
-          </span>
-          2021 All Rights Reserved
-          <span>
-            <a
-              href="https://github.com/mohammedfajer/EHRethChain"
-              className="github"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <i class="fab fa-github"></i>
-            </a>
-          </span>
-        </p>
-      </Container>
-    </footer>
-  );
+  return <footer></footer>;
 }
 
 export default Footer;

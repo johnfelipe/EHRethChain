@@ -1,4 +1,16 @@
-body {
-  padding: 0px;
+.content {
+  position: absolute;
+  top: 15%;
+  bottom: 15%;
+  left: 0px;
+  right: 0px;
+  overflow: auto;
+  text-align: center;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
   margin: 0;
+  height: 100vh;
 }

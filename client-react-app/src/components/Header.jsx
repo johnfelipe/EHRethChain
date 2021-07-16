@@ -1,27 +1,43 @@
 import React from "react";
+
+import { Typography, PageHeader } from "antd";
+
+import { FaLaptopMedical } from "react-icons/fa";
+
+// import { Container, Row, Col } from "react-bootstrap";
+
 import "./Header.css";
-import Navbar from "react-bootstrap/Navbar";
-import Container from "react-bootstrap/Container";
+
+const { Text, Title } = Typography;
+
+{
+  /* <header>
+      <Title level={3} className="header-title">
+        <Title level={3}>
+          <FaLaptopMedical className="brand-logo" />
+        </Title>
+        EHRethChain
+      </Title>
+
+      <Title level={5} className="header-author">
+        <Text type="secondary">
+          Created by: <Text underline>Mohammed Fajer</Text>
+        </Text>
+      </Title>
+    </header> */
+}
 
 function Header() {
   return (
-    <header className="header">
-      <Navbar className="nav">
-        <Container>
-          <Navbar.Brand className="brand">
-            <span style={{ marginRight: "10px" }}>
-              <i class="fas fa-laptop-medical"></i>
-            </span>
-            EHRethChain
-          </Navbar.Brand>
-          <Navbar.Toggle />
-          <Navbar.Collapse className="justify-content-end">
-            <Navbar.Text>
-              Created by: <span className="author">Mohammed Fajer</span>
-            </Navbar.Text>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+    <header>
+      <div className="header-container">
+        <PageHeader
+          className="site-page-header"
+          onBack={() => null}
+          title="Title"
+          subTitle="This is a subtitle"
+        />
+      </div>
     </header>
   );
 }
