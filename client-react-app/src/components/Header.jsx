@@ -1,43 +1,38 @@
 import React from "react";
-
-import { Typography, PageHeader } from "antd";
-
 import { FaLaptopMedical } from "react-icons/fa";
-
-// import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
+import { Typography } from "antd";
 
 import "./Header.css";
 
-const { Text, Title } = Typography;
-
-{
-  /* <header>
-      <Title level={3} className="header-title">
-        <Title level={3}>
-          <FaLaptopMedical className="brand-logo" />
-        </Title>
-        EHRethChain
-      </Title>
-
-      <Title level={5} className="header-author">
-        <Text type="secondary">
-          Created by: <Text underline>Mohammed Fajer</Text>
-        </Text>
-      </Title>
-    </header> */
-}
+const { Title, Text } = Typography;
 
 function Header() {
   return (
     <header>
-      <div className="header-container">
-        <PageHeader
-          className="site-page-header"
-          onBack={() => null}
-          title="Title"
-          subTitle="This is a subtitle"
-        />
-      </div>
+      {" "}
+      <Container className="header-container">
+        <Row>
+          <Col>
+            <div className="header-appname">
+              <Title level={4}>
+                <span>
+                  <FaLaptopMedical />
+                </span>
+                EHRethChain
+              </Title>
+            </div>
+          </Col>
+          <Col>
+            <Title type="secondary" level={5} className="header-author">
+              Created By:{" "}
+              <span>
+                <Text underline>Mohammed Fajer</Text>
+              </span>
+            </Title>
+          </Col>
+        </Row>
+      </Container>
     </header>
   );
 }

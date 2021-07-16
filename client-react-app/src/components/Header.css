@@ -1,31 +1,22 @@
 header {
   height: 10%;
-  background-color: #e4fbff;
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: baseline;
-}
-
-.header-title {
-  display: flex;
-  align-items: center;
-}
-
-.header-author {
-  text-align: center;
-}
-
-.brand-logo {
-  margin: 5px;
-  font-weight: bold;
-  font-size: 24px;
-  color: #334257;
+  background-color: #f6faff;
 }
 
 .header-container {
-  border: 1px solid red;
-  height: 60px;
-  margin: 20px auto;
-  padding: 0 200px;
-  flex-grow: 4;
+  margin: 50px auto;
+}
+
+.header-appname {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.header-appname span {
+  margin: auto 5px;
+  font-size: 20px;
+}
+
+.header-author {
+  text-align: right;
 }

@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "@nomiclabs/hardhat-waffle": "^2.0.1",
     "@react-icons/all-files": "^4.1.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -10,7 +12,10 @@
     "@walletconnect/web3-provider": "^1.4.1",
     "antd": "^4.16.6",
     "bootstrap": "^5.0.2",
+    "chai": "^4.3.4",
+    "ethereum-waffle": "^3.4.0",
     "ethers": "^5.4.1",
+    "hardhat": "^2.4.3",
     "ipfs-http-client": "^50.1.2",
     "react": "^17.0.2",
     "react-blockies": "^1.4.1",
@@ -50,5 +55,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {}
 }
