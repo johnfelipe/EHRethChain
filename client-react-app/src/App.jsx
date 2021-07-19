@@ -6,7 +6,11 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import PageNotFound from "./components/PageNotFound";
 import LandingPage from "./pages/LandingPage";
-import IssueDoctorID from "./pages/IssueDoctorID";
+import IssueDoctorID from "./pages/issueDoctorID/IssueDoctorID";
+import ProtectedRoute from "./components/Protected.route";
+import HomePage from "./pages/HomePage";
+
+require("dotenv").config();
 
 function App() {
   return (
@@ -15,6 +19,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={LandingPage} />
           <Route exact path="/issueDoctorID" component={IssueDoctorID} />
+          <ProtectedRoute exact path="/home" component={HomePage} />
           <Route path="*" component={PageNotFound} />
         </Switch>
       </Router>
