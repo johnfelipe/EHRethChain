@@ -8,10 +8,19 @@ import { Container, Row, Col } from "react-bootstrap";
 
 import { Typography } from "antd";
 
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-
 import { AiOutlineCopyrightCircle, AiFillGithub } from "react-icons/ai";
+
+// import Button from "@material-ui/core/Button";
+import Layout from "./components/Layout";
+
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
+
+import PageNotFound from "./components/NotFound";
 
 // import { AwesomeButton } from "react-awesome-button";
 // import "react-awesome-button/dist/styles.css";
@@ -31,37 +40,44 @@ const { Title, Text } = Typography;
 
 function Main() {
   return (
-    <main>
-      <Container className="main-container">
-        <Row>
-          <Col>
-            <div className="main-text">
-              <h4>
-                Welcome to EHRethChain an electronic health record powered
-              </h4>
-              <h4>by Ethereum Blockchain</h4>
-            </div>
-          </Col>
-        </Row>
-      </Container>
-      <Container className="main-container">
-        <Row>
-          <Col>
-            {/* <button className="connect-button">Connect</button> */}
-            {/* <Button /> */}
-          </Col>
-        </Row>
-      </Container>
-    </main>
+    <Layout>
+      <main>
+        <Container className="main-container">
+          <Row>
+            <Col>
+              <div className="main-text">
+                <h4>
+                  Welcome to EHRethChain an electronic health record powered
+                </h4>
+                <h4>by Ethereum Blockchain</h4>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+        <Container className="main-container">
+          <Row>
+            <Col>
+              {/* <button className="connect-button">Connect</button> */}
+              {/* <Button /> */}
+              <button className="btn blue">Connect</button>
+              <button className="btn blue">Issue Doctor ID</button>
+            </Col>
+          </Row>
+        </Container>
+      </main>
+    </Layout>
   );
 }
 
 function App() {
   return (
     <>
-      <Header />
-      <Main></Main>
-      <Footer></Footer>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={Main} />
+          <Route path="*" component={PageNotFound} />
+        </Switch>
+      </Router>
     </>
   );
 }

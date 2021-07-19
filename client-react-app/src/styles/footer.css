@@ -1,11 +1,14 @@
 footer {
-  height: 10%;
-  background-color: #f6faff;
+  height: 7%;
+  background-color: #1890ff;
   font-family: "Montserrat", sans-serif;
+  color: #fff;
+  padding-bottom: 80px;
 }
 
-.copyright {
-  margin-top: 35px;
+.footer-container {
+  margin: 25px auto;
+  text-align: center;
 }
 
 .copyright-icon {
@@ -15,7 +18,7 @@ footer {
 
 .github-icon {
   margin-left: 30px;
-  color: black;
+  color: #fff;
   font-size: 20px;
 }
 

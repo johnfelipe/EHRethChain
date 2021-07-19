@@ -5,37 +5,6 @@
   height: 100vh;
 }
 
-/* .ant-layout-header,
-.ant-layout-footer {
-  background: #f5f5f5;
-}
-
-.ant-layout-header {
-  position: relative;
-}
-
-.ant-layout-footer {
-  line-height: 1.5;
-}
-
-.ant-layout-content {
-  background-color: white;
-}
-.site-page-header-ghost-wrapper {
-  padding: 24px;
-  background-color: #f5f5f5;
-}
-
-.content-container {
-  margin: 25px;
-  background-color: wheat;
-  height: 200px;
-}
-
-.test {
-  padding-top: 20px;
-} */
-
 main {
   flex-grow: 1;
 }
@@ -53,16 +22,35 @@ main {
   /* width: 840px; */
   margin: 70px auto;
   font-family: "Montserrat", sans-serif;
-  font-weight: 500;
+  font-weight: lighter;
+  font-size: 24px;
   /* font-size: 24; */
 }
 
-.main-btn {
+/* start da css for da buttons */
+.btn {
+  border-radius: 37px;
+  padding: 15px 25px;
+  font-size: 22px;
+  text-decoration: none;
+  margin: 20px;
+  color: #fff;
   position: relative;
-  bottom: 0px;
+  display: inline-block;
 }
 
-.footer-container {
-  margin: 25px auto;
-  text-align: center;
+.btn:active {
+  transform: translate(0px, 5px);
+  -webkit-transform: translate(0px, 5px);
+  box-shadow: 0px 1px 0px 0px;
+}
+
+.blue {
+  background-color: #1890ff;
+  box-shadow: 0px 5px 0px 0px #3c93d5;
+}
+
+.blue:hover {
+  background-color: #6fc6ff;
+  color: #fff;
 }

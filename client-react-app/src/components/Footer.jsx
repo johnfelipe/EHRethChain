@@ -4,7 +4,7 @@ import { Container, Row, Col } from "react-bootstrap";
 
 import { AiOutlineCopyrightCircle, AiFillGithub } from "react-icons/ai";
 
-import "./Footer.css";
+import "../styles/footer.css";
 
 function Footer() {
   return (
@@ -12,7 +12,7 @@ function Footer() {
       <Container className="footer-container">
         <Row>
           <Col>
-            <div className="footer-content">
+            <div>
               <span>Copyright</span>
               <span className="copyright-icon">
                 <AiOutlineCopyrightCircle />

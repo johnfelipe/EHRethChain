@@ -3,7 +3,7 @@ import { FaLaptopMedical } from "react-icons/fa";
 import { Container, Row, Col } from "react-bootstrap";
 import { Typography } from "antd";
 
-import "./Header.css";
+import "../styles/header.css";
 
 const { Title, Text } = Typography;
 
@@ -15,7 +15,7 @@ function Header() {
         <Row>
           <Col>
             <div className="header-appname">
-              <Title level={4}>
+              <Title level={4} style={{ color: "#fff" }}>
                 <span>
                   <FaLaptopMedical />
                 </span>
@@ -24,10 +24,17 @@ function Header() {
             </div>
           </Col>
           <Col>
-            <Title type="secondary" level={5} className="header-author">
+            <Title
+              type="secondary"
+              level={5}
+              className="header-author"
+              style={{ color: "#fff" }}
+            >
               Created By:{" "}
               <span>
-                <Text underline>Mohammed Fajer</Text>
+                <Text underline style={{ color: "#fff" }}>
+                  Mohammed Fajer
+                </Text>
               </span>
             </Title>
           </Col>

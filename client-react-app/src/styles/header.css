@@ -1,10 +1,10 @@
 header {
-  height: 10%;
-  background-color: #f6faff;
+  height: 7%;
+  background-color: #1890ff;
 }
 
 .header-container {
-  margin: 50px auto;
+  margin: 20px auto;
 }
 
 .header-appname {
