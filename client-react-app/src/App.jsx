@@ -9,6 +9,7 @@ import LandingPage from "./pages/LandingPage";
 import IssueDoctorID from "./pages/issueDoctorID/IssueDoctorID";
 import ProtectedRoute from "./components/Protected.route";
 import HomePage from "./pages/HomePage";
+import RegisterUsers from "./pages/RegisterUsers";
 
 require("dotenv").config();
 
@@ -19,7 +20,8 @@ function App() {
         <Switch>
           <Route exact path="/" component={LandingPage} />
           <Route exact path="/issueDoctorID" component={IssueDoctorID} />
-          <ProtectedRoute exact path="/home" component={HomePage} />
+          <ProtectedRoute path="/home" component={HomePage} />
+
           <Route path="*" component={PageNotFound} />
         </Switch>
       </Router>

@@ -39,7 +39,7 @@ function connectMetaMask() {
     } catch (err) {
       reject({
         status: "failure",
-        message: "there was a error connecting to the wallet",
+        message: "there was an error connecting to provider",
       });
     }
   });

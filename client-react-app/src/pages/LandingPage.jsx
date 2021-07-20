@@ -61,13 +61,20 @@ function MetaMaskConnect(props) {
 
   let history = useHistory();
 
-  async function connectToMetaMask() {
-    // ? get account address
-    auth.login(() => history.push("/home"));
+  async function makeConnection() {
+    connectMetaMask()
+      .then((result) => {
+        console.log(result.status);
+        if (result.status === "success") {
+          // ? get account address
+          auth.login(() => history.push("/home"));
+        }
+      })
+      .catch((err) => console.log(err.message));
   }
 
   return (
-    <WalletBox onClick={connectToMetaMask}>
+    <WalletBox onClick={makeConnection}>
       <WalletImg src={props.walletImg} alt="metamask logo"></WalletImg>
       <WalletName>{props.walletName}</WalletName>
       <WalletDescription>{props.walletDescription}</WalletDescription>
@@ -90,21 +97,6 @@ function LandingPage() {
 
     setShowModal(true);
   }
-
-  // function connectWallet() {
-  //   // ? show model with metamask and once clicked do that.
-  //   connectMetaMask()
-  //     .then((data) => setIsMetaMaskInstalled(true))
-  //     .catch((err) => setIsMetaMaskInstalled(false));
-  // }
-
-  // useEffect(() => {
-  //   connectWallet();
-  // }, [isMetaMaskInstalled]);
-
-  // const openModal = () => {
-  //   setShowModal((prev) => !prev);
-  // };
 
   return (
     <Layout>
