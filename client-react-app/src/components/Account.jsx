@@ -19,32 +19,6 @@ import { CopyOutlined } from "@ant-design/icons";
 import { Typography } from "antd";
 const { Paragraph } = Typography;
 
-const Network = styled.div`
-  position: relative;
-  display: inline-block;
-  width: 150px;
-  margin: 20px;
-  span {
-    font-weight: bold;
-  }
-`;
-
-const Address = styled.div`
-  position: relative;
-  display: inline-block;
-  width: 190px;
-  left: 660px;
-  bottom: 20px;
-`;
-
-const Balance = styled.div`
-  position: relative;
-  display: inline-block;
-  widht: 50px;
-  left: 470px;
-  top: 18px;
-`;
-
 const DisconnectBtn = styled.button`
   width: 120px;
   border-radius: 30px;
@@ -56,13 +30,6 @@ const DisconnectBtn = styled.button`
     cursor: pointer;
     border-radius: 20px;
   }
-`;
-
-const AvatarContainer = styled.div`
-  position: relative;
-  display: inline-block;
-  left: 260px;
-  top: 10px;
 `;
 
 function Account() {
@@ -101,9 +68,9 @@ function Account() {
   return (
     <Container
       style={{
-        margin: "60px auto 80px auto",
+        margin: "20px auto 20px auto",
         padding: "20px",
-        boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+        boxShadow: "rgba(33, 35, 38, 0.1) 0px 10px 10px -10px",
       }}
     >
       <Row>
@@ -121,10 +88,8 @@ function Account() {
         </Col>
         <Col>
           <Row>
-            <Col>
-              <AvatarContainer>
-                <Blockies seed={userAddress} size={5} scale={8} />
-              </AvatarContainer>
+            <Col style={{ textAlign: "right" }}>
+              <Blockies seed={userAddress} size={5} scale={8} />
             </Col>
             <Col>
               {" "}

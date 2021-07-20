@@ -1,0 +1,29 @@
+.registerText {
+  text-align: center;
+  padding: 80px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 20px;
+}
+
+.registerBtn {
+  text-align: center;
+}
+
+.registerBtn button {
+  width: 200px;
+  height: 50px;
+  border: none;
+  color: white;
+  background-color: rgb(40, 142, 252);
+  border-radius: 37px;
+  font-size: 20px;
+}
+
+.registerBtn button:active {
+  box-shadow: 0 0 0 white;
+  margin: 6px 10px 2px 10px;
+}
+
+.registerBtn button:hover {
+  background-color: rgb(77, 162, 254);
+}

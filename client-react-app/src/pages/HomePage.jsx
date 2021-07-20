@@ -15,6 +15,8 @@ import {
 import RegisterUsers from "./RegisterUsers";
 import ProtectedRoute from "../components/Protected.route";
 import PageNotFound from "../components/PageNotFound";
+import RegisterPatient from "./RegisterPatient";
+import PatientHome from "./patientHomePage/PatientHome";
 
 function HomePage() {
   let match = useRouteMatch();
@@ -25,6 +27,13 @@ function HomePage() {
         <ProtectedRoute exact path={`${match.path}/registerUsers`}>
           <RegisterUsers />
         </ProtectedRoute>
+        <ProtectedRoute exact path={`${match.path}/registerPatient`}>
+          <RegisterPatient />
+        </ProtectedRoute>
+        <ProtectedRoute path={`${match.path}/patientHome`}>
+          <PatientHome />
+        </ProtectedRoute>
+
         {/* <Route path={`${match.path}/:homeId`}>
                 <Topic />
               </Route>
@@ -41,7 +50,7 @@ function HomePage() {
           </Layout>
         </Route>
 
-        <Route path="*" component={PageNotFound} />
+        {/* <Route path="*" component={PageNotFound} /> */}
       </Switch>
     </>
   );
