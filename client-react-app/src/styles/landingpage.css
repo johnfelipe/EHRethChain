@@ -17,7 +17,7 @@
 }
 
 /* start da css for da buttons */
-.btn {
+.lp-btn {
   border-radius: 37px;
   padding: 15px 25px;
   font-size: 22px;
@@ -28,18 +28,18 @@
   display: inline-block;
 }
 
-.btn:active {
+.lp-btn:active {
   transform: translate(0px, 5px);
   -webkit-transform: translate(0px, 5px);
   box-shadow: 0px 1px 0px 0px;
 }
 
-.blue {
+.lp-blue {
   background-color: #1890ff;
   box-shadow: 0px 5px 0px 0px #3c93d5;
 }
 
-.blue:hover {
+.lp-blue:hover {
   background-color: #6fc6ff;
   color: #fff;
 }

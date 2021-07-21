@@ -97,7 +97,8 @@ function Account() {
                 copyable={{
                   text: userAddress,
                   icon: (
-                    <CopyOutlined style={{ fontSize: "35px", margin: "5px" }} />
+                    <CopyOutlined />
+                    // style={{ fontSize: "35px", margin: "5px" }}
                   ),
                 }}
                 style={{ fontSize: "20px" }}

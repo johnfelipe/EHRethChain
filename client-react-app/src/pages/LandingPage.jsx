@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import "../styles/landingpage.css";
 
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import Layout from "../components/Layout";
 
 import { useHistory } from "react-router-dom";
@@ -116,15 +116,15 @@ function LandingPage() {
         <Container className="main-container">
           <Row>
             <Col>
-              <button className="btn blue" onClick={checkMetaMask}>
+              <Button className="lp-btn lp-blue" onClick={checkMetaMask}>
                 Connect
-              </button>
-              <button
-                className="btn blue"
+              </Button>
+              <Button
+                className="lp-btn lp-blue"
                 onClick={() => history.push("/issueDoctorID")}
               >
                 Issue Doctor ID
-              </button>
+              </Button>
             </Col>
           </Row>
         </Container>

@@ -20,7 +20,7 @@ function ActionPageLayout(props) {
               {props.actions}
             </Col>
             <Col sm={8} className="nav-container">
-              <p className="action-title">Navigation</p>
+              {/* <p className="action-title">Navigation</p> */}
               {props.content}
             </Col>
           </Row>
