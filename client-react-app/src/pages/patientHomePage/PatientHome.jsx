@@ -74,12 +74,6 @@ const patientActions = [
   { id: 5, name: "Revoke Permission" },
 ];
 
-const doctorActions = [
-  { id: 1, name: "Profile" },
-  { id: 2, name: "Assigned Patients" },
-  { id: 3, name: "Request Access" },
-];
-
 function PatientHome() {
   let match = useRouteMatch();
 
@@ -89,7 +83,13 @@ function PatientHome() {
         <ProtectedRoute exact path="/home/patientHome/Profile">
           <ActionPageLayout
             actions={<UserActions actions={patientActions} />}
-            content={<Profile />}
+            content={
+              <UserProfile
+                title="Personal Details"
+                name="Mohammed Fajer"
+                address="0x897Fd668E8adfF344D52104A699187096aD17645"
+              />
+            }
           />
         </ProtectedRoute>
         <ProtectedRoute exact path="/home/patientHome/ViewHealthRecords">
@@ -120,51 +120,18 @@ function PatientHome() {
         <Route exact path={match.path}>
           <ActionPageLayout
             actions={<UserActions actions={patientActions} />}
-            content={<Profile />}
+            content={
+              <UserProfile
+                title="Personal Details"
+                name="Mohammed Fajer"
+                address="0x897Fd668E8adfF344D52104A699187096aD17645"
+              />
+            }
           />
         </Route>
         <Route path="*" component={PageNotFound} />
       </Switch>
     </>
-  );
-}
-
-function Profile() {
-  return (
-    <Row>
-      <Row>
-        <Col sm={4} className="profile-info-title">
-          <span>Personal Details </span>
-        </Col>
-        <Col sm={8}></Col>
-      </Row>
-      <Row>
-        <Col sm={4} className="profile-info-text">
-          Full Name
-        </Col>
-        <Col sm={8}>
-          <Form.Control
-            type="text"
-            placeholder="Mohammed Fajer"
-            readOnly
-            className="profile-info-form-entry"
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col sm={4} className="profile-info-text">
-          Ethereum Address
-        </Col>
-        <Col sm={8}>
-          <Form.Control
-            className="profile-info-form-entry"
-            type="text"
-            placeholder="0x897Fd668E8adfF344D52104A699187096aD17645"
-            readOnly
-          />
-        </Col>
-      </Row>
-    </Row>
   );
 }
 

@@ -21,4 +21,4 @@ async function IssueDoctorID(formData) {
   return result;
 }
 
-export { IssueDoctorID };
+export { IssueDoctorID, client };

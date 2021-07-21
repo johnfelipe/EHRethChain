@@ -2,9 +2,7 @@ import React, { useState } from "react";
 
 import { Form } from "react-bootstrap";
 
-import { notification, Divider, Space } from "antd";
-
-// import { Alert, Button } from "antd";
+import { notification } from "antd";
 
 import { Container, Button, Alert } from "react-bootstrap";
 import { CSSTransition } from "react-transition-group";
@@ -40,8 +38,6 @@ function AccessNotification() {
           timeout={300}
           classNames="alert"
           unmountOnExit
-          // onEnter={() => setShowButton(false)}
-          // onExited={() => setShowButton(true)}
         >
           <Alert
             style={{
@@ -49,14 +45,8 @@ function AccessNotification() {
                 "rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px",
             }}
             variant="light"
-            // dismissible
-            // onClose={() => setShowMessage(false)}
           >
             <Alert.Heading>Request Access</Alert.Heading>
-            {/* <p>
-              This alert message is being transitioned in and out of the DOM.
-            </p> */}
-            {/* <Button onClick={() => setShowMessage(false)}>Close</Button> */}
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Ethereum Address</Form.Label>

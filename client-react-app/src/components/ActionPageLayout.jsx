@@ -15,7 +15,7 @@ function ActionPageLayout(props) {
         <Account />
         <Container>
           <Row>
-            <Col sm={4} className="action-container">
+            <Col sm={3} className="action-container">
               <p className="action-title">Actions</p>
               {props.actions}
             </Col>

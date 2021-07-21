@@ -8,6 +8,7 @@ import Account from "../components/Account";
 import { useHistory } from "react-router";
 
 import "../styles/registerUsers.css";
+import { Link } from "react-router-dom";
 
 function RegisterUsers() {
   let history = useHistory();
@@ -27,7 +28,10 @@ function RegisterUsers() {
                 </button>
               </Col>
               <Col className="registerBtn">
-                <button>Provider</button>
+                <button onClick={() => history.push("/home/doctorLogin")}>
+                  {" "}
+                  Provider{" "}
+                </button>
               </Col>
             </Row>
           </Container>
