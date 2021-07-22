@@ -16,7 +16,7 @@ import ActionPageLayout from "../../components/ActionPageLayout";
 import { Form, Card, InputGroup, Row, Col, Button } from "react-bootstrap";
 import UserProfile from "../../components/UserProfile";
 import PatientInfoCard from "../../components/PatientInfoCard";
-import PatientRecordPage from "../../components/PatientRecordPage";
+import PatientRecordPage from "./PatientRecordPage";
 
 function UserActions(props) {
   // let match = useRouteMatch();
