@@ -78,11 +78,11 @@ function PatientInformation(props) {
         <Col>
           <div>
             <p className="patient-records-text">Patient Records</p>
-            {/* <input
+            <input
               placeholder="Search by record name"
               className="patient-records-search-input"
               onChange={props.searchRecordsByName}
-            /> */}
+            />
           </div>
 
           <div style={{ display: "flex", flexFlow: "row wrap" }}>
@@ -149,24 +149,30 @@ export default function PatientRecordPage(props) {
 
     // ? ENSURE VALIDATED
 
-    setPatientRecords(
-      patientRecords.map((record) => {
-        if (record.id !== id) return record;
-        // alert(record.date);
-        // alert(typeof record.date);
+    if (validated === true) {
+      if (date.toString() !== "Invalid date") {
+        setPatientRecords(
+          patientRecords.map((record) => {
+            if (record.id !== id) return record;
+            // alert(record.date);
+            // alert(typeof record.date);
 
-        return {
-          recordName: recordName,
+            return {
+              recordName: recordName,
 
-          date: date.toString(),
-          doctorNote: doctorNote,
-          id: record.id,
-        };
-      })
-    );
-
-    message.success("Record updated successfully");
-    setShowViewModal(false);
+              date: date.toString(),
+              doctorNote: doctorNote,
+              id: record.id,
+            };
+          })
+        );
+        message.success("Record updated successfully");
+        setShowViewModal(false);
+      } else {
+        message.warning("Choose a date !");
+        setShowViewModal(true);
+      }
+    }
   };
 
   const handleDelete = (id) => {
