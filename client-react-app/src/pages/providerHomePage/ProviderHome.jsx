@@ -38,7 +38,7 @@ function UserActions(props) {
               style={{ width: "100%", textAlign: "left" }}
               size="lg"
               onClick={handleClick}
-              variant="outline-dark"
+              variant="outline-success"
             >
               {action.name}
             </Button>

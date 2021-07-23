@@ -127,6 +127,74 @@ export default function PatientRecordPage(props) {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showViewModal, setShowViewModal] = useState(false);
   const [patientRecords, setPatientRecords] = useState([]);
+  const [allPatientRecords, setAllPatientRecords] = useState([]);
+  useEffect(() => {
+    let records = [
+      {
+        recordName: "Test 1",
+        date: new Date().toString(),
+        doctorNote: "Secret",
+        id: 1,
+      },
+      {
+        recordName: "Blood Test",
+        date: new Date().toString(),
+        doctorNote: "Secret",
+        id: 2,
+      },
+      {
+        recordName: "kidey Check",
+        date: new Date().toString(),
+        doctorNote: "Secret",
+        id: 3,
+      },
+      {
+        recordName: "Despatch Note",
+        date: new Date().toString(),
+        doctorNote: "Secret",
+        id: 4,
+      },
+      {
+        recordName: "Nurse Tests",
+        date: new Date().toString(),
+        doctorNote: "Secret",
+        id: 5,
+      },
+      {
+        recordName: "Hips Check",
+        date: new Date().toString(),
+        doctorNote: "Secret",
+        id: 6,
+      },
+      {
+        recordName: "Blood Preasure Check",
+        date: new Date().toString(),
+        doctorNote: "Secret",
+        id: 7,
+      },
+      {
+        recordName: "Test 8",
+        date: new Date().toString(),
+        doctorNote: "Secret",
+        id: 8,
+      },
+      {
+        recordName: "Test 9",
+        date: new Date().toString(),
+        doctorNote: "Secret",
+        id: 9,
+      },
+      {
+        recordName: "Test 10",
+        date: new Date().toString(),
+        doctorNote: "Secret",
+        id: 10,
+      },
+    ];
+
+    setPatientRecords(records);
+    setAllPatientRecords(records);
+  }, []);
 
   const [viewedRecord, setViewedRecord] = useState({
     recordName: "",
@@ -137,8 +205,8 @@ export default function PatientRecordPage(props) {
 
   const searchRecordsByName = (event) => {
     const value = event.target.value.toLowerCase();
-    const filteredRecords = patientRecords.filter((record) =>
-      `${record.name}`.toLowerCase().includes(value)
+    const filteredRecords = allPatientRecords.filter((record) =>
+      `${record.recordName}`.toLowerCase().includes(value)
     );
 
     setPatientRecords(filteredRecords);
@@ -321,6 +389,7 @@ export default function PatientRecordPage(props) {
                   // defaultValue={moment(new Date(viewedRecord.date), dateFormat)}
                   // format={dateFormat}
                   defaultValue={moment(new Date(date), dateFormat)}
+                  value={moment(new Date(date), dateFormat)}
                   onChange={(date, dateString) =>
                     setDate(moment(new Date(dateString), dateFormat))
                   }

@@ -30,6 +30,7 @@ import Avatar from "react-avatar-edit";
 
 import "../../styles/profile.css";
 import AccessNotification from "../../components/AccessNotification";
+import PatientRecordCard from "../../components/PatientRecordCard";
 
 function UserActions(props) {
   // let match = useRouteMatch();
@@ -51,7 +52,7 @@ function UserActions(props) {
               style={{ width: "100%", textAlign: "left" }}
               size="lg"
               onClick={handleClick}
-              variant="outline-dark"
+              variant="outline-success"
             >
               {action.name}
             </Button>
@@ -155,85 +156,61 @@ function ViewHealthRecords() {
 
   return (
     <>
-      <Row style={{ padding: "40px 40px 10px 40px" }}>
-        <h3>View Health Records</h3>
+      <Row style={{ padding: "40px 5px" }}>
         <Col>
-          <Card border="primary">
-            <Card.Header>Blood Test 1</Card.Header>
-            <Card.Body>
-              <Card.Title>15-5-2020</Card.Title>
-              <Card.Text>Manchester Hosptial</Card.Text>
-              <Button type="primary" onClick={() => setVisible(true)}>
-                View
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col>
-          {" "}
-          <Card border="primary">
-            <Card.Header>Doctor Note</Card.Header>
-            <Card.Body>
-              <Card.Title>4-9-2021</Card.Title>
-              <Card.Text>Manchester Hosptial</Card.Text>
-              <Button type="primary" onClick={() => setVisible(true)}>
-                View
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col>
-          {" "}
-          <Card border="primary">
-            <Card.Header>Nurse Note</Card.Header>
-            <Card.Body>
-              <Card.Title>5-5-2018</Card.Title>
-              <Card.Text>Bolton Surgery</Card.Text>
-              <Button type="primary" onClick={() => setVisible(true)}>
-                View
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-      <Row style={{ padding: "40px 40px 10px 40px" }}>
-        <Col>
-          <Card border="primary">
-            <Card.Header>Blood Test 1</Card.Header>
-            <Card.Body>
-              <Card.Title>15-5-2020</Card.Title>
-              <Card.Text>Manchester Hosptial</Card.Text>
-              <Button type="primary" onClick={() => setVisible(true)}>
-                View
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col>
-          {" "}
-          <Card border="primary">
-            <Card.Header>Doctor Note</Card.Header>
-            <Card.Body>
-              <Card.Title>4-9-2021</Card.Title>
-              <Card.Text>Manchester Hosptial</Card.Text>
-              <Button type="primary" onClick={() => setVisible(true)}>
-                View
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col>
-          {" "}
-          <Card border="primary">
-            <Card.Header>Nurse Note</Card.Header>
-            <Card.Body>
-              <Card.Title>5-5-2018</Card.Title>
-              <Card.Text>Bolton Surgery</Card.Text>
-              <Button type="primary" onClick={() => setVisible(true)}>
-                View
-              </Button>
-            </Card.Body>
-          </Card>
+          <h3>View Health Records</h3>
+          <div style={{ display: "flex", flexFlow: "row wrap" }}>
+            <PatientRecordCard
+              recordName="Blood Test 1"
+              date="15-5-2020"
+              viewButton={
+                <Button type="primary" onClick={() => setVisible(true)}>
+                  View
+                </Button>
+              }
+              provider="Manchester Hosptial"
+            />
+            <PatientRecordCard
+              recordName="Blood Test 1"
+              date="15-5-2020"
+              viewButton={
+                <Button type="primary" onClick={() => setVisible(true)}>
+                  View
+                </Button>
+              }
+              provider="Manchester Hosptial"
+            />
+            <PatientRecordCard
+              recordName="Blood Test 1"
+              date="15-5-2020"
+              viewButton={
+                <Button type="primary" onClick={() => setVisible(true)}>
+                  View
+                </Button>
+              }
+              provider="Manchester Hosptial"
+            />
+            <PatientRecordCard
+              recordName="Blood Test 1"
+              date="15-5-2020"
+              viewButton={
+                <Button type="primary" onClick={() => setVisible(true)}>
+                  View
+                </Button>
+              }
+              provider="Manchester Hosptial"
+            />
+            <PatientRecordCard
+              recordName="Blood Test 1"
+              date="15-5-2020"
+              viewButton={
+                <Button type="primary" onClick={() => setVisible(true)}>
+                  View
+                </Button>
+              }
+              provider="Manchester Hosptial"
+            />
+          </div>
         </Col>
       </Row>
 

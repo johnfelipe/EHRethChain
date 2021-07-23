@@ -29,7 +29,7 @@ function PatientRecordCard(props) {
     <div className="record-card">
       <div className="record-name">{props.recordName}</div>
       <div className="record-date">{props.date}</div>
-
+      <div className="record-provider">{props.provider}</div>
       <div className="view-record-btn">{props.viewButton}</div>
     </div>
   );

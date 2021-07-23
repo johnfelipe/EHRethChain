@@ -56,9 +56,18 @@
   padding: 10px;
 }
 
+.record-provider {
+  padding: 10px;
+}
+
 .view-record-btn .btn {
   background-color: rgb(112, 186, 162);
   border: none;
   color: white;
   font-weight: bolder;
+}
+
+.view-record-btn .btn:hover {
+  transform: scale(1.1);
+  background-color: teal;
 }
