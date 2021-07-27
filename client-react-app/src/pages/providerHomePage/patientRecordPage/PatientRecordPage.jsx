@@ -1,120 +1,20 @@
 import React, { useEffect, useState } from "react";
-import Blockies from "react-blockies";
+
 import { Row, Col } from "react-bootstrap";
 
-import { LeftCircleOutlined, CopyOutlined } from "@ant-design/icons";
-import { useHistory } from "react-router";
-import { Typography } from "antd";
 import { Button } from "react-bootstrap";
 import { message } from "antd";
 
 import { Modal } from "antd";
 
-import "../../styles/patientRecordPage.css";
-import CreateRecordForm from "../../components/CreateRecordForm";
-// import ViewRecordForm from "../../components/ViewRecordForm";
-
-import PatientRecordCard from "../../components/PatientRecordCard";
+import "../../../styles/patientRecordPage.css";
+import CreateRecordForm from "../../../components/CreateRecordForm";
 
 import { DatePicker } from "antd";
 import moment from "moment";
 import { Form } from "react-bootstrap";
-import { Empty } from "antd";
 
-const { Paragraph } = Typography;
-
-function PatientInformation(props) {
-  let history = useHistory();
-  const returnToPatients = () => {
-    history.push("/home/providerHome/AssignedPatients/");
-  };
-  return (
-    <>
-      <Row>
-        <Col>
-          <span>
-            <LeftCircleOutlined
-              className="go-back-icon"
-              onClick={returnToPatients}
-            />
-          </span>
-          <span className="go-back-text">Go back</span>
-        </Col>
-      </Row>
-      <Row className="record-status-text">
-        <Col>You are viewing the records of the following patient</Col>
-      </Row>
-      <Row className="record-info-row">
-        <Col sm={2}>
-          <p className="record-blockie">
-            <Blockies seed={props.user.address} size={5} scale={8} />
-          </p>
-        </Col>
-        <Col sm={3}>
-          <span className="record-user-name">
-            {props.user.firstname} {props.user.lastname}
-          </span>
-        </Col>
-        <Col>
-          <Paragraph
-            copyable={{
-              text: props.user.address,
-              icon: <CopyOutlined style={{ fontSize: "18px" }} />,
-            }}
-          >
-            <span className="record-user-address">
-              {`${props.user.address.substring(0, 9)}...`}
-            </span>
-          </Paragraph>
-        </Col>
-        <Col>
-          {" "}
-          <button className="create-record-btn" onClick={props.handleCreateBtn}>
-            Create new Record
-          </button>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <div>
-            <p className="patient-records-text">Patient Records</p>
-            <input
-              placeholder="Search by record name"
-              className="patient-records-search-input"
-              onChange={props.searchRecordsByName}
-            />
-          </div>
-
-          <div style={{ display: "flex", flexFlow: "row wrap" }}>
-            {props.records.length > 0 ? (
-              props.records.map((record, index) => (
-                <PatientRecordCard
-                  recordName={record.recordName}
-                  date={record.date}
-                  provider={record.provider}
-                  key={record.id}
-                  id={record.id}
-                  viewButton={
-                    <Button
-                      variant="primary"
-                      onClick={() => props.handleViewRecord(record)}
-                    >
-                      View
-                    </Button>
-                  }
-                />
-              ))
-            ) : (
-              <div className="patient-empty">
-                <Empty />
-              </div>
-            )}
-          </div>
-        </Col>
-      </Row>
-    </>
-  );
-}
+import PatientInformation from "./PatientInformation";
 
 export default function PatientRecordPage(props) {
   const dateFormat = " DD/MM/YYYY";

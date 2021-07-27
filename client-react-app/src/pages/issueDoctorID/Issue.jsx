@@ -4,9 +4,9 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import Modal from "../../components/Modal";
 
 import { DatePicker, message } from "antd";
-import { Spin } from "antd";
 
 import QRCode from "react-qr-code";
+import { openNotification } from "../../helpers/trinsicExchangeNotification";
 
 import { IssueDoctorID } from "../../adapters/trinsic";
 
@@ -37,34 +37,38 @@ function Issue() {
   }, [showQR, showModal]);
 
   async function issueID() {
-    if (
-      hospital !== "" &&
-      fullname !== "" &&
-      address !== "" &&
-      position !== "" &&
-      department !== "" &&
-      id !== "" &&
-      expiration !== ""
-    ) {
-      let formData = {
-        hospital: hospital,
-        name: fullname,
-        address: address,
-        position: position,
-        department: department,
-        id: id,
-        expiration: expiration,
-      };
+    try {
+      if (
+        hospital !== "" &&
+        fullname !== "" &&
+        address !== "" &&
+        position !== "" &&
+        department !== "" &&
+        id !== "" &&
+        expiration !== ""
+      ) {
+        let formData = {
+          hospital: hospital,
+          name: fullname,
+          address: address,
+          position: position,
+          department: department,
+          id: id,
+          expiration: expiration,
+        };
 
-      issueLoading();
+        issueLoading();
 
-      let result = await IssueDoctorID(formData);
+        let result = await IssueDoctorID(formData);
 
-      setQRvalue(result.offerUrl);
-      setShowQR(true);
-      setShowModal(true);
-    } else {
-      message.warning("Please fill in the form entries first!");
+        setQRvalue(result.offerUrl);
+        setShowQR(true);
+        setShowModal(true);
+      } else {
+        message.warning("Please fill in the form entries first!");
+      }
+    } catch (err) {
+      openNotification();
     }
   }
 

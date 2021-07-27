@@ -1,14 +1,13 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
-import Layout from "../components/Layout";
-import MainContainer from "../components/MainContainer";
-import Account from "../components/Account";
+import Layout from "../../components/Layout";
+import MainContainer from "../../components/MainContainer";
+import Account from "../../components/Account";
 
 import { useHistory } from "react-router";
 
-import "../styles/registerUsers.css";
-import { Link } from "react-router-dom";
+import "../../styles/registerUsers.css";
 
 function RegisterUsers() {
   let history = useHistory();

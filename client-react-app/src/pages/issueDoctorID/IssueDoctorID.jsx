@@ -3,16 +3,17 @@ import React, { useState } from "react";
 import Layout from "../../components/Layout";
 import MainContainer from "../../components/MainContainer";
 
+import Info from "./Info";
+import Setup from "./Setup";
+import Issue from "./Issue";
+
+import { useHistory } from "react-router-dom";
+
 import { Container, Row, Col } from "react-bootstrap";
 
 import { Steps, Button, message } from "antd";
 
-import { useHistory } from "react-router-dom";
-
 import "../../styles/issueDoctorID.css";
-import Info from "./Info";
-import Setup from "./Setup";
-import Issue from "./Issue";
 
 const { Step } = Steps;
 

@@ -1,23 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-import "../styles/landingpage.css";
-
-import { Container, Row, Col, Button } from "react-bootstrap";
+import Modal from "../components/Modal";
 import Layout from "../components/Layout";
-
-import { useHistory } from "react-router-dom";
 import MainContainer from "../components/MainContainer";
 
 import { connectMetaMask, checkForWallet } from "../adapters/connectWallet";
-
-import Modal from "../components/Modal";
 import auth from "../adapters/auth";
 
+import { Container, Row, Col, Button, Alert } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { Alert } from "react-bootstrap";
+
+import "../styles/landingpage.css";
 
 const WalletBox = styled.div`
-  margin: 50px; /** was 76 */
+  margin: 50px;
   width: 400px;
   :hover {
     background-color: #f8f8f8;
@@ -66,7 +63,6 @@ function MetaMaskConnect(props) {
       .then((result) => {
         console.log(result.status);
         if (result.status === "success") {
-          // ? get account address
           auth.login(() => history.push("/home"));
         }
       })

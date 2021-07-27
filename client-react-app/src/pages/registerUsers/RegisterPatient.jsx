@@ -1,15 +1,17 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
-import Layout from "../components/Layout";
-import MainContainer from "../components/MainContainer";
-import Account from "../components/Account";
+import Layout from "../../components/Layout";
+import MainContainer from "../../components/MainContainer";
+import Account from "../../components/Account";
 
-import "../styles/registerPatient.css";
+import "../../styles/registerPatient.css";
 
-import { Form, Input, Button, Space } from "antd";
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { Form, Input, Button } from "antd";
+
 import { Typography } from "antd";
+
+import GoBackBtn from "../../components/GoBackBtn";
 
 const { Title } = Typography;
 
@@ -86,15 +88,13 @@ function RegisterPatient() {
           <Container>
             <Account />
             <Row>
-              <Col></Col>
+              <GoBackBtn path="/home/registerUsers" />
               <Col xs={6} className="form-container">
-                {" "}
                 <Title level={2} style={{ textAlign: "center" }}>
                   Registering a Patient
                 </Title>
-                <RegisterPatientForm />{" "}
+                <RegisterPatientForm />
               </Col>
-
               <Col></Col>
             </Row>
           </Container>

@@ -1,43 +1,27 @@
 import React, { useState } from "react";
 
-import Layout from "../components/Layout";
-import MainContainer from "../components/MainContainer";
-import Account from "../components/Account";
-import { Container, Row, Col, Button } from "react-bootstrap";
-import "../styles/doctorLogin.css";
+import Layout from "../../components/Layout";
+import MainContainer from "../../components/MainContainer";
+import Account from "../../components/Account";
+import Modal from "../../components/Modal";
 
-import { Typography } from "antd";
+import { Container, Row, Col, Button } from "react-bootstrap";
+
+import { client } from "../../adapters/trinsic";
+
+import { Typography, message } from "antd";
+
 import { Link } from "react-router-dom";
-import { client } from "../adapters/trinsic";
-import Modal from "../components/Modal";
+
 import QRCode from "react-qr-code";
 
-import { Button as antButton, notification } from "antd";
+import { openNotification } from "../../helpers/trinsicExchangeNotification";
+
+import "../../styles/doctorLogin.css";
+
+import GoBackBtn from "../../components/GoBackBtn";
 
 const { Title } = Typography;
-
-const close = () => {
-  console.log(
-    "Notification was closed. Either the close button was clicked or duration time elapsed."
-  );
-};
-
-const openNotification = () => {
-  const key = `open${Date.now()}`;
-  const btn = (
-    <Button type="primary" size="small" onClick={() => notification.close(key)}>
-      Ok
-    </Button>
-  );
-  notification.error({
-    message: "Error",
-    description:
-      "This account has exceeded the maximum allowed credential monthly exchanges. Please upgrade your plan.",
-    btn,
-    key,
-    onClose: close,
-  });
-};
 
 function DoctorLogin() {
   const [qrValue, setQRvalue] = useState("");
@@ -45,6 +29,9 @@ function DoctorLogin() {
   const [showQR, setShowQR] = useState(false);
 
   async function verifyCredentials() {
+    const hide = message.loading("Trying to verify credentials...", 0);
+    setTimeout(hide, 2500);
+
     try {
       let response = await client.createVerificationFromPolicy(
         process.env.REACT_APP_POLICY_ID
@@ -80,7 +67,8 @@ function DoctorLogin() {
           <Container>
             <Account />
             <Row>
-              <Col></Col>
+              <GoBackBtn path="/home/registerUsers" />
+
               <Col xs={6} className="form-container">
                 {" "}
                 <Title level={2} style={{ textAlign: "center" }}>

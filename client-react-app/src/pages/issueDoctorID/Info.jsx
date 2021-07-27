@@ -17,7 +17,6 @@ function Info() {
                 <p
                   style={{
                     fontSize: "16px",
-
                     padding: "10px 60px",
                   }}
                 >
@@ -29,7 +28,6 @@ function Info() {
                 <p
                   style={{
                     fontSize: "16px",
-
                     padding: "0 60px",
                   }}
                 >
