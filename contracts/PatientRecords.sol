@@ -46,13 +46,22 @@ contract PatientRecords is Ownable, AccessControl {
     function registerPatient(address _account) external
         onlyRole(ADMIN_ROLE)  {
             require(!hasRole(PATIENT_ROLE, _account), "This account already has patient role");
+            // require(!hasRole(PROVIDER_ROLE, _account), "This account cannot have provider role");
+            // require(!hasRole(ADMIN_ROLE, _account), "This account cannot have a admin role");
+            // require(!hasRole(ENTITY_ROLE, _account), "This account cannot have a entity role");
+
             _setupRole(PATIENT_ROLE, _account);
             _setRoleAdmin(PATIENT_ROLE, ADMIN_ROLE);
     }
 
     function registerProvider(address _account) external
         onlyRole(ADMIN_ROLE)  {
+
             require(!hasRole(PROVIDER_ROLE, _account), "This account already has provider role");
+            // require(!hasRole(PATIENT_ROLE, _account), "This account cannot have a patient role");
+            // require(!hasRole(ADMIN_ROLE, _account), "This account cannot have a admin role");
+            // require(!hasRole(ENTITY_ROLE, _account), "This account cannot have a entity role");
+
             _setupRole(PROVIDER_ROLE, _account);
             _setRoleAdmin(PROVIDER_ROLE, ADMIN_ROLE);
     }
@@ -60,6 +69,9 @@ contract PatientRecords is Ownable, AccessControl {
     function registerEntity(address _account) external
         onlyRole(ADMIN_ROLE)  {
             require(!hasRole(ENTITY_ROLE, _account), "This account already has entity role");
+            // require(!hasRole(PATIENT_ROLE, _account), "This account cannot have a patient role");
+            // require(!hasRole(ADMIN_ROLE, _account), "This account cannot have a admin role");
+            // require(!hasRole(PROVIDER_ROLE, _account), "This account already has provider role");
             _setupRole(ENTITY_ROLE, _account);
             _setRoleAdmin(ENTITY_ROLE, ADMIN_ROLE);
     }

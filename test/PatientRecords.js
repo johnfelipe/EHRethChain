@@ -34,7 +34,7 @@ describe("Patient Records Contract", () => {
 
   describe("Accounts", () => {
     it("Should display the accounts", () => {
-      console.log("     Contract Deployer Owner Admin   : ", owner.address);
+      console.log("     Contract Deployer Owner Admin   : ", owner.);
       console.log("     Admin                           : ", admin.address);
       console.log("     Patient 1                       : ", patient1.address);
       console.log("     Patient 2                       : ", patient2.address);
@@ -42,6 +42,9 @@ describe("Patient Records Contract", () => {
       console.log("     Provider 2                      : ", provider2.address);
       console.log("     Entity 1                        : ", entity1.address);
       console.log("     Entity 2                        : ", entity2.address);
+    });
+    it("Should display the accounts balances", () => {
+      console.log("     Contract Deployer Owner Admin   : ", owner.balance);
     });
   });
 
@@ -60,11 +63,99 @@ describe("Patient Records Contract", () => {
     });
   });
 
-  describe("Initial Roles", () => {
-    it("Owner is DEFAULT_ADMIN_ROLE", async () => {
-      expect(
-        await Contract.hasRole(DEFAULT_ADMIN_ROLE, owner.address)
-      ).to.equal(true);
+  describe("Users Roles", () => {
+    describe("Owner Roles", () => {
+      it("Owner role is DEFAULT_ADMIN_ROLE", async () => {
+        expect(
+          await Contract.hasRole(DEFAULT_ADMIN_ROLE, owner.address)
+        ).to.equal(true);
+      });
+
+      it("Owner role is not PATIENT_ROLE", async () => {
+        expect(await Contract.hasRole(PATIENT_ROLE, owner.address)).to.equal(
+          false
+        );
+      });
+      it("Owner role is not PROVIDER_ROLE", async () => {
+        expect(await Contract.hasRole(PROVIDER_ROLE, owner.address)).to.equal(
+          false
+        );
+      });
+      it("Owner role is not ENTITY_ROLE", async () => {
+        expect(await Contract.hasRole(ENTITY_ROLE, owner.address)).to.equal(
+          false
+        );
+      });
+      it("Owner role is not ADMIN_ROLE", async () => {
+        expect(await Contract.hasRole(ADMIN_ROLE, owner.address)).to.equal(
+          false
+        );
+      });
+    });
+
+    describe("Patient Roles", () => {
+      it("Patient 1 role is Not PATIENT_ROLE", async () => {
+        expect(await Contract.hasRole(PATIENT_ROLE, patient1.address)).to.equal(
+          false
+        );
+      });
+
+      it("Patient 1 role is PATIENT_ROLE", async () => {
+        await Contract.registerAdmin(admin.address);
+        await Contract.connect(admin).registerPatient(patient1.address);
+        expect(await Contract.hasRole(PATIENT_ROLE, patient1.address)).to.equal(
+          true
+        );
+      });
+
+      //   it("Patient 1 role is PATIENT_ROLE and cannot become a Provider ", async () => {
+      //     await Contract.registerAdmin(admin.address);
+      //     await Contract.connect(admin).registerPatient(patient1.address);
+      //     await expect(
+      //       Contract.connect(admin).registerProvider(patient1.address)
+      //     ).to.be.revertedWith("This account cannot have a patient role");
+      //   });
+
+      //   it("Patient 1 role is PATIENT_ROLE and cannot become an Entity ", async () => {
+      //     await Contract.registerAdmin(admin.address);
+      //     await Contract.connect(admin).registerPatient(patient1.address);
+      //     await expect(
+      //       Contract.connect(admin).registerEntity(patient1.address)
+      //     ).to.be.revertedWith("This account cannot have a patient role");
+      //   });
+
+      it("Patient 1 role is not PROVIDER_ROLE", async () => {
+        expect(
+          await Contract.hasRole(PROVIDER_ROLE, patient1.address)
+        ).to.equal(false);
+      });
+
+      it("Patient 1 role is not ENTITY_ROLE", async () => {
+        expect(await Contract.hasRole(ENTITY_ROLE, patient1.address)).to.equal(
+          false
+        );
+      });
+
+      it("Patient 1 role is not ADMIN_ROLE", async () => {
+        expect(await Contract.hasRole(ADMIN_ROLE, patient1.address)).to.equal(
+          false
+        );
+      });
+    });
+
+    describe("Provider Role", () => {
+      it("Provider 1 role is Not PROVIDER_ROLE", async () => {
+        expect(
+          await Contract.hasRole(PROVIDER_ROLE, provider1.address)
+        ).to.equal(false);
+      });
+      it("Provider 1 role is PROVIDER_ROLE", async () => {
+        await Contract.registerAdmin(admin.address);
+        await Contract.connect(admin).registerProvider(provider1.address);
+        expect(
+          await Contract.hasRole(PROVIDER_ROLE, provider1.address)
+        ).to.equal(true);
+      });
     });
   });
 
@@ -97,7 +188,7 @@ describe("Patient Records Contract", () => {
       });
     });
 
-    describe("ADMIN ROLE Assertions", () => {
+    describe("ADMIN_ROLE Assertions", () => {
       it("ADMIN_ROLE role Admin is DEFAULT_ADMIN_ROLE", async () => {
         expect(await Contract.getRoleAdmin(ADMIN_ROLE)).to.equal(
           DEFAULT_ADMIN_ROLE
@@ -125,7 +216,7 @@ describe("Patient Records Contract", () => {
       });
     });
 
-    describe("PATIENT ROLE Assertions", () => {
+    describe("PATIENT_ROLE Assertions", () => {
       it("PATIENT_ROLE role Admin is DEFAULT_ADMIN_ROLE", async () => {
         expect(await Contract.getRoleAdmin(PATIENT_ROLE)).to.equal(
           DEFAULT_ADMIN_ROLE
@@ -136,10 +227,13 @@ describe("Patient Records Contract", () => {
           ADMIN_ROLE
         );
       });
-      it("PATIENT_ROLE role Admin is ADMIN_ROLE", async () => {
+      it("PATIENT_ROLE role Admin is ADMIN_ROLE and no longer is DEFAULT_ADMIN_ROLE ", async () => {
         await Contract.registerAdmin(admin.address); // Owner register an admin
         await Contract.connect(admin).registerPatient(patient1.address); // Admin Register a Patient
         expect(await Contract.getRoleAdmin(PATIENT_ROLE)).to.equal(ADMIN_ROLE);
+        expect(await Contract.getRoleAdmin(PATIENT_ROLE)).not.to.equal(
+          DEFAULT_ADMIN_ROLE
+        );
       });
       it("PATIENT_ROLE role Admin is not PATIENT_ROLE", async () => {
         expect(await Contract.getRoleAdmin(PATIENT_ROLE)).not.to.equal(
@@ -154,6 +248,78 @@ describe("Patient Records Contract", () => {
       it("PATIENT_ROLE role Admin is not ENTITY_ROLE", async () => {
         expect(await Contract.getRoleAdmin(PATIENT_ROLE)).not.to.equal(
           ENTITY_ROLE
+        );
+      });
+    });
+
+    describe("PROVIDER_ROLE Assertions", () => {
+      it("PROVIDER_ROLE role Admin is DEFAULT_ADMIN_ROLE", async () => {
+        expect(await Contract.getRoleAdmin(PROVIDER_ROLE)).to.equal(
+          DEFAULT_ADMIN_ROLE
+        );
+      });
+      it("PROVIDER_ROLE role Admin is initially not ADMIN_ROLE", async () => {
+        expect(await Contract.getRoleAdmin(PROVIDER_ROLE)).not.to.equal(
+          ADMIN_ROLE
+        );
+      });
+      it("PROVIDER_ROLE role Admin is ADMIN_ROLE and no longer is DEFAULT_ADMIN_ROLE", async () => {
+        await Contract.registerAdmin(admin.address);
+        await Contract.connect(admin).registerProvider(provider1.address);
+        expect(await Contract.getRoleAdmin(PROVIDER_ROLE)).to.equal(ADMIN_ROLE);
+        expect(await Contract.getRoleAdmin(PROVIDER_ROLE)).not.to.equal(
+          DEFAULT_ADMIN_ROLE
+        );
+      });
+      it("PROVIDER_ROLE role Admin is not PROVIDER_ROLE", async () => {
+        expect(await Contract.getRoleAdmin(PROVIDER_ROLE)).not.to.equal(
+          PROVIDER_ROLE
+        );
+      });
+      it("PROVIDER_ROLE role Admin is not ENTITY_ROLE", async () => {
+        expect(await Contract.getRoleAdmin(PROVIDER_ROLE)).not.to.equal(
+          ENTITY_ROLE
+        );
+      });
+      it("PROVIDER_ROLE role Admin is not PATIENT_ROLE", async () => {
+        expect(await Contract.getRoleAdmin(PROVIDER_ROLE)).not.to.equal(
+          PATIENT_ROLE
+        );
+      });
+    });
+
+    describe("ENTITY_ROLE Assertions", () => {
+      it("ENTITY_ROLE role Admin is DEFAULT_ADMIN_ROLE", async () => {
+        expect(await Contract.getRoleAdmin(ENTITY_ROLE)).to.equal(
+          DEFAULT_ADMIN_ROLE
+        );
+      });
+      it("ENTITY_ROLE role Admin initially is not ADMIN_ROLE", async () => {
+        expect(await Contract.getRoleAdmin(ENTITY_ROLE)).not.to.equal(
+          ADMIN_ROLE
+        );
+      });
+      it("ENTITY_ROLE role Admin is ADMIN_ROLE and no longer is DEFAULT_ADMIN_ROLE", async () => {
+        await Contract.registerAdmin(admin.address);
+        await Contract.connect(admin).registerEntity(entity1.address);
+        expect(await Contract.getRoleAdmin(ENTITY_ROLE)).to.equal(ADMIN_ROLE);
+        expect(await Contract.getRoleAdmin(ENTITY_ROLE)).not.to.equal(
+          DEFAULT_ADMIN_ROLE
+        );
+      });
+      it("ENTITY_ROLE role Admin is not ENTITY_ROLE", async () => {
+        expect(await Contract.getRoleAdmin(ENTITY_ROLE)).not.to.equal(
+          ENTITY_ROLE
+        );
+      });
+      it("ENTITY_ROLE role Admin is not PATIENT_ROLE", async () => {
+        expect(await Contract.getRoleAdmin(ENTITY_ROLE)).not.to.equal(
+          PATIENT_ROLE
+        );
+      });
+      it("ENTITY_ROLE role Admin is not PROVIDER_ROLE", async () => {
+        expect(await Contract.getRoleAdmin(ENTITY_ROLE)).not.to.equal(
+          PROVIDER_ROLE
         );
       });
     });

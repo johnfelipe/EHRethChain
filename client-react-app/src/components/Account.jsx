@@ -9,10 +9,10 @@ import styled from "styled-components";
 import auth from "../adapters/auth";
 import { useHistory } from "react-router-dom";
 
-import Identicon from "react-identicons";
+// import Identicon from "react-identicons";
 
 import Blockies from "react-blockies";
-import { Avatar } from "antd";
+// import { Avatar } from "antd";
 
 import { CopyOutlined } from "@ant-design/icons";
 
@@ -38,26 +38,57 @@ function Account() {
   const [connectedToNet, setConnectedToNet] = useState("");
   const [userBalance, setUserBalance] = useState("");
   async function getUserData() {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    await provider.send("eth_requestAccounts", []);
-    const signer = provider.getSigner();
+    if (
+      typeof window.ethereum !== "undefined" ||
+      typeof window.web3 !== "undefined"
+    ) {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
 
-    setUserAddress(await signer.getAddress());
-    console.log(typeof userAddress);
-    setUserBalance(ethers.utils.formatEther(await signer.getBalance()));
-    let n = await provider.getNetwork();
-    let name = n.name;
-    if (name === "homestead") setConnectedToNet("Ethereum Mainnet");
-    else {
-      setConnectedToNet(
-        `${name.charAt(0).toUpperCase() + name.slice(1)} Test Network`
-      );
+      await provider.send("eth_requestAccounts", []);
+
+      switch (window.ethereum.chainId) {
+        case "0x1":
+          setConnectedToNet("Ethereum Main Network");
+          break;
+        case "0x3":
+          setConnectedToNet("Ropsten Test Network");
+          break;
+        case "0x4":
+          setConnectedToNet("Rinkeby Test Network");
+          break;
+        case "0x5":
+          setConnectedToNet("Goerli Test Network");
+          break;
+        case "0x2a":
+          setConnectedToNet("Kovan Test Network");
+          break;
+        case "0x539":
+          setConnectedToNet("Localhost Local Network");
+          break;
+        default:
+          break;
+      }
+
+      setUserAddress(await signer.getAddress());
+      setUserBalance(ethers.utils.formatEther(await signer.getBalance()));
+
+      // let n = await provider.getNetwork();
+      // let name = n.name;
+      // if (name === "homestead") setConnectedToNet("Ethereum Mainnet");
+      // else {
+      //   setConnectedToNet(
+      //     `${name.charAt(0).toUpperCase() + name.slice(1)} Test Network`
+      //   );
+      // }
+      // setUserBalance(ethers.utils.formatEther(await signer.getBalance()));
+      // setUserAddress(await signer.getAddress());
     }
   }
 
   useEffect(() => {
     getUserData();
-  }, [userAddress, connectedToNet, userBalance]);
+  }, []);
 
   function disconnect() {
     auth.logout(() => {

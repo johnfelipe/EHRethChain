@@ -9,6 +9,7 @@
     "hardhat": "^2.5.0"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.6.2",
     "@openzeppelin/contracts": "^4.2.0"
   }
 }
