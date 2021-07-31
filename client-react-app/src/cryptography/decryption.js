@@ -20,3 +20,5 @@ function decryptDataWithSymKey(cipherText, symmetricKey) {
 
   return decrypted.toString(CryptoJS.enc.Utf8);
 }
+
+export { decryptSymKeyWithPrivateKey, decryptDataWithSymKey };

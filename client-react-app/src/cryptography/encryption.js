@@ -19,3 +19,5 @@ function encryptDataWithSymKey(plainText, symmetricKey) {
   });
   return encryptedData;
 }
+
+export { encryptSymKeyWithPublicKey, encryptDataWithSymKey };

@@ -164,7 +164,11 @@ describe("Patient Records Contract", () => {
     });
     it("onlyVerifiedProvider modifier is working as expected", async () => {
       await Contract.registerAdmin(admin1.address);
-      await Contract.registerPatient(patient1.address);
+      await Contract.registerPatient(
+        patient1.address,
+        "5a063d4c079f4c67a00b47c735b2296cd9de9f84532a0b0c921ad1ece4ccbd5b",
+        "d9a07d0dfbd7f6446304c108edddeeef978f030d1bdcab045b7effb24ec5843f"
+      );
       await expect(
         Contract.connect(admin1).assignPatientToDoctor(
           patient1.address,
@@ -317,7 +321,11 @@ describe("Patient Records Contract", () => {
     it("Admin successfully assigned a registered patient to a verified provider", async () => {
       await Contract.registerAdmin(admin1.address);
       await Contract.registerProvider(provider1.address);
-      await Contract.registerPatient(patient1.address);
+      await Contract.registerPatient(
+        patient1.address,
+        "5a063d4c079f4c67a00b47c735b2296cd9de9f84532a0b0c921ad1ece4ccbd5b",
+        "d9a07d0dfbd7f6446304c108edddeeef978f030d1bdcab045b7effb24ec5843f"
+      );
       await expect(
         Contract.connect(admin1).assignPatientToDoctor(
           patient1.address,
@@ -331,8 +339,16 @@ describe("Patient Records Contract", () => {
     it("Successfully unassigned assigned patients", async () => {
       await Contract.registerAdmin(admin1.address);
       await Contract.registerProvider(provider1.address);
-      await Contract.registerPatient(patient1.address);
-      await Contract.registerPatient(patient2.address);
+      await Contract.registerPatient(
+        patient1.address,
+        "5a063d4c079f4c67a00b47c735b2296cd9de9f84532a0b0c921ad1ece4ccbd5b",
+        "d9a07d0dfbd7f6446304c108edddeeef978f030d1bdcab045b7effb24ec5843f"
+      );
+      await Contract.registerPatient(
+        patient2.address,
+        "5a063d4c079f4c67a00b47c735b2296cd9de9f84532a0b0c921ad1ece4ccbd5b",
+        "d9a07d0dfbd7f6446304c108edddeeef978f030d1bdcab045b7effb24ec5843f"
+      );
 
       // Assign patients
       await Contract.connect(admin1).assignPatientToDoctor(
@@ -375,8 +391,16 @@ describe("Patient Records Contract", () => {
     it("Provider successfully query assigned patients", async () => {
       await Contract.registerAdmin(admin1.address);
       await Contract.registerProvider(provider1.address);
-      await Contract.registerPatient(patient1.address);
-      await Contract.registerPatient(patient2.address);
+      await Contract.registerPatient(
+        patient1.address,
+        "5a063d4c079f4c67a00b47c735b2296cd9de9f84532a0b0c921ad1ece4ccbd5b",
+        "d9a07d0dfbd7f6446304c108edddeeef978f030d1bdcab045b7effb24ec5843f"
+      );
+      await Contract.registerPatient(
+        patient2.address,
+        "5a063d4c079f4c67a00b47c735b2296cd9de9f84532a0b0c921ad1ece4ccbd5b",
+        "d9a07d0dfbd7f6446304c108edddeeef978f030d1bdcab045b7effb24ec5843f"
+      );
       await Contract.connect(admin1).assignPatientToDoctor(
         patient1.address,
         provider1.address
@@ -406,12 +430,593 @@ describe("Patient Records Contract", () => {
     });
 
     it("Patient view own records successfully", async () => {
-      await Contract.registerPatient(patient1.address);
+      await Contract.registerPatient(
+        patient1.address,
+        "5a063d4c079f4c67a00b47c735b2296cd9de9f84532a0b0c921ad1ece4ccbd5b",
+        "d9a07d0dfbd7f6446304c108edddeeef978f030d1bdcab045b7effb24ec5843f"
+      );
       expect(await Contract.connect(patient1).viewOwnRecords()).to.eql([
         [],
-        "",
-        "",
+        "5a063d4c079f4c67a00b47c735b2296cd9de9f84532a0b0c921ad1ece4ccbd5b",
+        "d9a07d0dfbd7f6446304c108edddeeef978f030d1bdcab045b7effb24ec5843f",
       ]);
     });
   });
+
+  describe("Patient granting provider access permission", () => {
+    it("Provider 1 is not yet granted access by patient 1", async () => {
+      await Contract.connect(patient1).registerPatient(
+        patient1.address,
+        "5a063d4c079f4c67a00b47c735b2296cd9de9f84532a0b0c921ad1ece4ccbd5b",
+        "d9a07d0dfbd7f6446304c108edddeeef978f030d1bdcab045b7effb24ec5843f"
+      );
+      expect(
+        await Contract.connect(patient1).isGrantedProvider(provider1.address)
+      ).to.equal(false);
+    });
+
+    it("Patient 1 is not a provider thus can not check", async () => {
+      await Contract.connect(patient1).registerPatient(
+        patient1.address,
+        "5a063d4c079f4c67a00b47c735b2296cd9de9f84532a0b0c921ad1ece4ccbd5b",
+        "d9a07d0dfbd7f6446304c108edddeeef978f030d1bdcab045b7effb24ec5843f"
+      );
+      await expect(
+        Contract.connect(patient1).isGrantedProvider(patient1.address)
+      ).to.be.revertedWith("Patient account is not allowed here");
+    });
+
+    it("Patient 1 grant access to provider 1", async () => {
+      await Contract.connect(patient1).registerPatient(
+        patient1.address,
+        "5a063d4c079f4c67a00b47c735b2296cd9de9f84532a0b0c921ad1ece4ccbd5b",
+        "d9a07d0dfbd7f6446304c108edddeeef978f030d1bdcab045b7effb24ec5843f"
+      );
+      await Contract.registerProvider(provider1.address);
+      Contract.connect(patient1).grantProviderAccess(provider1.address);
+      expect(
+        await Contract.connect(patient1).isGrantedProvider(provider1.address)
+      ).to.equal(true);
+    });
+
+    it("Patient 1 revoke access from provider 1", async () => {
+      await Contract.connect(patient1).registerPatient(
+        patient1.address,
+        "5a063d4c079f4c67a00b47c735b2296cd9de9f84532a0b0c921ad1ece4ccbd5b",
+        "d9a07d0dfbd7f6446304c108edddeeef978f030d1bdcab045b7effb24ec5843f"
+      );
+      await Contract.registerProvider(provider1.address);
+      await Contract.connect(patient1).grantProviderAccess(provider1.address);
+      await Contract.connect(patient1).revokeGrantedProvider(provider1.address);
+      expect(
+        await Contract.connect(patient1).isGrantedProvider(provider1.address)
+      ).to.equal(false);
+    });
+  });
+
+  describe("Provider creating new record for patients", () => {
+    it("Provider 1 crete new records for patient 1", async () => {
+      let firstNameCID =
+        "5a063d4c079f4c67a00b47c735b2296cd9de9f84532a0b0c921ad1ece4ccbd5b";
+      let lastNameCID =
+        "d9a07d0dfbd7f6446304c108edddeeef978f030d1bdcab045b7effb24ec5843f";
+
+      // register a patient (patient 1)
+      await Contract.connect(patient1).registerPatient(
+        patient1.address,
+        firstNameCID,
+        lastNameCID
+      );
+
+      // owner register a provider (provider 1)
+      await Contract.registerProvider(provider1.address);
+
+      // owner register an admin (admin 1)
+      await Contract.registerAdmin(admin1.address);
+
+      // admin 1 assign patient 1 to provider 1
+      await Contract.connect(admin1).assignPatientToDoctor(
+        patient1.address,
+        provider1.address
+      );
+
+      // patient 1 grant provider 1 access
+      await Contract.connect(patient1).grantProviderAccess(provider1.address);
+
+      // verify patient 1 records before adding
+      console.log(await Contract.connect(patient1).viewOwnRecords());
+      console.log("\n\n");
+
+      // provider 1 creates a new record for patient 1
+      let recordCID =
+        "be9356c54eea66f78c424f744dd34ef3cdd28bcc452c2fc67f3e5698eab8606d";
+      await Contract.connect(provider1).createNewRecord(
+        patient1.address,
+        recordCID
+      );
+
+      // verify patient 1 has new record added by provider 1
+      let patient1Records = await Contract.connect(patient1).viewOwnRecords();
+      console.log(patient1Records);
+
+      // verify hash and doctor address
+      let doctorID = provider1.address;
+      let expectedResults = [
+        [[recordCID, doctorID]],
+        firstNameCID,
+        lastNameCID,
+      ];
+
+      expect(patient1Records).to.eqls(expectedResults);
+    });
+
+    it("Not granted providers can not create records for their assigned patients", async () => {
+      let firstNameCID =
+        "5a063d4c079f4c67a00b47c735b2296cd9de9f84532a0b0c921ad1ece4ccbd5b";
+      let lastNameCID =
+        "d9a07d0dfbd7f6446304c108edddeeef978f030d1bdcab045b7effb24ec5843f";
+      let recordCID =
+        "be9356c54eea66f78c424f744dd34ef3cdd28bcc452c2fc67f3e5698eab8606d";
+
+      // register a patient (patient 1)
+      await Contract.connect(patient1).registerPatient(
+        patient1.address,
+        firstNameCID,
+        lastNameCID
+      );
+
+      // owner register a provider (provider 1)
+      await Contract.registerProvider(provider1.address);
+
+      // owner register an admin (admin 1)
+      await Contract.registerAdmin(admin1.address);
+
+      // admin 1 assign patient 1 to provider 1
+      await Contract.connect(admin1).assignPatientToDoctor(
+        patient1.address,
+        provider1.address
+      );
+
+      // patient 1 grant provider 1 access
+      // await Contract.connect(patient1).grantProviderAccess(provider1.address);
+
+      await expect(
+        Contract.connect(provider1).createNewRecord(patient1.address, recordCID)
+      ).to.be.revertedWith(
+        "You are not granted permission to create a new record"
+      );
+    });
+
+    it("Provider 1 cannot create record for unassigned patient", async () => {
+      let firstNameCID =
+        "5a063d4c079f4c67a00b47c735b2296cd9de9f84532a0b0c921ad1ece4ccbd5b";
+      let lastNameCID =
+        "d9a07d0dfbd7f6446304c108edddeeef978f030d1bdcab045b7effb24ec5843f";
+      let recordCID =
+        "be9356c54eea66f78c424f744dd34ef3cdd28bcc452c2fc67f3e5698eab8606d";
+
+      // register a patient (patient 1)
+      await Contract.connect(patient1).registerPatient(
+        patient1.address,
+        firstNameCID,
+        lastNameCID
+      );
+
+      // owner register a provider (provider 1)
+      await Contract.registerProvider(provider1.address);
+
+      // owner register an admin (admin 1)
+      await Contract.registerAdmin(admin1.address);
+
+      // admin 1 assign patient 1 to provider 1
+      // await Contract.connect(admin1).assignPatientToDoctor(
+      //   patient1.address,
+      //   provider1.address
+      // );
+
+      // patient 1 grant provider 1 access
+      await Contract.connect(patient1).grantProviderAccess(provider1.address);
+
+      await expect(
+        Contract.connect(provider1).createNewRecord(patient1.address, recordCID)
+      ).to.be.revertedWith("This account is not an assigned patient");
+    });
+  });
+
+  describe("Provider deleting patient records", () => {
+    it("Successfully deleted patient 1 record after provider 1 created it", async () => {
+      let firstNameCID =
+        "5a063d4c079f4c67a00b47c735b2296cd9de9f84532a0b0c921ad1ece4ccbd5b";
+      let lastNameCID =
+        "d9a07d0dfbd7f6446304c108edddeeef978f030d1bdcab045b7effb24ec5843f";
+      let recordCID =
+        "be9356c54eea66f78c424f744dd34ef3cdd28bcc452c2fc67f3e5698eab8606d";
+
+      // register a patient (patient 1)
+      await Contract.connect(patient1).registerPatient(
+        patient1.address,
+        firstNameCID,
+        lastNameCID
+      );
+
+      // owner register a provider (provider 1)
+      await Contract.registerProvider(provider1.address);
+
+      // owner register an admin (admin 1)
+      await Contract.registerAdmin(admin1.address);
+
+      // admin 1 assign patient 1 to provider 1
+      await Contract.connect(admin1).assignPatientToDoctor(
+        patient1.address,
+        provider1.address
+      );
+
+      // patient 1 grant provider 1 access
+      await Contract.connect(patient1).grantProviderAccess(provider1.address);
+
+      // verify patient 1 records before adding
+      console.log(await Contract.connect(patient1).viewOwnRecords());
+      console.log("\n\n");
+
+      // provider 1 create new record for patient 1
+      await Contract.connect(provider1).createNewRecord(
+        patient1.address,
+        recordCID
+      );
+
+      // verify patient 1 records after creation
+      console.log(await Contract.connect(patient1).viewOwnRecords());
+      console.log("\n\n");
+
+      // provider 1 deletes the created record
+      await Contract.connect(provider1).deleteRecord(
+        patient1.address,
+        recordCID
+      );
+
+      // verify patient 1 records after deletion
+      console.log(await Contract.connect(patient1).viewOwnRecords());
+      console.log("\n\n");
+
+      // assetion here
+      let expectedResults = [
+        [["", "0x0000000000000000000000000000000000000000"]],
+        firstNameCID,
+        lastNameCID,
+      ];
+
+      expect(await Contract.connect(patient1).viewOwnRecords()).to.eqls(
+        expectedResults
+      );
+    });
+
+    it("Provider 1 try to delete patient 1 record that does not exist", async () => {
+      let firstNameCID =
+        "5a063d4c079f4c67a00b47c735b2296cd9de9f84532a0b0c921ad1ece4ccbd5b";
+      let lastNameCID =
+        "d9a07d0dfbd7f6446304c108edddeeef978f030d1bdcab045b7effb24ec5843f";
+      let recordCID =
+        "be9356c54eea66f78c424f744dd34ef3cdd28bcc452c2fc67f3e5698eab8606d";
+
+      // register a patient (patient 1)
+      await Contract.connect(patient1).registerPatient(
+        patient1.address,
+        firstNameCID,
+        lastNameCID
+      );
+
+      // owner register a provider (provider 1)
+      await Contract.registerProvider(provider1.address);
+
+      // owner register an admin (admin 1)
+      await Contract.registerAdmin(admin1.address);
+
+      // admin 1 assign patient 1 to provider 1
+      await Contract.connect(admin1).assignPatientToDoctor(
+        patient1.address,
+        provider1.address
+      );
+
+      // patient 1 grant provider 1 access
+      await Contract.connect(patient1).grantProviderAccess(provider1.address);
+
+      // verify patient 1 records before adding
+      console.log(await Contract.connect(patient1).viewOwnRecords());
+      console.log("\n\n");
+
+      // provider 1 create new record for patient 1
+      // await Contract.connect(provider1).createNewRecord(
+      //   patient1.address,
+      //   recordCID
+      // );
+
+      // verify patient 1 records after creation
+      // console.log(await Contract.connect(patient1).viewOwnRecords());
+      // console.log("\n\n");
+
+      // // provider 1 deletes the created record
+      // await Contract.connect(provider1).deleteRecord(
+      //   patient1.address,
+      //   recordCID
+      // );
+
+      // // verify patient 1 records after deletion
+      // console.log(await Contract.connect(patient1).viewOwnRecords());
+      // console.log("\n\n");
+
+      // assetion here
+      // let expectedResults = [
+      //   [["", "0x0000000000000000000000000000000000000000"]],
+      //   firstNameCID,
+      //   lastNameCID,
+      // ];
+
+      // 0x32 Array out-of-bounds or negative index
+      await expect(
+        Contract.connect(provider1).deleteRecord(patient1.address, recordCID)
+      ).to.be.revertedWith("This patient has no records to delete");
+    });
+  });
+
+  describe("Provider update patient records", () => {
+    it("Provider 1 update record 1 of patient 1", async () => {
+      // 1. data here
+      let firstNameCID =
+        "5a063d4c079f4c67a00b47c735b2296cd9de9f84532a0b0c921ad1ece4ccbd5b";
+      let lastNameCID =
+        "d9a07d0dfbd7f6446304c108edddeeef978f030d1bdcab045b7effb24ec5843f";
+      let oldRecordCID =
+        "be9356c54eea66f78c424f744dd34ef3cdd28bcc452c2fc67f3e5698eab8606d";
+      let newRecordCID =
+        "db7c45cc95a531e14d1e9f3f510afffc331aefec63f4aa487bc8a60ea254b936";
+
+      // register patient 1
+      await Contract.connect(patient1).registerPatient(
+        patient1.address,
+        firstNameCID,
+        lastNameCID
+      );
+      // owner register provider 1
+      await Contract.registerProvider(provider1.address);
+      // owner register admin 1
+      await Contract.registerAdmin(admin1.address);
+      // admin 1 assign patient 1 to provider 1
+      await Contract.connect(admin1).assignPatientToDoctor(
+        patient1.address,
+        provider1.address
+      );
+      // patient 1 grant provider 1 access
+      await Contract.connect(patient1).grantProviderAccess(provider1.address);
+
+      console.log(await Contract.connect(patient1).viewOwnRecords());
+      console.log("\n\n\n");
+      // provider 1 create record 1 for paitent 1
+      await Contract.connect(provider1).createNewRecord(
+        patient1.address,
+        oldRecordCID
+      );
+
+      console.log(await Contract.connect(patient1).viewOwnRecords());
+      console.log("\n\n\n");
+
+      // provider 1 update record 1 for patient 1
+      await Contract.connect(provider1).updateRecord(
+        patient1.address,
+        oldRecordCID,
+        newRecordCID
+      );
+
+      console.log(await Contract.connect(patient1).viewOwnRecords());
+    });
+
+    it("try to update empty records", async () => {
+      // 1. data here
+      let firstNameCID =
+        "5a063d4c079f4c67a00b47c735b2296cd9de9f84532a0b0c921ad1ece4ccbd5b";
+      let lastNameCID =
+        "d9a07d0dfbd7f6446304c108edddeeef978f030d1bdcab045b7effb24ec5843f";
+      let oldRecordCID =
+        "be9356c54eea66f78c424f744dd34ef3cdd28bcc452c2fc67f3e5698eab8606d";
+      let newRecordCID =
+        "db7c45cc95a531e14d1e9f3f510afffc331aefec63f4aa487bc8a60ea254b936";
+
+      // register patient 1
+      await Contract.connect(patient1).registerPatient(
+        patient1.address,
+        firstNameCID,
+        lastNameCID
+      );
+      // owner register provider 1
+      await Contract.registerProvider(provider1.address);
+      // owner register admin 1
+      await Contract.registerAdmin(admin1.address);
+      // admin 1 assign patient 1 to provider 1
+      await Contract.connect(admin1).assignPatientToDoctor(
+        patient1.address,
+        provider1.address
+      );
+      // patient 1 grant provider 1 access
+      await Contract.connect(patient1).grantProviderAccess(provider1.address);
+
+      console.log(await Contract.connect(patient1).viewOwnRecords());
+      console.log("\n\n\n");
+      // provider 1 create record 1 for paitent 1
+      //  await Contract.connect(provider1).createNewRecord(
+      //    patient1.address,
+      //    oldRecordCID
+      //  );
+
+      //  console.log(await Contract.connect(patient1).viewOwnRecords());
+      //  console.log("\n\n\n");
+
+      // provider 1 update record 1 for patient 1
+
+      // reverted with panic code 0x32
+      // out-of-bounds or negative index
+
+      await expect(
+        Contract.connect(provider1).updateRecord(
+          patient1.address,
+          oldRecordCID,
+          newRecordCID
+        )
+      ).to.be.revertedWith("0x32");
+
+      //  console.log(await Contract.connect(patient1).viewOwnRecords());
+    });
+  });
+
+  describe("Patient grant entities access", () => {
+    it("Patient 1 grant entity 1 access for record sharing", async () => {
+      // patient 1 register as a patient
+      await Contract.connect(patient1).registerPatient(
+        patient1.address,
+        "",
+        ""
+      );
+      // owner registers entity 1
+      await Contract.registerEntity(entity1.address);
+
+      // patient 1 grant entity 1 access
+      await Contract.connect(patient1).grantEntityAccess(entity1.address);
+
+      // patient 1 verify access
+      expect(
+        await Contract.connect(patient1).isGrantedEntity(entity1.address)
+      ).to.equal(true);
+    });
+  });
+
+  describe("Patient share record with entities", () => {
+    it("Patient 1 share record 1 with entity 1 after provider 1 creates record 1", async () => {
+      // 1. data here
+      let firstNameCID =
+        "5a063d4c079f4c67a00b47c735b2296cd9de9f84532a0b0c921ad1ece4ccbd5b";
+      let lastNameCID =
+        "d9a07d0dfbd7f6446304c108edddeeef978f030d1bdcab045b7effb24ec5843f";
+      let recordCID =
+        "be9356c54eea66f78c424f744dd34ef3cdd28bcc452c2fc67f3e5698eab8606d";
+
+      // patient 1 register as a patient
+      await Contract.connect(patient1).registerPatient(
+        patient1.address,
+        firstNameCID,
+        lastNameCID
+      );
+      // owner registers entity 1
+      await Contract.registerEntity(entity1.address);
+
+      // patient 1 grant entity 1 access
+      await Contract.connect(patient1).grantEntityAccess(entity1.address);
+
+      // owner register admin 1
+      await Contract.registerAdmin(admin1.address);
+
+      // owner register provider 1
+      await Contract.registerProvider(provider1.address);
+
+      // admin 1 assign patient 1 to provider 1
+      await Contract.connect(admin1).assignPatientToDoctor(
+        patient1.address,
+        provider1.address
+      );
+
+      // patient 1 grant provider 1 access
+      await Contract.connect(patient1).grantProviderAccess(provider1.address);
+
+      console.log(await Contract.connect(patient1).viewOwnRecords());
+      console.log("\n\n");
+
+      // provider 1 create record 1 for paitent 1
+      await Contract.connect(provider1).createNewRecord(
+        patient1.address,
+        recordCID
+      );
+
+      console.log(await Contract.connect(patient1).viewOwnRecords());
+      console.log("\n\n");
+
+      // patient 1 share  record 1 to entity 1
+      await Contract.connect(patient1).shareRecordWithEntity(
+        entity1.address,
+        recordCID
+      );
+
+      // entity 1 retreive record shared by patient 1
+      console.log(
+        await Contract.connect(entity1).viewSharedRecords(patient1.address)
+      );
+    });
+  });
+
+  describe("Patient revoke access for shared records with entities", () => {
+    it("Patient 1 revoke share access from entity 1", async () => {
+      // 1. data here
+      let firstNameCID =
+        "5a063d4c079f4c67a00b47c735b2296cd9de9f84532a0b0c921ad1ece4ccbd5b";
+      let lastNameCID =
+        "d9a07d0dfbd7f6446304c108edddeeef978f030d1bdcab045b7effb24ec5843f";
+      let recordCID =
+        "be9356c54eea66f78c424f744dd34ef3cdd28bcc452c2fc67f3e5698eab8606d";
+
+      // patient 1 register as a patient
+      await Contract.connect(patient1).registerPatient(
+        patient1.address,
+        firstNameCID,
+        lastNameCID
+      );
+      // owner registers entity 1
+      await Contract.registerEntity(entity1.address);
+
+      // patient 1 grant entity 1 access
+      await Contract.connect(patient1).grantEntityAccess(entity1.address);
+
+      // owner register admin 1
+      await Contract.registerAdmin(admin1.address);
+
+      // owner register provider 1
+      await Contract.registerProvider(provider1.address);
+
+      // admin 1 assign patient 1 to provider 1
+      await Contract.connect(admin1).assignPatientToDoctor(
+        patient1.address,
+        provider1.address
+      );
+
+      // patient 1 grant provider 1 access
+      await Contract.connect(patient1).grantProviderAccess(provider1.address);
+
+      console.log(await Contract.connect(patient1).viewOwnRecords());
+      console.log("\n\n");
+
+      // provider 1 create record 1 for paitent 1
+      await Contract.connect(provider1).createNewRecord(
+        patient1.address,
+        recordCID
+      );
+
+      console.log(await Contract.connect(patient1).viewOwnRecords());
+      console.log("\n\n");
+
+      // patient 1 share  record 1 to entity 1
+      await Contract.connect(patient1).shareRecordWithEntity(
+        entity1.address,
+        recordCID
+      );
+
+      // entity 1 retreive record shared by patient 1
+      console.log(
+        await Contract.connect(entity1).viewSharedRecords(patient1.address)
+      );
+
+      await Contract.connect(patient1).revokeAccessFromEntity(entity1.address);
+
+      // patient 1 revoke access to entity 1
+      console.log(
+        await Contract.connect(entity1).viewSharedRecords(patient1.address)
+      );
+    });
+  });
+
+  describe("Entities view shared records", () => {});
 });

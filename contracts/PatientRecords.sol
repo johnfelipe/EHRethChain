@@ -26,11 +26,16 @@ contract PatientRecords is Ownable, AccessControl {
         address doctorAccount; // 0x0000000000000000000000000000000000000000
     }
 
+    
+
     struct PatientData {
         EHrecord[] patientRecords;
         string firstNameHash; // ""
         string lastNameHash; // ""
-    }
+        
+    } 
+
+   
 
     struct AssignedPatients {
         address[] patients;
@@ -39,10 +44,57 @@ contract PatientRecords is Ownable, AccessControl {
         uint counter;
     }
 
+    struct GrantedProviders {
+        address[] providers;
+        mapping(address => bool) isgranted;
+        mapping(address => uint) providerIndex;
+        uint counter;
+    }
+    // sharing records with entities
+    // struct SharedRecords {
+    //     string[] sharedHashes;
+    //     mapping(string => uint) hashIndex;
+    //     uint counter;
+    // }
+    //  struct PermissionList {
+    //     address[] accounts;
+    //     mapping(address => bool) isgranted;
+    //     mapping(address => uint) accountIndex;
+    //     uint counter;
+    // }
+
+    // struct SharedRecordsWithEntities {
+    //     PermissionList entities;
+    //     SharedRecords records;
+    // }
+    struct SharedRecords {
+        bool isGranted;
+        string[] records;
+        mapping(string => uint) recordIndex;
+        uint counter;
+    }
+
+
+    
     
     mapping(address => bool) private isVerified;
     mapping(address => AssignedPatients) private doctorAssignedPatients;
     mapping(address => PatientData) private patientData;
+    mapping(string => uint) private recordIndex;
+    uint private recordCounter;
+
+    mapping(address => GrantedProviders) private grantedProviders;
+
+    // entities
+    mapping(address => SharedRecords) private  sharedRecords;
+
+    // Events
+    event NewRecordCreated(string message);
+    event RecordDeleted(string hash);
+    event UpdateRecord(string oldHash, string newHash);
+    event ShareRecord(string recordHash, address with);
+    event RevokeSharedRecord(address with);
+
 
     // Modifiers 
     // TODO: Is there a way to check if address is valid?
@@ -59,11 +111,27 @@ contract PatientRecords is Ownable, AccessControl {
         require(isAccountVerified(_account) == true, "This account must be verified");
         _;
     }
+    modifier onlyVerifiedEntity(address _account) {
+        require(hasRole(ENTITY_ROLE, _account), "This account must be a registered entity");
+        require(isAccountVerified(_account) == true, "This account must be verified");
+        _;
+    }
     modifier onlyRegisteredPatient(address _account) {
         require(hasRole(PATIENT_ROLE,  _account), "This account must be a registered patient");
         _;
     }
-    
+    modifier notPatient(address _address) {
+        require(!hasRole(PATIENT_ROLE, _address), "Patient account is not allowed here");
+        _;
+    }
+    modifier onlyAssignedPatient(address _account) {
+        require(doctorAssignedPatients[msg.sender].exists[_account] == true, "This account is not an assigned patient");
+        _;
+    }
+    modifier onlyGrantedProvider(address _patient){
+        require(grantedProviders[_patient].isgranted[msg.sender] == true, "You are not granted permission to do this operation for this patient");
+        _;
+    }
 
     // Contract Deployer Owner (Admin)
     constructor() {
@@ -79,9 +147,16 @@ contract PatientRecords is Ownable, AccessControl {
         return isVerified[_account];
     }
 
-    function registerPatient(address _account) external onlyNew(PATIENT_ROLE, _account) {
+
+    //TODO: try removing the paramters and regsiter msg.sender instead
+    function registerPatient(address _account,
+         string memory fnHash, string memory lnHash) external onlyNew(PATIENT_ROLE, _account) {
         // 1. ✅  ensure that is new patient 
         _setupRole(PATIENT_ROLE, _account);
+        // 2. setup hash of the user name
+        patientData[_account].firstNameHash = fnHash;
+        patientData[_account].lastNameHash = lnHash;
+
     }
     
 
@@ -92,6 +167,85 @@ contract PatientRecords is Ownable, AccessControl {
 
         return patientData[msg.sender];
     }
+
+    function isGrantedProvider(address _account) public view 
+        onlyRole(PATIENT_ROLE) notPatient(_account)  returns (bool) {
+        return grantedProviders[msg.sender].isgranted[_account];
+    }
+
+    function grantProviderAccess(address _account) external 
+        onlyRole(PATIENT_ROLE) {
+            // 1. only if not granted
+            if(!grantedProviders[msg.sender].isgranted[_account]){
+                grantedProviders[msg.sender].providers.push(_account);
+                grantedProviders[msg.sender].isgranted[_account] = true;
+                grantedProviders[msg.sender].providerIndex[_account] = grantedProviders[msg.sender].counter++;
+            }
+            else {
+                revert("This account is already granted access");
+            }
+    }
+    
+    function revokeGrantedProvider(address _account) external 
+        onlyRole(PATIENT_ROLE) {
+            // 1. only if granted
+            if(grantedProviders[msg.sender].isgranted[_account]) {
+                uint index = grantedProviders[msg.sender].providerIndex[_account];
+                grantedProviders[msg.sender].isgranted[_account] = false;
+                delete grantedProviders[msg.sender].providers[index];
+                delete grantedProviders[msg.sender].providerIndex[_account];
+                grantedProviders[msg.sender].counter--;
+            }
+        }
+
+
+
+    function isGrantedEntity(address _account) public view 
+        onlyRole(PATIENT_ROLE) onlyVerifiedEntity(_account)  returns (bool) {
+        return sharedRecords[_account].isGranted;
+    }
+
+    function grantEntityAccess(address _account) 
+        public onlyRole(PATIENT_ROLE) onlyVerifiedEntity(_account) {
+            sharedRecords[_account].isGranted = true;
+
+        }
+    
+    function shareRecordWithEntity(address _account, string memory hash)
+        public onlyRole(PATIENT_ROLE) onlyVerifiedEntity(_account) {
+        
+        if(isGrantedEntity(_account)) {
+            sharedRecords[_account].records.push(hash);
+            sharedRecords[_account].recordIndex[hash]=sharedRecords[_account].counter++;
+            emit ShareRecord(hash, _account);
+        } else {
+            revert ("Account is not granted share permission");
+        }
+        
+        
+    }
+
+    function revokeAccessFromEntity(address _account) public 
+        onlyRole(PATIENT_ROLE) onlyVerifiedEntity(_account) {
+            // sharedRecords[_account].isGranted = false;
+            // delete sharedRecords[_account].records;
+            delete sharedRecords[_account];
+            emit RevokeSharedRecord(_account);
+            // sharedRecords[_account].counter = 0;
+    }
+
+
+
+    // TODO: 
+    // 1. grant provider access to CRUD operations
+    // 2. share specific record with entities
+    // 3. revoke provider access to CRUD operations
+    // 4. revoke entity from shared records
+    // 5. doctor can only do CRUD on his own records
+    // 6. entity can only see shared records 
+    // 7. admin can assign and unassign patients to providers
+
+
 
     // ------------- Owner --------------------------
     // Owner verifies a user after holder provides credentials
@@ -196,7 +350,113 @@ contract PatientRecords is Ownable, AccessControl {
             return doctorAssignedPatients[msg.sender].patients;
     }
 
+    // registered/verified/granted access provider can
+    // - create new record for a patient
+    // - delete his own records
+    // - update his own records
+    // - view all records for a patient
 
+    function createNewRecord(address _patient, string memory hash) external 
+        onlyRole(PROVIDER_ROLE) onlyAssignedPatient(_patient)
+        onlyVerifiedProvider(msg.sender) onlyRegisteredPatient(_patient) {
+
+            // 1. ✅ allow only granted provider for that patient
+            // 2. ✅ check if patient is an assigned patient to the provider
+
+            if(grantedProviders[_patient].isgranted[msg.sender] == true) {
+                EHrecord memory newRecord = EHrecord(hash, msg.sender);
+                patientData[_patient].patientRecords.push(newRecord);
+
+                recordIndex[hash] = recordCounter++;
+
+                emit NewRecordCreated("New Record has been created");
+            } else {
+                revert("You are not granted permission to create a new record");
+            }
+
+           
+        }
+
+    // TODO: check before you delete
+    // what if there is nothing to delete ?
+    function deleteRecord(address _patient, string memory hash) external 
+        onlyRole(PROVIDER_ROLE) onlyAssignedPatient(_patient)
+        onlyVerifiedProvider(msg.sender) onlyRegisteredPatient(_patient) {
+
+            if(grantedProviders[_patient].isgranted[msg.sender] == true) {
+                if(patientData[_patient].patientRecords.length > 0) {
+                    delete patientData[_patient].patientRecords[recordIndex[hash]];
+                    delete recordIndex[hash];
+                    recordCounter--;
+                    emit RecordDeleted(hash);
+                }
+                 else {
+                     revert("This patient has no records to delete");
+                 }
+
+               
+            } else {
+                revert("You are not granted permission to delete a record");
+            }
+
+
+    }
+    
+
+    // update record would replace the hash with the new updated hash
+    // TODO: recordIndex manage for all patients ? what if patients have same hash ? 
+    function updateRecord(address _patient,
+        string memory oldHash,
+        string memory newHash) external 
+            onlyRole(PROVIDER_ROLE) onlyAssignedPatient(_patient)
+            onlyVerifiedProvider(msg.sender) onlyRegisteredPatient(_patient)
+            onlyGrantedProvider(_patient) {
+
+                
+
+                // 1. get the index of the old has
+                uint oldHashIndex = recordIndex[oldHash];
+                // 2. update the hash with the new hash at the same index
+                patientData[_patient].patientRecords[oldHashIndex].hash=newHash;
+                // 3. remove the old hash from the mapping
+                delete recordIndex[oldHash];
+                // 4. add the new hash to the mapping at the same index of the old
+                recordIndex[newHash] = oldHashIndex;
+
+                emit UpdateRecord(oldHash, newHash);
+    }
+
+
+    // ------------- Entity --------------------------
+    // a registered patient can share a record with a registered and verified
+    // entity, a patient select which record to share. 
+    // a patient can revoke that shared record so that the entity no longer able to
+    // access it.
+
+    // entities can only read from what is shared with them
+    // patient grant and provoke access to share specific records
+
+
+    function viewSharedRecords(address _patient) 
+        external view onlyRole(ENTITY_ROLE) onlyRegisteredPatient(_patient) 
+        returns (string[] memory records) {
+
+
+            // 1. entity must be granted access
+            if(sharedRecords[msg.sender].isGranted) {
+                return sharedRecords[msg.sender].records;
+                
+            }
+            
+            
+            // 2. entity then would be able to gain shared record hashes
+
+
+        }
+
+
+    // TODO: think about the design, store, cost of transcation, cost of my
+    // smart contracts, encryption/decryption, grant and revoke access
 
 
 
