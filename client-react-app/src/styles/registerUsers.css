@@ -1,10 +1,10 @@
-.registerText {
+.register-text {
   text-align: center;
-  padding: 80px;
+  padding: 40px;
   font-family: "Montserrat", sans-serif;
   font-size: 20px;
 }
-
+/* 
 .registerBtn {
   text-align: center;
 }
@@ -26,4 +26,21 @@
 
 .registerBtn button:hover {
   background-color: rgb(77, 162, 254);
+} */
+
+.system-users-text {
+  font-size: 20px;
+  font-weight: bolder;
+  margin-left: 15px;
+}
+
+.users-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  margin: 20px;
+}
+
+.info-icon {
+  padding: 5px;
 }
