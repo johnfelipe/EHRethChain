@@ -12,7 +12,7 @@ function ActionPageLayout(props) {
   return (
     <Layout>
       <MainContainer>
-        <Account />
+        <Account status={props.status} />
         <Container>
           <Row>
             <Col sm={3} className="action-container">

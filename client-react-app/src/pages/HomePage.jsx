@@ -12,6 +12,10 @@ import RegisterPatient from "./registerUsers/RegisterPatient";
 import PatientHome from "./patientHomePage/PatientHome";
 import DoctorLogin from "./registerUsers/DoctorLogin";
 import ProviderHome from "./providerHomePage/ProviderHome";
+import AdminLogin from "./registerUsers/AdminLogin";
+import EntityLogin from "./registerUsers/EntityLogin";
+import AdminHome from "./adminHomePage/AdminHome";
+import EntityHome from "./entityHomePage/EntityHome";
 
 function HomePage() {
   let match = useRouteMatch();
@@ -31,12 +35,28 @@ function HomePage() {
           <DoctorLogin />
         </ProtectedRoute>
 
+        <ProtectedRoute exact path={`${match.path}/adminLogin`}>
+          <AdminLogin />
+        </ProtectedRoute>
+
+        <ProtectedRoute exact path={`${match.path}/entityLogin`}>
+          <EntityLogin />
+        </ProtectedRoute>
+
         <ProtectedRoute path={`${match.path}/providerHome`}>
           <ProviderHome />
         </ProtectedRoute>
 
         <ProtectedRoute path={`${match.path}/patientHome`}>
           <PatientHome />
+        </ProtectedRoute>
+
+        <ProtectedRoute path={`${match.path}/adminHome`}>
+          <AdminHome />
+        </ProtectedRoute>
+
+        <ProtectedRoute path={`${match.path}/entityHome`}>
+          <EntityHome />
         </ProtectedRoute>
 
         <Route exact path={match.path}>

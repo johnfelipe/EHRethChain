@@ -13,7 +13,10 @@ import GivePermission from "./GivePermission";
 import ShareRecords from "./ShareRecords";
 import RevokePermission from "./RevokePermission";
 
+import { FcInfo } from "react-icons/fc";
+
 import "../../styles/profile.css";
+import PatientProfile from "../../components/PatientProfile";
 
 const patientActions = [
   { id: 1, name: "Profile" },
@@ -23,6 +26,14 @@ const patientActions = [
   { id: 5, name: "Revoke Permission" },
 ];
 
+{
+  /* <UserProfile
+                title="Personal Details"
+                name="Mohammed Fajer"
+                address="0x897Fd668E8adfF344D52104A699187096aD17645"
+              /> */
+}
+
 function PatientHome() {
   let match = useRouteMatch();
 
@@ -31,6 +42,11 @@ function PatientHome() {
       <Switch>
         <ProtectedRoute exact path="/home/patientHome/Profile">
           <ActionPageLayout
+            status={
+              <p style={{ color: "green", fontSize: "18px" }}>
+                <FcInfo /> You are logged in as patient
+              </p>
+            }
             actions={
               <UserActions
                 actions={patientActions}
@@ -38,9 +54,8 @@ function PatientHome() {
               />
             }
             content={
-              <UserProfile
-                title="Personal Details"
-                name="Mohammed Fajer"
+              <PatientProfile
+                fullname="Mohammed Fajer"
                 address="0x897Fd668E8adfF344D52104A699187096aD17645"
               />
             }
@@ -48,6 +63,11 @@ function PatientHome() {
         </ProtectedRoute>
         <ProtectedRoute exact path="/home/patientHome/ViewHealthRecords">
           <ActionPageLayout
+            status={
+              <p style={{ color: "green", fontSize: "18px" }}>
+                <FcInfo /> You are logged in as patient
+              </p>
+            }
             actions={
               <UserActions
                 actions={patientActions}
@@ -59,6 +79,11 @@ function PatientHome() {
         </ProtectedRoute>
         <ProtectedRoute exact path="/home/patientHome/GivePermission">
           <ActionPageLayout
+            status={
+              <p style={{ color: "green", fontSize: "18px" }}>
+                <FcInfo /> You are logged in as patient
+              </p>
+            }
             actions={
               <UserActions
                 actions={patientActions}
@@ -70,6 +95,11 @@ function PatientHome() {
         </ProtectedRoute>
         <ProtectedRoute exact path="/home/patientHome/ShareRecords">
           <ActionPageLayout
+            status={
+              <p style={{ color: "green", fontSize: "18px" }}>
+                <FcInfo /> You are logged in as patient
+              </p>
+            }
             actions={
               <UserActions
                 actions={patientActions}
@@ -81,6 +111,11 @@ function PatientHome() {
         </ProtectedRoute>
         <ProtectedRoute exact path="/home/patientHome/RevokePermission">
           <ActionPageLayout
+            status={
+              <p style={{ color: "green", fontSize: "18px" }}>
+                <FcInfo /> You are logged in as patient
+              </p>
+            }
             actions={
               <UserActions
                 actions={patientActions}
@@ -93,6 +128,11 @@ function PatientHome() {
 
         <Route exact path={match.path}>
           <ActionPageLayout
+            status={
+              <p style={{ color: "green", fontSize: "18px" }}>
+                <FcInfo /> You are logged in as patient
+              </p>
+            }
             actions={
               <UserActions
                 actions={patientActions}
@@ -100,9 +140,8 @@ function PatientHome() {
               />
             }
             content={
-              <UserProfile
-                title="Personal Details"
-                name="Mohammed Fajer"
+              <PatientProfile
+                fullname="Mohammed Fajer"
                 address="0x897Fd668E8adfF344D52104A699187096aD17645"
               />
             }

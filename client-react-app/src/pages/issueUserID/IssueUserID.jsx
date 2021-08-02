@@ -5,7 +5,7 @@ import MainContainer from "../../components/MainContainer";
 
 import Info from "./Info";
 import Setup from "./Setup";
-import Issue from "./Issue";
+import IssueDoctorCredentials from "./IssueDoctorCredentials";
 
 import { useHistory } from "react-router-dom";
 
@@ -15,7 +15,56 @@ import { Steps, Button, message } from "antd";
 
 import "../../styles/issueDoctorID.css";
 
+import { Tabs } from "antd";
+import IssueAdminCredentials from "./IssueAdminCredentials";
+import IssueEntityCredentials from "./IssueEntityCredentials";
+
+import { GiDoctorFace } from "react-icons/gi";
+import { GrUserAdmin } from "react-icons/gr";
+import { CgOrganisation } from "react-icons/cg";
+
+const { TabPane } = Tabs;
+
 const { Step } = Steps;
+
+function IssueIDTabs() {
+  return (
+    <>
+      <Tabs tabPosition={"left"}>
+        <TabPane
+          tab={
+            <span>
+              <GiDoctorFace style={{ fontSize: "18px" }} /> Issue Doctor ID
+            </span>
+          }
+          key="1"
+        >
+          <IssueDoctorCredentials />
+        </TabPane>
+        <TabPane
+          tab={
+            <span>
+              <GrUserAdmin style={{ fontSize: "18px" }} /> Issue Admin ID
+            </span>
+          }
+          key="2"
+        >
+          <IssueAdminCredentials />
+        </TabPane>
+        <TabPane
+          tab={
+            <span>
+              <CgOrganisation style={{ fontSize: "18px" }} /> Issue Entity ID
+            </span>
+          }
+          key="3"
+        >
+          <IssueEntityCredentials />
+        </TabPane>
+      </Tabs>
+    </>
+  );
+}
 
 const steps = [
   {
@@ -27,12 +76,12 @@ const steps = [
     content: <Setup />,
   },
   {
-    title: "Issue Doctor ID",
-    content: <Issue />,
+    title: "Issue Users ID",
+    content: <IssueIDTabs />,
   },
 ];
 
-function IssueDoctorID() {
+function IssueUserID() {
   let history = useHistory();
   const [current, setCurrent] = useState(0);
 
@@ -95,4 +144,4 @@ function IssueDoctorID() {
   );
 }
 
-export default IssueDoctorID;
+export default IssueUserID;

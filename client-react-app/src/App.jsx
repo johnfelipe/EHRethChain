@@ -8,7 +8,7 @@ import PageNotFound from "./components/PageNotFound";
 import ProtectedRoute from "./components/Protected.route";
 
 import LandingPage from "./pages/LandingPage";
-import IssueDoctorID from "./pages/issueDoctorID/IssueDoctorID";
+import IssueUserID from "./pages/issueUserID/IssueUserID";
 import HomePage from "./pages/HomePage";
 
 // import { ethers } from "ethers";
@@ -118,7 +118,7 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/" component={LandingPage} />
-          <Route exact path="/issueDoctorID" component={IssueDoctorID} />
+          <Route exact path="/issueUserID" component={IssueUserID} />
           <ProtectedRoute path="/home" component={HomePage} />
           <Route path="*" component={PageNotFound} />
         </Switch>

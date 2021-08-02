@@ -12,7 +12,7 @@ import { IssueDoctorID } from "../../adapters/trinsic";
 
 const key = "updatable";
 
-function Issue() {
+function IssueDoctorCredentials() {
   const [hospital, setHospital] = useState("");
   const [fullname, setFullname] = useState("");
   const [address, setAddress] = useState("");
@@ -227,4 +227,4 @@ function Issue() {
   );
 }
 
-export default Issue;
+export default IssueDoctorCredentials;

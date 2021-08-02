@@ -1,5 +1,5 @@
 import React from "react";
-import { FaLaptopMedical } from "react-icons/fa";
+import { FaEthereum } from "react-icons/fa";
 import { Container, Row, Col } from "react-bootstrap";
 import { Typography } from "antd";
 
@@ -17,7 +17,7 @@ function Header() {
             <div className="header-appname">
               <Title level={4} style={{ color: "#fff" }}>
                 <span>
-                  <FaLaptopMedical />
+                  <FaEthereum style={{ fontSize: "30px" }} />
                 </span>
                 EHRethChain
               </Title>

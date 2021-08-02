@@ -32,7 +32,7 @@ const DisconnectBtn = styled.button`
   }
 `;
 
-function Account() {
+function Account(props) {
   let history = useHistory();
   const [userAddress, setUserAddress] = useState("");
   const [connectedToNet, setConnectedToNet] = useState("");
@@ -116,6 +116,9 @@ function Account() {
             Connected to{" "}
             <span style={{ fontWeight: "bold" }}>{connectedToNet}</span>
           </p>
+          <Row>
+            <Col>{props.status}</Col>
+          </Row>
         </Col>
         <Col>
           <Row>

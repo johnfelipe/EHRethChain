@@ -84,8 +84,7 @@ function DoctorLogin() {
                   </Button>
 
                   <span>
-                    Or{" "}
-                    <Link to="/issueDoctorID">issue your doctor ID now!</Link>
+                    Or <Link to="/issueUserID">issue your doctor ID now!</Link>
                   </span>
                 </div>
               </Col>

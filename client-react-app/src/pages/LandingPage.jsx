@@ -11,6 +11,9 @@ import { Container, Row, Col, Button, Alert } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
+import LandingPageImage from "../assets/images/landingPageImg.png";
+import { Space } from "antd";
+
 import "../styles/landingpage.css";
 
 const WalletBox = styled.div`
@@ -38,6 +41,71 @@ const WalletName = styled.h3`
 const WalletDescription = styled.p`
   text-align: center;
 `;
+
+function HomeInfo(props) {
+  let history = useHistory();
+  return (
+    <Container className="main-container">
+      <Row>
+        <Col style={{ margin: "20px" }}>
+          <Row>
+            <Col>
+              <div
+                style={{
+                  fontSize: "40px",
+                  color: "rgba(35, 167, 56, 0.8)",
+                }}
+              >
+                Electronic Health Record
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <div>
+                <p style={{ fontSize: "20px" }}>
+                  powered by ethereum blockchain technology
+                </p>
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <div>
+                <Space size={8}>
+                  <button
+                    className="button-37"
+                    style={{ fontSize: "22px", fontWeight: "bold" }}
+                    onClick={props.connectOnClick}
+                  >
+                    Connect
+                  </button>
+                  <button
+                    className="button-37"
+                    style={{
+                      backgroundColor: "#1890FF",
+                      border: "none",
+                      fontSize: "22px",
+                      fontWeight: "bold",
+                    }}
+                    onClick={() => history.push("/issueUserID")}
+                  >
+                    Issue User ID
+                  </button>
+                </Space>
+              </div>
+            </Col>
+          </Row>
+        </Col>
+        <Col style={{ margin: "20px" }}>
+          <div>
+            <img src={LandingPageImage} alt="ethereum-network" />
+          </div>
+        </Col>
+      </Row>
+    </Container>
+  );
+}
 
 function InstallMetaMask(props) {
   return (
@@ -97,7 +165,7 @@ function LandingPage() {
   return (
     <Layout>
       <MainContainer>
-        <Container className="main-container">
+        {/* <Container className="main-container">
           <Row>
             <Col>
               <div className="main-text">
@@ -108,8 +176,11 @@ function LandingPage() {
               </div>
             </Col>
           </Row>
-        </Container>
-        <Container className="main-container">
+        </Container> */}
+
+        <HomeInfo connectOnClick={checkMetaMask} />
+
+        {/* <Container className="main-container">
           <Row>
             <Col>
               <Button className="lp-btn lp-blue" onClick={checkMetaMask}>
@@ -117,13 +188,13 @@ function LandingPage() {
               </Button>
               <Button
                 className="lp-btn lp-blue"
-                onClick={() => history.push("/issueDoctorID")}
+                onClick={() => history.push("/issueUserID")}
               >
-                Issue Doctor ID
+                Issue User ID
               </Button>
             </Col>
           </Row>
-        </Container>
+        </Container> */}
         <Modal showModal={showModal} setShowModal={setShowModal}>
           {isMetaMaskInstalled ? (
             <MetaMaskConnect

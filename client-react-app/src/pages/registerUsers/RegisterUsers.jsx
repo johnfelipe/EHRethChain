@@ -17,24 +17,39 @@ import PatientImage from "../../assets/images/patient-avatar.png";
 import ProviderImage from "../../assets/images/provider-avatar.png";
 import EntityImage from "../../assets/images/entity-avatar.png";
 
-{
-  /* <Row>
-              <Col className="registerBtn">
-                <button onClick={() => history.push("/home/registerPatient")}>
-                  Patient
-                </button>
-              </Col>
-              <Col className="registerBtn">
-                <button onClick={() => history.push("/home/doctorLogin")}>
-                  {" "}
-                  Provider{" "}
-                </button>
-              </Col>
-            </Row> */
-}
+import { Popover } from "antd";
 
 function RegisterUsers() {
   let history = useHistory();
+
+  const patientInfo = (
+    <div>
+      <p>Patient Registeration</p>
+    </div>
+  );
+
+  const adminInfo = (
+    <div>
+      <p>Admin Login, to verify your credentials or issue new one.</p>
+    </div>
+  );
+
+  const providerInfo = (
+    <div>
+      <p>Provider Login, to verify your credentials or issue new one.</p>
+    </div>
+  );
+
+  const entityInfo = (
+    <div>
+      <p>
+        Entity represent other system users, like researchers, pharmaceutical
+        companies, etc...
+      </p>
+      <p>Entity Login, to verify your credentials or issue new one.</p>
+    </div>
+  );
+
   return (
     <>
       <Layout>
@@ -55,9 +70,11 @@ function RegisterUsers() {
                 user={
                   <div>
                     {" "}
-                    <span className="info-icon">
-                      Patient <AiOutlineInfoCircle />
-                    </span>{" "}
+                    <Popover content={patientInfo}>
+                      <span className="info-icon">
+                        Patient <AiOutlineInfoCircle />
+                      </span>{" "}
+                    </Popover>
                   </div>
                 }
                 button={
@@ -72,21 +89,30 @@ function RegisterUsers() {
                 user={
                   <div>
                     {" "}
-                    <span className="info-icon">
-                      Admin <AiOutlineInfoCircle />
-                    </span>{" "}
+                    <Popover content={adminInfo}>
+                      <span className="info-icon">
+                        Admin <AiOutlineInfoCircle />
+                      </span>{" "}
+                    </Popover>
                   </div>
                 }
-                button={<button> Login </button>}
+                button={
+                  <button onClick={() => history.push("/home/adminLogin")}>
+                    {" "}
+                    Login{" "}
+                  </button>
+                }
               />
               <SystemUserCard
                 image={<img src={ProviderImage} alt="provider avatar" />}
                 user={
                   <div>
                     {" "}
-                    <span className="info-icon">
-                      Provider <AiOutlineInfoCircle />
-                    </span>{" "}
+                    <Popover content={providerInfo}>
+                      <span className="info-icon">
+                        Provider <AiOutlineInfoCircle />
+                      </span>{" "}
+                    </Popover>
                   </div>
                 }
                 button={
@@ -101,12 +127,19 @@ function RegisterUsers() {
                 user={
                   <div>
                     {" "}
-                    <span className="info-icon">
-                      Entity <AiOutlineInfoCircle />
-                    </span>{" "}
+                    <Popover content={entityInfo}>
+                      <span className="info-icon">
+                        Entity <AiOutlineInfoCircle />
+                      </span>{" "}
+                    </Popover>
                   </div>
                 }
-                button={<button> Login </button>}
+                button={
+                  <button onClick={() => history.push("/home/entityLogin")}>
+                    {" "}
+                    Login{" "}
+                  </button>
+                }
               />
             </Row>
           </Container>
