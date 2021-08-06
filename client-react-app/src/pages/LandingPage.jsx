@@ -12,9 +12,19 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import LandingPageImage from "../assets/images/landingPageImg.png";
+import ImagePlaceHolder from "../assets/images/imagePlaceHolder.png";
+
+import { FaCubes, FaCreditCard } from "react-icons/fa";
+import { FcInfo } from "react-icons/fc";
+import { BsLink45Deg } from "react-icons/bs";
+import { SiIpfs } from "react-icons/si";
+
 import { Space } from "antd";
 
+import { Divider } from "antd";
+
 import "../styles/landingpage.css";
+import LandingPageAboutCard from "../components/LandingPageAboutCard";
 
 const WalletBox = styled.div`
   margin: 50px;
@@ -47,15 +57,10 @@ function HomeInfo(props) {
   return (
     <Container className="main-container">
       <Row>
-        <Col style={{ margin: "20px" }}>
+        <Col className="home-section-text">
           <Row>
             <Col>
-              <div
-                style={{
-                  fontSize: "40px",
-                  color: "rgba(35, 167, 56, 0.8)",
-                }}
-              >
+              <div className="home-section-text-title ">
                 Electronic Health Record
               </div>
             </Col>
@@ -63,7 +68,7 @@ function HomeInfo(props) {
           <Row>
             <Col>
               <div>
-                <p style={{ fontSize: "20px" }}>
+                <p className="home-section-text-subtitle">
                   powered by ethereum blockchain technology
                 </p>
               </div>
@@ -104,6 +109,62 @@ function HomeInfo(props) {
         </Col>
       </Row>
     </Container>
+  );
+}
+
+function AboutSection(props) {
+  return (
+    <>
+      <Container className="about-section-text">
+        <Row>
+          <Col>
+            <Divider>
+              <h3>About</h3>
+            </Divider>
+            <p className="about-section-description">
+              The main technologies used for creating this application.
+            </p>
+          </Col>
+        </Row>
+      </Container>
+      <Container className="about-section-card-container">
+        <LandingPageAboutCard
+          icon={<FaCubes className="about-card-icon" />}
+          title={<p>BLOCKCHAIN TECHNOLOGY</p>}
+          description={
+            <p>
+              (BCT) Providing a public distributed and decentralised ledger
+              governed by smart contracts for assets management and security.
+            </p>
+          }
+          link="https://ethereum.org/en/"
+        />
+
+        <LandingPageAboutCard
+          icon={<SiIpfs className="about-card-icon" />}
+          title={<p>INTERPLANETART FILE SYSTEM</p>}
+          description={
+            <p>
+              (IPFS) Distributed and dencetralised peer-to-peer file system
+              relies on cryptography and content-addressing for data storage.
+            </p>
+          }
+          link="https://ipfs.io/"
+        />
+
+        <LandingPageAboutCard
+          icon={<FaCreditCard className="about-card-icon" />}
+          title={<p>SELF-SOVEREIGN IDENTIY</p>}
+          description={
+            <p>
+              (Trinsic) is a digital blockchain based verifiable data exchange
+              platform between issuers, holders and verifiers of credentials.
+            </p>
+          }
+          link="https://trinsic.id/"
+        />
+      </Container>
+    </>
   );
 }
 
@@ -165,36 +226,9 @@ function LandingPage() {
   return (
     <Layout>
       <MainContainer>
-        {/* <Container className="main-container">
-          <Row>
-            <Col>
-              <div className="main-text">
-                <h4>
-                  Welcome to EHRethChain an electronic health record powered
-                </h4>
-                <h4>by Ethereum Blockchain</h4>
-              </div>
-            </Col>
-          </Row>
-        </Container> */}
-
         <HomeInfo connectOnClick={checkMetaMask} />
+        <AboutSection />
 
-        {/* <Container className="main-container">
-          <Row>
-            <Col>
-              <Button className="lp-btn lp-blue" onClick={checkMetaMask}>
-                Connect
-              </Button>
-              <Button
-                className="lp-btn lp-blue"
-                onClick={() => history.push("/issueUserID")}
-              >
-                Issue User ID
-              </Button>
-            </Col>
-          </Row>
-        </Container> */}
         <Modal showModal={showModal} setShowModal={setShowModal}>
           {isMetaMaskInstalled ? (
             <MetaMaskConnect

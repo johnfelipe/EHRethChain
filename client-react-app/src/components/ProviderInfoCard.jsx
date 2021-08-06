@@ -20,7 +20,7 @@ import InfiniteScroll from "react-infinite-scroller";
 
 // import reqwest from "reqwest";
 
-import axios from "axios";
+// import axios from "axios";
 
 const fakeDataUrl =
   "https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo";

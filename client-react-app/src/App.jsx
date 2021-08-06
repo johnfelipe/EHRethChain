@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import "./styles.css";
+import "./App.css";
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -10,6 +10,8 @@ import ProtectedRoute from "./components/Protected.route";
 import LandingPage from "./pages/LandingPage";
 import IssueUserID from "./pages/issueUserID/IssueUserID";
 import HomePage from "./pages/HomePage";
+
+import Home from "./pages";
 
 // import { ethers } from "ethers";
 // import Greeter from "./artifacts/contracts/Greeter.sol/Greeter.json";
@@ -117,10 +119,11 @@ function App() {
     <>
       <Router>
         <Switch>
-          <Route exact path="/" component={LandingPage} />
+          <Route exact path="/" component={Home} />
+          {/* <Route exact path="/" component={LandingPage} />
           <Route exact path="/issueUserID" component={IssueUserID} />
           <ProtectedRoute path="/home" component={HomePage} />
-          <Route path="*" component={PageNotFound} />
+          <Route path="*" component={PageNotFound} /> */}
         </Switch>
       </Router>
     </>

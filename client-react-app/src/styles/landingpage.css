@@ -8,6 +8,42 @@
   justify-content: center;
 }
 
+.home-section-text {
+  margin: 20px 80px 0 0;
+  padding: 100px 100px 0 10px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.home-section-text-title {
+  font-size: 40px;
+  color: rgba(35, 167, 56, 0.8);
+  font-weight: bold;
+}
+
+.home-section-text-subtitle {
+  font-size: 20px;
+}
+
+.about-section-text {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  margin-top: 300px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.about-section-description {
+  text-align: center;
+  font-size: 16px;
+}
+
+.about-section-card-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  margin: 30px auto 360px auto;
+}
+
 .main-text {
   /* padding: 30px; */
   text-align: center;
