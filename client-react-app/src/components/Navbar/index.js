@@ -16,7 +16,7 @@ import { animateScroll as scroll } from "react-scroll";
 
 import { IconContext } from "react-icons/lib";
 
-function Navbar({ toggle }) {
+function Navbar({ toggle, ...restProps }) {
   const [scrollNav, setScrollNav] = useState(false);
 
   const changeNav = () => {
@@ -100,7 +100,7 @@ function Navbar({ toggle }) {
                 </NavLinks>
               </NavItem>
             </NavMenu>
-            <NavBtn>
+            <NavBtn onClick={restProps.connectOnClick}>
               <NavBtnLink primary={true}>Connect</NavBtnLink>
             </NavBtn>
           </NavbarContainer>

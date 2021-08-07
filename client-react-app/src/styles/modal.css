@@ -1,13 +1,16 @@
 .myModal-background {
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
 
+  padding-right: 15px; /* Avoid width reflow */
   background: rgba(196, 196, 196, 0.4);
-  position: absolute;
+  position: fixed; /* was absolute */
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 11;
+  z-index: 1000;
+  height: 100vh;
+  overflow-y: hidden;
 }
 
 .myModal-container {

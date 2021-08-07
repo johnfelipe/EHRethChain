@@ -13,6 +13,16 @@ import { Typography } from "antd";
 
 import GoBackBtn from "../../components/GoBackBtn";
 
+import { newIdentity } from "../../cryptography/ethIdentity";
+
+import Localbase from "localbase";
+
+import { addToIPFS } from "../../adapters/ipfs";
+
+import { encryptSymKeyWithPublicKey } from "../../cryptography/encryption";
+
+import DownloadUserIdentity from "../../components/DownloadUserIdentity";
+
 const { Title } = Typography;
 
 const layout = {
@@ -31,8 +41,48 @@ const tailLayout = {
 };
 
 function RegisterPatientForm() {
-  function onFinish(values) {
+  async function onFinish(values) {
     console.log("Sucess : ", values);
+
+    let password =
+      values.firstname + values.ethereumAddress.toString() + values.lastname;
+    console.log(password);
+
+    // generate user keys
+    let patinetNewIdentity = newIdentity(password, 256);
+
+    console.log(patinetNewIdentity);
+    let db = new Localbase("db");
+
+    // store private key on user wallet or browser
+    // store user public key to ipfs
+    // encrypt user symmetric key and store on ipfs
+
+    try {
+      let pkCID = await addToIPFS(patinetNewIdentity.publicKey);
+
+      let encryptedSymmKey = await encryptSymKeyWithPublicKey(
+        patinetNewIdentity.publicKey,
+        patinetNewIdentity.symmetricKey
+      );
+      console.log(1);
+      let encryptedSymmKeyCid = await addToIPFS(encryptedSymmKey);
+
+      db.collection("users").add({
+        id: values.firstname + " " + values.lastname,
+        privateKey: patinetNewIdentity.privateKey,
+        publicKeyIPFScid: pkCID,
+        encryptedSymmetricKeyCid: encryptedSymmKeyCid,
+      });
+    } catch (e) {
+      console.error(e);
+    }
+
+    // encrypt his name with symmetric key
+    // store data on ipfs
+    // pass those cids to register user
+    // register patient
+    // direct to patientHome
   }
   function onFinishFailed(errorInfo) {
     console.log("Failure : ", errorInfo);
@@ -52,7 +102,7 @@ function RegisterPatientForm() {
     >
       <Form.Item
         label="First Name"
-        name="firsname"
+        name="firstname"
         tooltip="This is a required field"
       >
         <Input placeholder="firstname" required></Input>
@@ -66,7 +116,7 @@ function RegisterPatientForm() {
       </Form.Item>
       <Form.Item
         label="Ethereum address"
-        name="ethereum address"
+        name="ethereumAddress"
         tooltip="This is a required field"
       >
         <Input placeholder="your ethereum address shown above" required></Input>

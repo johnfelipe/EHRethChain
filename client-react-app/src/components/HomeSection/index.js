@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "../ButtonElements";
+import { useHistory } from "react-router-dom";
 
 import {
   HomeContainer,
@@ -24,7 +25,10 @@ const HomeSection = ({
   primary,
   dark,
   id,
+  ...restProps
 }) => {
+  let history = useHistory();
+
   return (
     <>
       <HomeContainer id={id}>
@@ -44,6 +48,7 @@ const HomeSection = ({
                   primary={primary ? 1 : 0}
                   dark={dark ? 1 : 0}
                   dark2={dark ? 1 : 0}
+                  onClick={restProps.connectOnClick}
                 >
                   {buttonLabel1}
                 </Button>{" "}
@@ -57,6 +62,7 @@ const HomeSection = ({
                   primary={0}
                   dark={dark ? 1 : 0}
                   dark2={dark ? 1 : 0}
+                  onClick={() => history.push("/issueUserID")}
                 >
                   {buttonLabel2}
                 </Button>

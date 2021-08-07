@@ -85,7 +85,7 @@ const Title = styled.div`
 const SubTitle = styled.div`
   text-align: center;
   font-size: 20px;
-  font-weight: bold;
+  /* font-weight: bold; */
 
   @media screen and (max-width: 768px) {
     font-size: 16px;

@@ -13,20 +13,37 @@ function Modal({ showModal, setShowModal, children, ...restProps }) {
     }
   }
 
+  const lockBody = () => {
+    if (showModal) {
+      document.body.style.position = "fixed";
+    } else {
+      document.body.style.position = "inherit";
+    }
+  };
+
   const renderState = (
     <>
       {showModal ? (
-        <div className="myModal-background" onClick={closeModel} ref={modalRef}>
-          <div className="myModal-container" showModal={showModal}>
-            {children}
-            <MdClose
-              className="myModel-close-button "
-              aria-label="Close modal"
-              onClick={() => setShowModal((prev) => !prev)}
-            />
+        <>
+          {lockBody()}
+          <div
+            className="myModal-background"
+            onClick={closeModel}
+            ref={modalRef}
+          >
+            <div className="myModal-container" showModal={showModal}>
+              {children}
+              <MdClose
+                className="myModel-close-button "
+                aria-label="Close modal"
+                onClick={() => setShowModal((prev) => !prev)}
+              />
+            </div>
           </div>
-        </div>
-      ) : null}
+        </>
+      ) : (
+        lockBody()
+      )}
     </>
   );
 

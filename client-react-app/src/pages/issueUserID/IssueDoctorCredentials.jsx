@@ -82,6 +82,7 @@ function IssueDoctorCredentials() {
             style={{
               margin: "0 auto 50px auto",
               padding: "20px",
+              width: "90%",
               boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
             }}
           >

@@ -120,6 +120,9 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route exact path="/issueUserID" component={IssueUserID} />
+          <ProtectedRoute path="/home" component={HomePage} />
+          <Route path="*" component={PageNotFound} />
           {/* <Route exact path="/" component={LandingPage} />
           <Route exact path="/issueUserID" component={IssueUserID} />
           <ProtectedRoute path="/home" component={HomePage} />
