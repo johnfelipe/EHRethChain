@@ -88,52 +88,88 @@ function MetaMaskConnect(props) {
               let adminR = contract.ADMIN_ROLE();
               let ownerR = contract.DEFAULT_ADMIN_ROLE();
 
-              contract.hasRole(ownerR, address).then((v) => {
-                if (v === true) {
+              const checkUserStatus = async () => {
+                let isOwner = await contract.hasRole(ownerR, address);
+                let isPatient = await contract.hasRole(paitnetR, address);
+                let isProvider = await contract.hasRole(providerR, address);
+                let isEntity = await contract.hasRole(entityR, address);
+                let isAdmin = await contract.hasRole(adminR, address);
+
+                if (isOwner) {
                   console.log("this account is the owner");
                   auth.login(() => history.push("/home"));
-                }
-              });
-              contract.hasRole(paitnetR, address).then((v) => {
-                if (v === true) {
+                } else if (isPatient) {
                   console.log("this account is a patient");
-                  // go to patient page
                   auth.login(() => history.push("/home/patientHome"));
-                } else {
-                  // go to register page
-                  auth.login(() => history.push("/home/registerUsers"));
-                }
-              });
-              contract.hasRole(providerR, address).then((v) => {
-                if (v === true) {
+                } else if (isProvider) {
                   console.log("this account is a provider");
-                  // go to patient page
                   auth.login(() => history.push("/home/providerHome"));
-                } else {
-                  // go to register page
-                  auth.login(() => history.push("/home/registerUsers"));
-                }
-              });
-              contract.hasRole(entityR, address).then((v) => {
-                if (v === true) {
+                } else if (isEntity) {
                   console.log("this account is an entity");
-                  // go to patient page
                   auth.login(() => history.push("/home/entityHome"));
-                } else {
-                  // go to register page
-                  auth.login(() => history.push("/home/registerUsers"));
-                }
-              });
-              contract.hasRole(adminR, address).then((v) => {
-                if (v === true) {
+                } else if (isAdmin) {
                   console.log("this account is an admin");
-                  // go to patient page
                   auth.login(() => history.push("/home/adminHome"));
                 } else {
-                  // go to register page
+                  console.log("here");
                   auth.login(() => history.push("/home/registerUsers"));
                 }
-              });
+              };
+
+              checkUserStatus();
+
+              // contract
+              //   .hasRole(ownerR, address)
+              //   .then((v) => {
+              //     alert(v);
+              //     if (v === true) {
+              //       console.log("this account is the owner");
+              //       auth.login(() => history.push("/home"));
+              //     }
+              //   })
+              //   .catch((err) => alert(err));
+
+              // contract.hasRole(paitnetR, address).then((v) => {
+              //   if (v === true) {
+              //     console.log("this account is a patient");
+              //     // go to patient page
+              //     auth.login(() => history.push("/home/patientHome"));
+              //   } else {
+              //     // go to register page
+              //     auth.login(() => history.push("/home/registerUsers"));
+              //   }
+              // });
+
+              // contract.hasRole(providerR, address).then((v) => {
+              //   if (v === true) {
+              //     console.log("this account is a provider");
+              //     // go to patient page
+              //     auth.login(() => history.push("/home/providerHome"));
+              //   } else {
+              //     // go to register page
+              //     auth.login(() => history.push("/home/registerUsers"));
+              //   }
+              // });
+              // contract.hasRole(entityR, address).then((v) => {
+              //   if (v === true) {
+              //     console.log("this account is an entity");
+              //     // go to patient page
+              //     auth.login(() => history.push("/home/entityHome"));
+              //   } else {
+              //     // go to register page
+              //     auth.login(() => history.push("/home/registerUsers"));
+              //   }
+              // });
+              // contract.hasRole(adminR, address).then((v) => {
+              //   if (v === true) {
+              //     console.log("this account is an admin");
+              //     // go to patient page
+              //     auth.login(() => history.push("/home/adminHome"));
+              //   } else {
+              //     // go to register page
+              //     auth.login(() => history.push("/home/registerUsers"));
+              //   }
+              // });
 
               // auth.login(() => history.push("/home"));
             });
@@ -159,7 +195,6 @@ function MetaMaskConnect(props) {
 
 const Home = () => {
   const [isOpen, setIsOpen] = useState(false);
-  let history = useHistory();
 
   const [showModal, setShowModal] = useState(false);
   const [isMetaMaskInstalled, setIsMetaMaskInstalled] = useState(false);

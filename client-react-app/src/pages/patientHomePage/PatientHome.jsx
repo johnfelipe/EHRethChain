@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 
@@ -18,6 +18,15 @@ import { FcInfo } from "react-icons/fc";
 import "../../styles/profile.css";
 import PatientProfile from "../../components/PatientProfile";
 
+import IPFS from "ipfs";
+import { ethers } from "ethers";
+
+import {
+  contractAddress,
+  requestAccount,
+  initContract,
+} from "../../adapters/contractAPI";
+
 const patientActions = [
   { id: 1, name: "Profile" },
   { id: 2, name: "View Health Records" },
@@ -36,6 +45,21 @@ const patientActions = [
 
 function PatientHome() {
   let match = useRouteMatch();
+
+  async function profileData() {
+    // const node = await IPFS.create().catch((err) => console.log(err));
+    let result = initContract();
+    let signer = result.provider.getSigner();
+    let contract = new ethers.Contract(contractAddress, result.abi, signer);
+
+    let records = await contract.viewOwnRecords();
+    console.log(records);
+  }
+
+  useEffect(() => {
+    console.log("here");
+    profileData();
+  }, []);
 
   return (
     <>

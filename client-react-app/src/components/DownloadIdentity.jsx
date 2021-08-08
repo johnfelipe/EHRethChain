@@ -124,6 +124,8 @@ export default class DownloadIdentity extends React.Component {
       URL.revokeObjectURL(fileDownloadUrl); // free up storage--no longer needed.
       this.setState({ fileDownloadUrl: "" });
     });
+
+    this.props.callback(true);
   }
 
   /**

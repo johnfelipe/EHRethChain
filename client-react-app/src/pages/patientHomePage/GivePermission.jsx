@@ -23,7 +23,7 @@ export default function GivePermission() {
         <Col>
           <Form noValidate validated={validated} onSubmit={handleSubmit}>
             <Row className="mb-3">
-              <Form.Group as={Col} md="" controlId="validationCustom03">
+              <Form.Group as={Col} md="">
                 <Form.Label>Doctor's Ethereum Address</Form.Label>
                 <Form.Control
                   type="text"
@@ -36,7 +36,7 @@ export default function GivePermission() {
               </Form.Group>
             </Row>
             <Row className="mb-3">
-              <Form.Group as={Col} md="" controlId="validationCustom03">
+              <Form.Group as={Col} md="">
                 <Form.Label>Patient's Ethereum Address</Form.Label>
                 <Form.Control
                   type="text"

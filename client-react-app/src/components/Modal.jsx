@@ -16,8 +16,9 @@ function Modal({ showModal, setShowModal, children, ...restProps }) {
   const lockBody = () => {
     if (showModal) {
       document.body.style.position = "fixed";
+      document.body.style.position = "static";
     } else {
-      document.body.style.position = "inherit";
+      document.body.style.position = "static";
     }
   };
 

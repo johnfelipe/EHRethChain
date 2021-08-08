@@ -92,12 +92,10 @@ const TextArea = styled.textarea`
 `;
 
 export default function DownloadUserIdentity(props) {
-  const [showModal, setShowModal] = useState();
-
   return (
     <div>
-      {showModal && (
-        <Modal showModal={showModal} setShowModal={setShowModal}>
+      {props.showModal && (
+        <Modal showModal={props.showModal} setShowModal={props.setShowModal}>
           <IdentityContainer>
             <IdentityWrapper>
               <TitleContainer>
@@ -115,25 +113,26 @@ export default function DownloadUserIdentity(props) {
                     <Label>Public Key</Label>
                   </div>
                   <div>
-                    <TextArea rows={3} type="text" value={props.pubK} />
+                    <TextArea rows={4} type="text" placeholder={props.pubK} />
                   </div>
                   <div>
                     <Label>Private Key</Label>
                   </div>
                   <div>
-                    <TextArea rows={3} type="text" value={props.priK} />
+                    <TextArea rows={2} type="text" placeholder={props.priK} />
                   </div>
                   <div>
                     <Label>Symmetric Key</Label>
                   </div>
                   <div>
-                    <TextArea rows={3} type="text" value={props.symmK} />
+                    <TextArea rows={2} type="text" placeholder={props.symmK} />
                   </div>
 
                   <DownloadIdentity
                     pubK={props.pubK}
                     priK={props.priK}
                     symmK={props.symmK}
+                    callback={props.callback}
                   />
                 </IdentityContentContainer>
 
@@ -152,7 +151,7 @@ export default function DownloadUserIdentity(props) {
         </Modal>
       )}
 
-      <button
+      {/* <button
         onClick={() => {
           console.log("here");
           console.log(showModal);
@@ -161,7 +160,7 @@ export default function DownloadUserIdentity(props) {
         }}
       >
         Show Modal{" "}
-      </button>
+      </button> */}
     </div>
   );
 }

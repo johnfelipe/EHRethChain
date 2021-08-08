@@ -9,7 +9,9 @@ const ipfs = create({
 
 export const addToIPFS = async (data) => {
   const { cid } = await ipfs.add(data);
-  return cid.toString();
+  return new Promise((resolve, reject) => {
+    resolve(cid.toString());
+  });
 };
 
 export const getFromIPFS = async (hashToGet) => {
