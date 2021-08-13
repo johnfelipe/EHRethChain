@@ -22,7 +22,13 @@ import Localbase from "localbase";
 
 import { addToIPFS } from "../../adapters/ipfs";
 
-import { encryptSymKeyWithPublicKey } from "../../cryptography/encryption";
+import {
+  encryptSymKeyWithPublicKey,
+  encryptDataWithSymKey,
+} from "../../cryptography/encryption";
+
+import { decryptDataWithSymKey } from "../../cryptography/decryption";
+
 import { ethers } from "ethers";
 
 import DownloadUserIdentity from "../../components/DownloadUserIdentity";
@@ -74,63 +80,55 @@ function RegisterPatientForm() {
       setTimeout(async () => {
         hide();
 
-        // const node = await IPFS.create().catch((err) => console.log(err));
-
         let result = initContract();
         let signer = result.provider.getSigner();
         let contract = new ethers.Contract(contractAddress, result.abi, signer);
 
         console.log(patinetNewIdentity);
 
-        // const fnameAdded = await node
-        //   .add(patinetNewIdentity.firstname)
-        //   .catch((err) => console.log(err));
-
-        // const lnameAdded = await node
-        //   .add(patinetNewIdentity.lastname)
-        //   .catch((err) => console.log(err));
-
-        // console.log(fnameAdded.cid.toString(), lnameAdded.cid.toString());
-
         try {
-          // const node = await IPFS.create();
           console.log(
             patinetNewIdentity.firstname,
             patinetNewIdentity.lastname
           );
-          const fNameCid = await addToIPFS(
-            patinetNewIdentity.firstname.toString()
+
+          // encrypt name with user symmetric key
+          let encryptedFname = encryptDataWithSymKey(
+            patinetNewIdentity.firstname,
+            patinetNewIdentity.symmetricKey
           );
-          const lNameCid = await addToIPFS(
-            patinetNewIdentity.lastname.toString()
+
+          let encryptedLname = encryptDataWithSymKey(
+            patinetNewIdentity.lastname,
+            patinetNewIdentity.symmetricKey
           );
+
+          // store encrypted data on IPFS
+          const fNameCid = await addToIPFS(encryptedFname);
+          const lNameCid = await addToIPFS(encryptedLname);
           console.log(fNameCid);
           console.log(lNameCid);
+
+          //register user
+          await contract.registerPatient(
+            signer.getAddress(),
+            fNameCid,
+            lNameCid
+          );
+
+          // check registered user
+          let r = await contract.hasRole(
+            contract.PATIENT_ROLE(),
+            signer.getAddress()
+          );
+          if (r === true) {
+            // redirect
+            resolve("done");
+          }
         } catch (err) {
           console.log(err);
         }
-
-        //Register
-        // await contract
-        //   .registerPatient(
-        //     signer.getAddress(),
-        //     fnameAdded.cid.toString(),
-        //     lnameAdded.cid.toString()
-        //   )
-        //   .catch((err) => {
-        //     console.log(err);
-        //   });
-
-        // let r = await contract.hasRole(
-        //   result.contract.PATIENT_ROLE(),
-        //   signer.getAddress()
-        // );
-
-        // if (r === true) {
-        //   message.info("You are already registered Patient ");
-        // }
-
-        resolve("done");
+        // resolve("done");
       }, 3500);
     });
     const success = message.success(
@@ -157,29 +155,13 @@ function RegisterPatientForm() {
     );
   };
 
-  // useEffect(() => {
-  //   if (isDownloaded === true) {
-  //     // if downloaded we register then we redirect
-
-  //     t();
-
-  //     //
-  //   }
-  //   return () => {};
-  // }, [isDownloaded]);
-
   function hasDownloadedIdentity(value) {
-    // alert(value);
     setIsDownloaded(true);
-
     registerPatient();
   }
 
   function onFinish(values) {
     console.log("Sucess : ", values);
-
-    // setFName(values.firstname);
-    // setLName(values.setLName);
 
     let password =
       values.firstname + values.ethereumAddress.toString() + values.lastname;
@@ -187,11 +169,6 @@ function RegisterPatientForm() {
 
     // generate user keys
     let identity = newIdentity(password, 256);
-    // console.log({
-    //   ...identity,
-    //   firstname: values.firstname,
-    //   lastname: values.lastname,
-    // });
 
     setPatientNewIdentity((prev) => ({
       ...prev,
@@ -204,41 +181,6 @@ function RegisterPatientForm() {
     if (isDownloaded === false) {
       warnUserToDownload();
     }
-
-    // prompt the user to store the keys
-    // if downloaded register and redirect
-
-    // let db = new Localbase("db");
-
-    // store private key on user wallet or browser
-    // store user public key to ipfs
-    // encrypt user symmetric key and store on ipfs
-
-    // try {
-    //   let pkCID = await addToIPFS(patinetNewIdentity.publicKey);
-
-    //   let encryptedSymmKey = await encryptSymKeyWithPublicKey(
-    //     patinetNewIdentity.publicKey,
-    //     patinetNewIdentity.symmetricKey
-    //   );
-    //   console.log(1);
-    //   let encryptedSymmKeyCid = await addToIPFS(encryptedSymmKey);
-
-    //   db.collection("users").add({
-    //     id: values.firstname + " " + values.lastname,
-    //     privateKey: patinetNewIdentity.privateKey,
-    //     publicKeyIPFScid: pkCID,
-    //     encryptedSymmetricKeyCid: encryptedSymmKeyCid,
-    //   });
-    // } catch (e) {
-    //   console.error(e);
-    // }
-
-    // encrypt his name with symmetric key
-    // store data on ipfs
-    // pass those cids to register user
-    // register patient
-    // direct to patientHome
   }
   function onFinishFailed(errorInfo) {
     console.log("Failure : ", errorInfo);

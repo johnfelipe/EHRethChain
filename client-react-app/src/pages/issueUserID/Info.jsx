@@ -3,6 +3,8 @@ import { Container, Row, Col, Card, CardGroup } from "react-bootstrap";
 
 import { Button } from "antd";
 
+import { FaIdCard, FaShareAlt, FaUserCheck } from "react-icons/fa";
+
 function Info() {
   return (
     <>
@@ -52,14 +54,14 @@ function Info() {
         <Row>
           <CardGroup style={{ margin: "40px 0" }}>
             <Card>
-              <i
-                class="fas fa-id-card fa-5x"
+              <FaIdCard
                 style={{
                   width: "200px",
                   margin: "20px auto",
                   color: "#053742",
+                  fontSize: "80px",
                 }}
-              ></i>
+              />
               <Card.Body>
                 <Card.Title>Issue Credentials</Card.Title>
                 <Card.Text>
@@ -70,14 +72,14 @@ function Info() {
               </Card.Body>
             </Card>
             <Card>
-              <i
-                class="fas fa-share-alt fa-5x"
+              <FaShareAlt
                 style={{
                   width: "200px",
                   margin: "20px auto",
                   color: "#053742",
+                  fontSize: "80px",
                 }}
-              ></i>
+              />
               <Card.Body>
                 <Card.Title>Share Credentials</Card.Title>
                 <Card.Text>
@@ -88,14 +90,14 @@ function Info() {
               </Card.Body>
             </Card>
             <Card>
-              <i
-                class="fas fa-user-check fa-5x"
+              <FaUserCheck
                 style={{
                   width: "200px",
                   margin: "20px auto",
                   color: "#053742",
+                  fontSize: "80px",
                 }}
-              ></i>
+              />
               <Card.Body>
                 <Card.Title>Verify credentials</Card.Title>
                 <Card.Text>

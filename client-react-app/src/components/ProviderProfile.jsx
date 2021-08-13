@@ -97,7 +97,7 @@ function ProviderProfile(props) {
                   </span>
                 </Col>
               </Form.Group>
-              <Form.Group as={Row} className="mb-3">
+              {/* <Form.Group as={Row} className="mb-3">
                 <Form.Label column sm="3">
                   Address
                 </Form.Label>
@@ -117,8 +117,8 @@ function ProviderProfile(props) {
                     />
                   </span>
                 </Col>
-              </Form.Group>
-              <Form.Group as={Row} className="mb-3">
+              </Form.Group> */}
+              {/* <Form.Group as={Row} className="mb-3">
                 <Form.Label column sm="3">
                   Position
                 </Form.Label>
@@ -138,8 +138,8 @@ function ProviderProfile(props) {
                     />
                   </span>
                 </Col>
-              </Form.Group>
-              <Form.Group as={Row} className="mb-3">
+              </Form.Group> */}
+              {/* <Form.Group as={Row} className="mb-3">
                 <Form.Label column sm="3">
                   Department
                 </Form.Label>
@@ -159,7 +159,7 @@ function ProviderProfile(props) {
                     />
                   </span>
                 </Col>
-              </Form.Group>
+              </Form.Group> */}
               <Form.Group as={Row} className="mb-3">
                 <Form.Label column sm="3">
                   ID

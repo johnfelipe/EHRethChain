@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Container, Row, Col, Form } from "react-bootstrap";
 import { Divider } from "antd";
@@ -28,6 +28,7 @@ function PatientProfile(props) {
               <p style={{ color: "#1890FF" }}>Patient </p>
             </div>
           </Col>
+          <Col> {props.button}</Col>
         </Row>
         <Row>
           <Col style={{ textAlign: "center" }}>
@@ -54,7 +55,7 @@ function PatientProfile(props) {
                 <Form.Label column sm="3">
                   Fullname
                 </Form.Label>
-                <Col sm="8" style={{ display: "flex" }}>
+                <Col sm="9" style={{ display: "flex" }}>
                   <Form.Control
                     type="text"
                     placeholder={props.fullname}
@@ -75,7 +76,7 @@ function PatientProfile(props) {
                 <Form.Label column sm="3">
                   Ethereum Address
                 </Form.Label>
-                <Col sm="8" style={{ display: "flex" }}>
+                <Col sm="9" style={{ display: "flex" }}>
                   <Form.Control
                     type="text"
                     placeholder={props.address}

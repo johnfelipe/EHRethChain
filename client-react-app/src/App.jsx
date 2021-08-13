@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "./App.css";
 
@@ -32,6 +32,8 @@ require("dotenv").config();
 // }
 
 function App() {
+  const [items, setItems] = useState([]);
+  // const [reload, setReload] = useState(false);
   // const [greeting, setGreetingValue] = useState("");
 
   // async function requestAccount() {
@@ -115,20 +117,60 @@ function App() {
   //   }
   // }
 
+  useEffect(() => {
+    // let request = new XMLHttpRequest();
+    // request.open("GET", "http://localhost:8000/inventory");
+    // request.responseType = "text";
+
+    // request.onload = () => {
+    //   console.log(request.response);
+    // };
+    getItems();
+
+    // fetch("http://localhost:8000/inventory", { method: "GET", mode: "cors" })
+    //   .then((res) => res.json())
+    //   .then((data) => console.log(data));
+    // request.send();
+  }, []);
+
+  async function getItems() {
+    let options = {
+      method: "GET",
+      mode: "cors",
+    };
+    try {
+      const res = await fetch("http://localhost:8000/inventory", options);
+      const data = await res.json();
+      console.log(data);
+      setItems(data);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   return (
     <>
-      <Router>
+      <h1>hi</h1>
+      <h1>Items</h1>
+
+      {items.map((item, index) => (
+        <div key={index}>
+          <p> {item.UID} </p>
+          <p> {item.Name} </p>
+          <p> {item.Desc} </p>
+          <p> {item.Price} </p>
+        </div>
+      ))}
+
+      {/* <Router>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/issueUserID" component={IssueUserID} />
           <ProtectedRoute path="/home" component={HomePage} />
           <Route path="*" component={PageNotFound} />
-          {/* <Route exact path="/" component={LandingPage} />
-          <Route exact path="/issueUserID" component={IssueUserID} />
-          <ProtectedRoute path="/home" component={HomePage} />
-          <Route path="*" component={PageNotFound} /> */}
+       
         </Switch>
-      </Router>
+      </Router> */}
     </>
   );
 }

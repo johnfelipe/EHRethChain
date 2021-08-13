@@ -241,7 +241,7 @@ export default function ProviderInfoCard(props) {
           {" "}
           <div className="provider-name-dep">
             <p>{props.name} </p>
-            <p>{props.department} </p>
+            {/* <p>{props.department} </p> */}
           </div>{" "}
         </Col>
       </Row>

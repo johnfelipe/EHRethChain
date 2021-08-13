@@ -8,7 +8,10 @@ import { DatePicker, message } from "antd";
 import QRCode from "react-qr-code";
 import { openNotification } from "../../helpers/trinsicExchangeNotification";
 
-import { IssueDoctorID } from "../../adapters/trinsic";
+import {
+  manchesterHospitalIssueDoctorID,
+  londonHospitalIssueDoctorID,
+} from "../../adapters/trinsic";
 
 const key = "updatable";
 
@@ -22,7 +25,6 @@ function IssueDoctorCredentials() {
   const [expiration, setExpiration] = useState("");
 
   const [qrValue, setQRvalue] = useState("");
-
   const [showModal, setShowModal] = useState(false);
   const [showQR, setShowQR] = useState(false);
 
@@ -48,22 +50,48 @@ function IssueDoctorCredentials() {
         expiration !== ""
       ) {
         let formData = {
-          hospital: hospital,
-          name: fullname,
-          address: address,
-          position: position,
-          department: department,
-          id: id,
-          expiration: expiration,
+          Hospital: hospital,
+          "Full Name": fullname,
+          Address: address,
+          Position: position,
+          Department: department,
+          ID: id,
+          Expiration: expiration,
         };
-
+        console.log(formData);
         issueLoading();
 
-        let result = await IssueDoctorID(formData);
+        let result;
 
-        setQRvalue(result.offerUrl);
-        setShowQR(true);
-        setShowModal(true);
+        switch (hospital.toLowerCase()) {
+          case "manchester hospital":
+            console.log(
+              "here i am about to issue manchester hospital provider id"
+            );
+            result = await manchesterHospitalIssueDoctorID(formData);
+            console.log("here is the result of the issue", result);
+
+            setQRvalue(result.offerUrl);
+            setShowQR(true);
+            setShowModal(true);
+            return;
+
+          case "london hospital":
+            result = await londonHospitalIssueDoctorID(formData);
+            setQRvalue(result.offerUrl);
+            setShowQR(true);
+            setShowModal(true);
+            return;
+          default:
+            setShowQR(false);
+            setShowModal(false);
+            message.info(
+              "We can only issue credentials for either 'manchester hospital' or 'london hospital'"
+            );
+            break;
+        }
+        setShowQR(false);
+        setShowModal(false);
       } else {
         message.warning("Please fill in the form entries first!");
       }

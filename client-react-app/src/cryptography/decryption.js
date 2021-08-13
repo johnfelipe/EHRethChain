@@ -14,10 +14,13 @@ async function decryptSymKeyWithPrivateKey(privateKey, encryptedData) {
 
 // ? Decrypt Ciphertext with Symmetric Key
 function decryptDataWithSymKey(cipherText, symmetricKey) {
-  var decrypted = CryptoJS.AES.decrypt(cipherText, symmetricKey, {
-    format: JsonFormatter,
-  });
+  // var decrypted = CryptoJS.AES.decrypt(cipherText, symmetricKey, {
+  //   format: JsonFormatter,
+  // });
 
+  // return decrypted.toString(CryptoJS.enc.Utf8);
+
+  var decrypted = CryptoJS.AES.decrypt(cipherText, symmetricKey);
   return decrypted.toString(CryptoJS.enc.Utf8);
 }
 

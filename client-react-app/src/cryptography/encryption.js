@@ -14,10 +14,13 @@ async function encryptSymKeyWithPublicKey(publicKey, symmetricKey) {
 
 // ? Encrypt Data with Symmetric Key
 function encryptDataWithSymKey(plainText, symmetricKey) {
-  var encryptedData = CryptoJS.AES.encrypt(plainText, symmetricKey, {
-    format: JsonFormatter,
-  });
-  return encryptedData;
+  // var encryptedData = CryptoJS.AES.encrypt(plainText, symmetricKey, {
+  //   format: JsonFormatter,
+  // });
+  // return encryptedData;
+
+  var encryptedData = CryptoJS.AES.encrypt(plainText, symmetricKey);
+  return encryptedData.toString();
 }
 
 export { encryptSymKeyWithPublicKey, encryptDataWithSymKey };

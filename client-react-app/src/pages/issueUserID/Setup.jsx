@@ -3,16 +3,21 @@ import { Row, Col, Card } from "react-bootstrap";
 
 import { Button } from "antd";
 
+import { FaUserCircle, FaWallet, FaEnvelopeOpenText } from "react-icons/fa";
+
 function Setup() {
   return (
     <>
       <Row style={{ margin: "10px auto 60px auto" }}>
         <Col>
           <Card>
-            <i
-              class="fas fa-user-circle fa-6x"
-              style={{ margin: "10px", color: "#053742" }}
-            ></i>
+            <FaUserCircle
+              style={{
+                margin: "10px auto",
+                color: "#053742",
+                fontSize: "100px",
+              }}
+            />
             <Card.Body>
               <Card.Title>1. Create an account with Trinsic</Card.Title>
               <Card.Text>
@@ -31,10 +36,13 @@ function Setup() {
         </Col>
         <Col>
           <Card>
-            <i
-              class="fas fa-wallet fa-6x"
-              style={{ margin: "10px", color: "#053742" }}
-            ></i>
+            <FaWallet
+              style={{
+                margin: "10px auto",
+                color: "#053742",
+                fontSize: "100px",
+              }}
+            />
             <Card.Body>
               <Card.Title>2. Download Trinsic Wallet</Card.Title>
               <Card.Text>
@@ -53,10 +61,14 @@ function Setup() {
         </Col>
         <Col>
           <Card>
-            <i
-              class="fas fa-envelope-open-text fa-6x"
-              style={{ margin: "10px", color: "#053742" }}
-            ></i>
+            <FaEnvelopeOpenText
+              style={{
+                margin: "20px auto",
+                color: "#053742",
+                fontSize: "100px",
+              }}
+            />
+
             <Card.Body>
               <Card.Title>
                 3. Check your email and create a login credentials

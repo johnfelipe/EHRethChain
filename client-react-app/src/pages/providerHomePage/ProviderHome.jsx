@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 
@@ -25,13 +25,15 @@ import { FcInfo } from "react-icons/fc";
 const doctorActions = [
   { id: 1, name: "Profile" },
   { id: 2, name: "Assigned Patients" },
-  { id: 3, name: "Request Access" },
+  // { id: 3, name: "Request Access" },
 ];
 
 function ProviderHome() {
   let match = useRouteMatch();
+
   return (
     <>
+      {/* <AcceptedProvider> */}
       <Switch>
         <ProtectedRoute exact path="/home/providerHome/Profile">
           <ActionPageLayout
@@ -71,7 +73,7 @@ function ProviderHome() {
           />
         </ProtectedRoute>
 
-        <ProtectedRoute exact path="/home/providerHome/RequestAccess">
+        {/* <ProtectedRoute exact path="/home/providerHome/RequestAccess">
           <ActionPageLayout
             status={
               <p style={{ color: "green", fontSize: "18px" }}>
@@ -86,7 +88,7 @@ function ProviderHome() {
             }
             content={<RequestAccess />}
           />
-        </ProtectedRoute>
+        </ProtectedRoute> */}
 
         <Route exact path={match.path}>
           <ActionPageLayout
@@ -111,6 +113,7 @@ function ProviderHome() {
         </Route>
         <Route path="*" component={PageNotFound} />
       </Switch>
+      {/* </AcceptedProvider> */}
     </>
   );
 }

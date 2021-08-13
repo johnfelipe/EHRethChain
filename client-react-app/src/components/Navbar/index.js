@@ -29,6 +29,9 @@ function Navbar({ toggle, ...restProps }) {
 
   useEffect(() => {
     window.addEventListener("scroll", changeNav);
+    return () => {
+      window.removeEventListener("scroll", changeNav, false);
+    };
   }, []);
 
   const toggleHome = () => {

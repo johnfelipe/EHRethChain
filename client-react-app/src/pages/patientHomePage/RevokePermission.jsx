@@ -1,9 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Form, Button, Row, Col } from "react-bootstrap";
 
+import {
+  contractAddress,
+  requestAccount,
+  initContract,
+} from "../../adapters/contractAPI";
+import { ethers } from "ethers";
+
+import { message, notification } from "antd";
+
 export default function RevokePermission() {
   const [validated, setValidated] = useState(false);
+  const [patientAddress, setPatientAddress] = useState("");
+  const [revokedAddress, setRevokedAddress] = useState("");
+
+  let result = initContract();
+  let signer = result.provider.getSigner();
+  let contract = new ethers.Contract(contractAddress, result.abi, signer);
+
+  useEffect(() => {
+    async function fetchUserData() {
+      let addr = await signer.getAddress();
+      setPatientAddress(addr);
+    }
+    fetchUserData();
+  }, []);
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -13,12 +36,16 @@ export default function RevokePermission() {
     }
 
     setValidated(true);
+
+    // ? 1. Determine address role (either provider or entity)
+    // ? 2. Check this provider is granted Access
+    // ? 3. Revoke account either entity or provider
   };
   return (
     <>
       <Row style={{ padding: "90px" }}>
         <h3>Revoke Records</h3>
-        <Col sm={2}></Col>
+        <Col sm={1}></Col>
         <Col>
           <Form noValidate validated={validated} onSubmit={handleSubmit}>
             <Row className="mb-3">
@@ -26,8 +53,9 @@ export default function RevokePermission() {
                 <Form.Label>Your Ethereum address</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Your ethereum address"
+                  placeholder={patientAddress}
                   required
+                  readOnly
                 />
                 <Form.Control.Feedback type="invalid">
                   Please provide your doctor ethereum address.
@@ -47,7 +75,7 @@ export default function RevokePermission() {
                 </Form.Control.Feedback>
               </Form.Group>
             </Row>
-            <Row className="mb-3">
+            {/* <Row className="mb-3">
               <Form.Group as={Col} md="" controlId="validationCustom03">
                 <Form.Label>Record Name</Form.Label>
                 <Form.Control type="text" placeholder="record name" required />
@@ -55,14 +83,14 @@ export default function RevokePermission() {
                   Please provide a record name.
                 </Form.Control.Feedback>
               </Form.Group>
-            </Row>
+            </Row> */}
 
             <Button variant="primary" type="button" onClick={handleSubmit}>
               Share
             </Button>
           </Form>
         </Col>
-        <Col sm={2}></Col>
+        <Col sm={1}></Col>
       </Row>
     </>
   );

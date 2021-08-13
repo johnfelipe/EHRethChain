@@ -13,8 +13,8 @@ export default function UserActions(props) {
 
   return (
     <>
-      {props.actions.map((action) => (
-        <Row className="action-items">
+      {props.actions.map((action, index) => (
+        <Row className="action-items" key={index}>
           <Col>
             <Button
               style={{ width: "100%", textAlign: "left" }}

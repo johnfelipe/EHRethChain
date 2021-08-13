@@ -2,13 +2,96 @@ import React, { useEffect, useState } from "react";
 
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { DatePicker, message } from "antd";
+import Modal from "../../components/Modal";
+
+import QRCode from "react-qr-code";
+import { openNotification } from "../../helpers/trinsicExchangeNotification";
+
+import {
+  manchesterHospitalIssueAdminID,
+  londonHospitalIssueAdminID,
+} from "../../adapters/trinsic";
+
+const key = "updatable";
 
 function IssueAdminCredentials(props) {
-  const [hospital, setHospital] = useState("");
   const [fullname, setFullname] = useState("");
+  const [hospital, setHospital] = useState("");
   const [address, setAddress] = useState("");
   const [id, setID] = useState("");
   const [expiration, setExpiration] = useState("");
+
+  const [qrValue, setQRvalue] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [showQR, setShowQR] = useState(false);
+
+  function issueLoading() {
+    message.loading({ content: "Loading...", key });
+  }
+
+  useEffect(() => {
+    if (showQR && showModal) {
+      message.success({ content: "Loaded!", key, duration: 2 });
+    }
+  }, [showQR, showModal]);
+
+  async function issueID() {
+    try {
+      if (
+        hospital !== "" &&
+        fullname !== "" &&
+        address !== "" &&
+        id !== "" &&
+        expiration !== ""
+      ) {
+        let formData = {
+          "Full Name": fullname,
+          Hospital: hospital,
+          Address: address,
+          ID: id,
+          Expiration: expiration,
+        };
+        console.log(formData);
+        issueLoading();
+
+        let result;
+
+        switch (hospital.toLowerCase()) {
+          case "manchester hospital":
+            console.log(
+              "here i am about to issue manchester hospital admin id"
+            );
+            result = await manchesterHospitalIssueAdminID(formData);
+            console.log("here is the result of the issue", result);
+
+            setQRvalue(result.offerUrl);
+            setShowQR(true);
+            setShowModal(true);
+            return;
+
+          case "london hospital":
+            result = await londonHospitalIssueAdminID(formData);
+            setQRvalue(result.offerUrl);
+            setShowQR(true);
+            setShowModal(true);
+            return;
+          default:
+            setShowQR(false);
+            setShowModal(false);
+            message.info(
+              "We can only issue credentials for either 'manchester hospital' or 'london hospital'"
+            );
+            break;
+        }
+        setShowQR(false);
+        setShowModal(false);
+      } else {
+        message.warning("Please fill in the form entries first!");
+      }
+    } catch (err) {
+      openNotification();
+    }
+  }
 
   return (
     <>
@@ -111,7 +194,7 @@ function IssueAdminCredentials(props) {
                   padding: "10px",
                   fontSize: "18px",
                 }}
-                // onClick={issueID}
+                onClick={issueID}
               >
                 Issue Admin ID
               </Button>
@@ -119,6 +202,23 @@ function IssueAdminCredentials(props) {
           </Col>
           <Col></Col>
         </Row>
+        {showQR && showModal && (
+          <Modal showModal={showModal} setShowModal={setShowModal}>
+            <Container>
+              <h4>Scan this code to accept a connectionless credential</h4>
+              <Row style={{ margin: "40px" }}>
+                <Col></Col>
+                <Col>
+                  {" "}
+                  <div style={{ padding: "20px" }}>
+                    <QRCode value={qrValue} />
+                  </div>
+                </Col>
+                <Col></Col>
+              </Row>
+            </Container>
+          </Modal>
+        )}
       </Container>
     </>
   );

@@ -194,6 +194,7 @@ function MetaMaskConnect(props) {
 }
 
 const Home = () => {
+  let history = useHistory();
   const [isOpen, setIsOpen] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
