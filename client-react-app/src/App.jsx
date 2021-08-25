@@ -117,7 +117,7 @@ function App() {
   //   }
   // }
 
-  useEffect(() => {
+ // useEffect(() => {
     // let request = new XMLHttpRequest();
     // request.open("GET", "http://localhost:8000/inventory");
     // request.responseType = "text";
@@ -125,32 +125,32 @@ function App() {
     // request.onload = () => {
     //   console.log(request.response);
     // };
-    getItems();
+    // getItems();
 
     // fetch("http://localhost:8000/inventory", { method: "GET", mode: "cors" })
     //   .then((res) => res.json())
     //   .then((data) => console.log(data));
     // request.send();
-  }, []);
+ // }, []);
 
-  async function getItems() {
-    let options = {
-      method: "GET",
-      mode: "cors",
-    };
-    try {
-      const res = await fetch("http://localhost:8000/inventory", options);
-      const data = await res.json();
-      console.log(data);
-      setItems(data);
-    } catch (err) {
-      console.error(err);
-    }
-  }
+  // async function getItems() {
+  //   let options = {
+  //     method: "GET",
+  //     mode: "cors",
+  //   };
+  //   try {
+  //     const res = await fetch("http://localhost:8000/inventory", options);
+  //     const data = await res.json();
+  //     console.log(data);
+  //     setItems(data);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }
 
   return (
     <>
-      <h1>hi</h1>
+      {/* <h1>hi</h1>
       <h1>Items</h1>
 
       {items.map((item, index) => (
@@ -160,9 +160,9 @@ function App() {
           <p> {item.Desc} </p>
           <p> {item.Price} </p>
         </div>
-      ))}
+      ))} */}
 
-      {/* <Router>
+      /* <Router>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/issueUserID" component={IssueUserID} />
@@ -170,7 +170,7 @@ function App() {
           <Route path="*" component={PageNotFound} />
        
         </Switch>
-      </Router> */}
+      </Router> 
     </>
   );
 }

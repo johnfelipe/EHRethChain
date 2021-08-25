@@ -4,7 +4,7 @@ async function main() {
   const PatientRecords = await hre.ethers.getContractFactory("PatientRecords");
   const patientRecords = await PatientRecords.deploy();
   await patientRecords.deployed();
-  console.log("PatientRecords deployed to:", greeter.address);
+  console.log("PatientRecords deployed to:", patientRecords.address);
 }
 
 main()
