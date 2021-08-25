@@ -24,7 +24,7 @@ function RegisterUsers() {
 
   const patientInfo = (
     <div>
-      <p>Patient Registeration</p>
+      <p>Patient Registration</p>
     </div>
   );
 

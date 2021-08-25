@@ -14,18 +14,10 @@ import ProviderProfile from "../../components/ProviderProfile";
 
 import { FcInfo } from "react-icons/fc";
 
-{
-  /* <UserProfile
-                title="Personal Details"
-                name="Mohammed Fajer"
-                address="0x897Fd668E8adfF344D52104A699187096aD17645"
-              /> */
-}
-
 const doctorActions = [
   { id: 1, name: "Profile" },
   { id: 2, name: "Assigned Patients" },
-  // { id: 3, name: "Request Access" },
+  { id: 3, name: "Request Access" },
 ];
 
 function ProviderHome() {
@@ -33,7 +25,7 @@ function ProviderHome() {
 
   return (
     <>
-      {/* <AcceptedProvider> */}
+      
       <Switch>
         <ProtectedRoute exact path="/home/providerHome/Profile">
           <ActionPageLayout
@@ -73,7 +65,7 @@ function ProviderHome() {
           />
         </ProtectedRoute>
 
-        {/* <ProtectedRoute exact path="/home/providerHome/RequestAccess">
+        <ProtectedRoute exact path="/home/providerHome/RequestAccess">
           <ActionPageLayout
             status={
               <p style={{ color: "green", fontSize: "18px" }}>
@@ -88,7 +80,7 @@ function ProviderHome() {
             }
             content={<RequestAccess />}
           />
-        </ProtectedRoute> */}
+        </ProtectedRoute>
 
         <Route exact path={match.path}>
           <ActionPageLayout

@@ -28,13 +28,6 @@ import GoBackBtn from "../../components/GoBackBtn";
 
 import styled from "styled-components";
 
-import {
-  contractAddress,
-  requestAccount,
-  initContract,
-} from "../../adapters/contractAPI";
-import { ethers } from "ethers";
-
 const key = "updatable";
 const { Option } = Select;
 
@@ -76,16 +69,6 @@ function DoctorLogin() {
   function verifyLoading() {
     message.loading({ content: "Loading...", key });
   }
-
-  useEffect(() => {
-    async function fetchUserData() {
-      let addr = await signer.getAddress();
-      setProviderAddress(addr);
-      console.log(await owner.getAddress());
-    }
-
-    fetchUserData();
-  }, []);
 
   useEffect(() => {
     if (showQR && showModal) {
@@ -133,7 +116,7 @@ function DoctorLogin() {
 
         setShowQR(false);
 
-        // store address and if verified in localstorage
+        // store address and if verified in local storage
         if (verification.state === "Accepted") {
           // alert("Verification  Accepted");
           message.success("Verification Accepted");
@@ -160,7 +143,7 @@ function DoctorLogin() {
             .catch((err) => console.log(err));
 
           // ? 2.  direct provider to provider page
-          message.success("Successfully regsitered as a provider.");
+          message.success("Successfully registered as a provider.");
           message.loading("Redirecting to provider home page.");
 
           // We need to pass in the provider data to provider home
@@ -189,38 +172,6 @@ function DoctorLogin() {
       // openNotification();
     }
   }
-
-  // async function verifyCredentials() {
-  //   const hide = message.loading("Trying to verify credentials...", 0);
-  //   setTimeout(hide, 2500);
-
-  //   try {
-  //     let response = await client.createVerificationFromPolicy(
-  //       process.env.REACT_APP_POLICY_ID
-  //     );
-
-  //     setQRvalue(response.verificationRequestUrl);
-  //     setShowQR(true);
-  //     setShowModal(true);
-
-  //     let verificationID = response.verificationId;
-  //     let verification = { state: "Requested" };
-  //     let timeOut = false;
-  //     setTimeout(() => (timeOut = true), 1000 * 60);
-  //     while (!timeOut && verification.state === "Requested") {
-  //       verification = await client.getVerification(verificationID);
-  //     }
-
-  //     setShowQR(false);
-  //     if (verification.state === "Accepted") {
-  //       alert("Verification  Accepted");
-  //     } else {
-  //       alert("Verification  Rejected");
-  //     }
-  //   } catch (err) {
-  //     openNotification();
-  //   }
-  // }
 
   function handleChange(value) {
     console.log(`selected ${value}`);
@@ -259,7 +210,7 @@ function DoctorLogin() {
                     size="lg"
                     onClick={verifyCredentials}
                   >
-                    Verify Credientials
+                    Verify Credentials
                   </Button>
 
                   <span>
@@ -273,7 +224,7 @@ function DoctorLogin() {
             {showQR && showModal && (
               <Modal showModal={showModal} setShowModal={setShowModal}>
                 <Container>
-                  <h4>Scan this code to accept a connectionless credential</h4>
+                  <h4>Scan this code to accept a connection-less credential</h4>
                   <Row style={{ margin: "40px" }}>
                     <Col></Col>
                     <Col>

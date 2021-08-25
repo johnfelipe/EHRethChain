@@ -19,16 +19,10 @@ import { Modal, message } from "antd";
 import "../../styles/profile.css";
 import PatientProfile from "../../components/PatientProfile";
 
-import IPFS from "ipfs";
-import { ethers } from "ethers";
 
 import { getFromIPFS } from "../../adapters/ipfs";
 
-import {
-  contractAddress,
-  requestAccount,
-  initContract,
-} from "../../adapters/contractAPI";
+
 
 import { decryptDataWithSymKey } from "../../cryptography/decryption";
 
@@ -74,13 +68,7 @@ const patientActions = [
   { id: 5, name: "Revoke Permission" },
 ];
 
-{
-  /* <UserProfile
-                title="Personal Details"
-                name="Mohammed Fajer"
-                address="0x897Fd668E8adfF344D52104A699187096aD17645"
-              /> */
-}
+
 
 function PatientHome() {
   let match = useRouteMatch();
@@ -91,59 +79,18 @@ function PatientHome() {
   const [name, setName] = useState("");
   const [patientData, setPatienData] = useState({});
 
-  const [symmk, setSymmK] = useState("");
+ 
 
   const showModal = () => {
     setIsModalVisible(true);
   };
 
   const handleOk = () => {
-    if (symmk !== "" && symmk.length >= 64) {
-      // alert(symmk);
-      setIsModalVisible(false);
-    } else {
-      message.warn("You must enter your symmetric key before continuing.");
-    }
   };
 
   const handleCancel = () => {
-    if (symmk !== "" && symmk.length >= 64) {
-      // alert(symmk);
-      setIsModalVisible(false);
-    } else {
-      message.warn("You must enter your symmetric key before continuing.");
-    }
   };
 
-  useEffect(() => {
-    showModal();
-    async function fetchUserData() {
-      let result = initContract();
-      let signer = result.provider.getSigner();
-      let contract = new ethers.Contract(contractAddress, result.abi, signer);
-
-      let addr = await signer.getAddress();
-      setAddress(addr);
-      console.log(address);
-
-      // ? 1. Retrieve patient records from the blockchain
-      let records = await contract.viewOwnRecords();
-      setPatienData(records);
-      console.log(patientData);
-
-      // ? 2. Retrieve encrypted data from IPFS
-      let fNameEncrypted = await getFromIPFS(records.firstNameHash);
-      let lNameEncrypted = await getFromIPFS(records.lastNameHash);
-
-      // ? 3. Decrypt the encrypted data
-      let fNamePlaintext = decryptDataWithSymKey(fNameEncrypted, symmk);
-      let lNamePlaintext = decryptDataWithSymKey(lNameEncrypted, symmk);
-
-      // ? 4. Update data
-      setName(fNamePlaintext + " " + lNamePlaintext);
-    }
-    fetchUserData();
-  }, [reload, symmk]);
 
   return (
     <>
@@ -272,7 +219,7 @@ function PatientHome() {
         <Route path="*" component={PageNotFound} />
       </Switch>
 
-      <Modal
+      {/* <Modal
         title="Enter Your Keys"
         centered
         visible={isModalVisible}
@@ -292,7 +239,7 @@ function PatientHome() {
             />
           </div>
         </PromptFormContainer>
-      </Modal>
+      </Modal> */}
     </>
   );
 }

@@ -5,45 +5,12 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import { Empty, Modal } from "antd";
 import PatientRecordCard from "../../components/PatientRecordCard";
 
-import { ethers } from "ethers";
 
-import {
-  contractAddress,
-  requestAccount,
-  initContract,
-} from "../../adapters/contractAPI";
 
 export default function ViewHealthRecords(props) {
   const [visible, setVisible] = useState(false);
-  const [viewOption, setViewOption] = useState(false);
+  const [viewOption, setViewOption] = useState(true);
   const [recordHashes, setRecordHashes] = useState([]);
-
-  useEffect(() => {
-    let result = initContract();
-    let signer = result.provider.getSigner();
-    let contract = new ethers.Contract(contractAddress, result.abi, signer);
-    let records;
-
-    async function fetchUserRecords() {
-      // Retreive patient CIDS from blockchain
-      records = await contract
-        .viewOwnRecords()
-        .catch((err) => console.log(err));
-
-      // Set Records hashes
-      setRecordHashes(records.patientRecords);
-
-      if (recordHashes.length > 0) {
-        console.log(recordHashes);
-        setViewOption(true);
-      } else {
-        console.log(recordHashes);
-        setViewOption(false);
-      }
-    }
-
-    fetchUserRecords();
-  }, []);
 
   const noData = (
     <>

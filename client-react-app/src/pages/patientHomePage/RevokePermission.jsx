@@ -16,17 +16,6 @@ export default function RevokePermission() {
   const [patientAddress, setPatientAddress] = useState("");
   const [revokedAddress, setRevokedAddress] = useState("");
 
-  let result = initContract();
-  let signer = result.provider.getSigner();
-  let contract = new ethers.Contract(contractAddress, result.abi, signer);
-
-  useEffect(() => {
-    async function fetchUserData() {
-      let addr = await signer.getAddress();
-      setPatientAddress(addr);
-    }
-    fetchUserData();
-  }, []);
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;

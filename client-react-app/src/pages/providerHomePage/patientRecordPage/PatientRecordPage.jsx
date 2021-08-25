@@ -282,12 +282,7 @@ export default function PatientRecordPage(props) {
               <Col sm="4">
                 <DatePicker
                   showTime
-                  // defaultValue={moment(new Date(date), dateFormat)}
-                  // onChange={(date, dateString) =>
-                  //   setDate(moment(date, dateFormat))
-                  // }
-                  // defaultValue={moment(new Date(viewedRecord.date), dateFormat)}
-                  // format={dateFormat}
+                
                   defaultValue={moment(new Date(date), dateFormat)}
                   value={moment(new Date(date), dateFormat)}
                   onChange={(date, dateString) =>

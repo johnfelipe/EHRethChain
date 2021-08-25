@@ -32,7 +32,7 @@ function EntityLogin() {
                     size="lg"
                     // onClick={verifyCredentials}
                   >
-                    Verify Credientials
+                    Verify Credentials
                   </Button>
 
                   <span>
