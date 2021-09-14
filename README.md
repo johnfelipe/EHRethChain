@@ -4,7 +4,7 @@
   <img src="https://github.com/mohammedfajer/EHRethChain/blob/main/ethereum.png" width="30%"/><br>
   <b>EHRethChain: Blockchain Based Electronic Health Record Web Application</b><br>
   <a href="https://ethereum.org/en/">Ethereum Platform</a> |
-  <a href="https://github.com/mohammedfajer/Storj-REST-API">Storj RESTful API</a> |
+  <a href="https://github.com/mohammedfajer/Storj-REST-API">Storj RESTful API</a>
   <br><br>
   <img src="https://github.com/mohammedfajer/EHRethChain/blob/main/EHRethChain.gif" />
 </p>
