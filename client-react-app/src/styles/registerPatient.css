@@ -1,0 +1,8 @@
+.form-container {
+  padding: 50px;
+  box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+}
+
+#components-form-demo-register-patient-form .ant-btn {
+  margin-right: 8px;
+}
