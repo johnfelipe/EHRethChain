@@ -45,7 +45,13 @@ text
 
 text
 
+#### Tech Stack
+text
+
 ### 2.1 Installation Instruction <a name="subparagraph1"></a>
+
+#### Software Dependencies:
+text
 
 text
 
