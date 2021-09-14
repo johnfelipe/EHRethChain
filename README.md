@@ -3,9 +3,9 @@
 
 Youtube Demo Video
 
-![EHRethChain](https://github.com/mohammedfajer/EHRethChain/blob/main/Screenshot%202021-09-14%20at%2023.55.54.png)https://www.youtube.com/watch?v=TI9b3nxaX9U
 
- 
+ [![EHRethChain](https://github.com/mohammedfajer/EHRethChain/blob/main/Screenshot%202021-09-14%20at%2023.55.54.png)](https://www.youtube.com/watch?v=TI9b3nxaX9U)
+
 
 
  
