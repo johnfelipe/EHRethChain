@@ -110,8 +110,8 @@ function MetaMaskConnect(props) {
     .then((result) => {
       console.log(result);
       if (result.status == "success") {
-        checkUserRole();
-        // auth.login(() =>  history.push("/home"));
+        // checkUserRole();
+        auth.login(() =>  history.push("/home"));
       }
     })
   }
