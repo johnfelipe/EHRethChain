@@ -13,7 +13,7 @@
 
 © 2020/2021 The University of Manchester and Mohammed Akram Fajer
 
-[video]
+
 
 Presenting Master Project conducted at the University of Manchester. Reference this project when you choose to use any of the ideas, source code, images or other material found in this repository.
 
