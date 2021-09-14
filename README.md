@@ -13,8 +13,6 @@
 
 © 2020/2021 The University of Manchester and Mohammed Akram Fajer
 
-
-
 Presenting Master Project conducted at the University of Manchester. Reference this project when you choose to use any of the ideas, source code, images or other material found in this repository.
 
 #### LaTeX Reference:
@@ -39,22 +37,48 @@ note           = {School of Computing, The University of Manchester}
 
 ## 1. Introduction <a name="introduction"></a>
 
-text
+This repository document and host "Blockchain Technology Based Patient-Centric Electronic Health Record" project, for the master degree project at the School of Computing, University of Manchester.
+
+This project is not under active development, but feel free to look around.
+
+This project was developed with MacOS Big Sur, React JS, Ethereum Smart Contracts and the solidity programming language.
 
 ## 2. About The Project <a name="paragraph1"></a>
 
-text
+The project aims to develop a web application using blockchain technology for healthcare, particularly for electronic health records (EHRs). Furthermore, gain a deeper understanding of blockchain benefits for healthcare and the extent of its applicability and core limitations.
 
 #### Tech Stack
-text
+- HTML, CSS, JavaScript
+- React JS (JS framework to develop web applications)
+- Web3.js (JS library to communicate with smart contract)
+- Ethers.js (JS library to communicate with smart contract)
+- Metamask Wallet Chrome Extension (Allow to connect to ethereum network, ethereum localhost and ethereum testnets)
+- Infura - Ethereum API (for testnets and mainnet)
+- Hardhat - ethereum development environment for professional
+- Waffle - smart contrac testing
+- Storj API [Here](https://github.com/mohammedfajer/Storj-REST-API)
 
 ### 2.1 Installation Instruction <a name="subparagraph1"></a>
 
 #### Software Dependencies:
-text
+- Node.js https://nodejs.org/en/download/
 
-text
+The rest of software dependencies are Javascript libraries listed in this file [package.json](https://github.com/mohammedfajer/EHRethChain/blob/main/client-react-app/package.json)
+
 
 ### 2.2 Run Instruction <a name="subparagraph2"></a>
 
-text
+1. Clone Repository or download it as a zip file
+2. Install Node.js
+3. Run on terminal (command line)
+
+```bash
+$ cd client-react-app
+$ yarn install or npm install
+$ yarn start or npm start
+```
+
+
+
+
+
