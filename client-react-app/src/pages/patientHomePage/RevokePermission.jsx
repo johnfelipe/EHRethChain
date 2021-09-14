@@ -75,8 +75,10 @@ export default function RevokePermission() {
             </Row> */}
 
             <Button variant="primary" type="button" onClick={handleSubmit}>
-              Share
+              Revoke
             </Button>
+
+            
           </Form>
         </Col>
         <Col sm={1}></Col>

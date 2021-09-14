@@ -75,6 +75,10 @@ export default class DemoSection extends Component {
     window.addEventListener("resize", this.showNav);
   }
 
+  componentWillUnmount(){
+    window.removeEventListener("resize", this.showNav);
+  }
+
   showNav = () => {
     if (window.innerWidth >= 1100) {
       this.state({ showNavigation: false });
@@ -119,8 +123,8 @@ export default class DemoSection extends Component {
       content: (
         <VideoCard
           image={IMG3}
-          title="App Walkthrough"
-          description="illutrating how to use this application"
+          title="App Walk through"
+          description="illustrating how to use this application"
         />
       ),
     },
@@ -129,8 +133,8 @@ export default class DemoSection extends Component {
       content: (
         <VideoCard
           image={IMG2}
-          title="Source Code Walkthrough"
-          description="more technical detials of the implementation"
+          title="Source Code Walk through"
+          description="more technical details of the implementation"
         />
       ),
     },
@@ -164,7 +168,7 @@ export default class DemoSection extends Component {
           <DemoSectionSubtitle>
             <p>
               three videos, one explaining the technology behind this
-              application, one used as a walkthrough for how to use this
+              application, one used as a walk through for how to use this
               application and one for explaining the source code.
             </p>
           </DemoSectionSubtitle>

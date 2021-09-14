@@ -18,16 +18,20 @@ import GoBackBtn from "../../components/GoBackBtn";
 
 import { newIdentity } from "../../cryptography/ethIdentity";
 
-import Localbase from "localbase";
 
-import { addToIPFS } from "../../adapters/ipfs";
+import {
+  contractAddress,
+  requestAccount,
+  initContract,
+} from "../../adapters/contractAPI";
 
 
 import { ethers } from "ethers";
 
 import DownloadUserIdentity from "../../components/DownloadUserIdentity";
+import UserPassPhraseModel from "../../components/UserPassPhraseModel";
+import StorjAPI from "../../adapters/APIWrapper";
 
-import IPFS from "ipfs";
 
 
 const { Title } = Typography;
@@ -50,7 +54,7 @@ const tailLayout = {
 function RegisterPatientForm() {
   let history = useHistory();
   const [showModal, setShowModal] = useState(false);
-  
+  const [formData, setFormData] = useState({});
 
 
   const warnUserToDownload = () => {
@@ -63,7 +67,9 @@ function RegisterPatientForm() {
 
  
   function onFinish(values) {
-    console.log("Sucess : ", values);
+    console.log("Success : ", values);
+    setFormData(values);
+    setShowModal(true);
   }
   
   function onFinishFailed(errorInfo) {
@@ -73,6 +79,47 @@ function RegisterPatientForm() {
   function onReset() {}
 
   function onFill() {}
+
+  async function encryptionPassphrase(passphrase) {
+    let storjAPI = new StorjAPI();
+
+    let result = initContract();
+    const provider = result.provider;
+    const signer = await provider.getSigner();
+    let Contract = new ethers.Contract(contractAddress, result.abi, signer);
+    let address =  await signer.getAddress();
+    
+    let userAccessGrant;
+
+    if(result != -1) {
+    
+   
+      // [x] 0. get user pass phrase
+      // [] 1. generate access grant
+      let reqData = { userPassPhrase: passphrase }
+      storjAPI.generateUserAccess(reqData,String(address))
+      .then(resData => {
+        userAccessGrant = resData.userAccessGrant;
+      })
+      .catch(err => console.log(err));
+
+      // 2. add user identity information
+      storjAPI.uploadIdentity({
+        userAccessGrant: userAccessGrant,
+        objectKey: "/EHRs/identity.json",
+        identity: {
+          firstname: formData.firstname,
+          lastname: formData.lastname
+        }
+      }, String(address))
+
+      // 3. register patient
+      await Contract.registerPatient(userAccessGrant);
+
+      // 4. redirect to patient homepage
+      auth.login(() => history.push("/home/patientHome"));
+    }
+  }
 
   return (
     <>
@@ -108,12 +155,13 @@ function RegisterPatientForm() {
           ></Input>
         </Form.Item>
         <Form.Item {...tailLayout}>
-          <Button block type="primary" htmlType="submit">
+          <Button block type="primary" htmlType="submit" >
             Register
           </Button>
         </Form.Item>
       </Form>
-    
+
+      <UserPassPhraseModel showModal={showModal} setShowModal={setShowModal} getPhrase={encryptionPassphrase} />
     </>
   );
 }
@@ -138,6 +186,7 @@ function RegisterPatient() {
           </Container>
         </MainContainer>
       </Layout>
+      
     </>
   );
 }

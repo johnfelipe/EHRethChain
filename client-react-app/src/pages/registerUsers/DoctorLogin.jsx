@@ -59,13 +59,8 @@ function DoctorLogin() {
   const [isVerified, setIsVerified] = useState(false);
   const [accpetedData, setAcceptedData] = useState({});
 
-  const result = initContract();
-  const signer = result.provider.getSigner();
 
-  let provider = new ethers.providers.JsonRpcProvider();
-  let owner = provider.getSigner(0);
-  let contractAsOwner = result.contract.connect(owner);
-
+ 
   function verifyLoading() {
     message.loading({ content: "Loading...", key });
   }

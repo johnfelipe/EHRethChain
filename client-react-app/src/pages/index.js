@@ -52,7 +52,7 @@ function InstallMetaMask(props) {
   return (
     <WalletBox>
       <Alert variant="warning">
-        <p>You dont have MetaMask browser extension to use this app.</p>
+        <p>You don't have MetaMask browser extension to use this app.</p>
         <Alert.Link href="https://metamask.io/" target="_blank">
           Here
         </Alert.Link>{" "}
@@ -67,8 +67,53 @@ function MetaMaskConnect(props) {
 
   let history = useHistory();
 
+  function checkUserRole() {
+
+    let result = initContract();
+
+    if(result != -1) {
+
+      let signer = result.provider.getSigner();
+      signer.getAddress()
+      .then(address => {
+
+        let Contract = result.contract;
+        let patientRole = Contract.PATIENT_ROLE();
+        let ownerRole = Contract.DEFAULT_ADMIN_ROLE();
+
+    
+        const checkRole = async () => {
+          let isOwner =  await Contract.hasRole(ownerRole, address);
+          let isPatient = await Contract.hasRole(patientRole, address);
+          if (isOwner) {
+            console.log("this account is the owner");
+            auth.login(() => history.push("/home"));
+          } else if (isPatient) {
+            console.log("this account is a patient");
+            auth.login(() => history.push("/home/patientHome"));
+          } else {
+            console.log("this account has no role");
+            auth.login(() => history.push("/home/registerUsers"));
+          }
+        }
+
+        checkRole();
+
+      })
+      .catch((err) => console.log(err.message));
+
+    }
+  }
+
   async function makeConnection() {
     connectMetaMask()
+    .then((result) => {
+      console.log(result);
+      if (result.status == "success") {
+        checkUserRole();
+        // auth.login(() =>  history.push("/home"));
+      }
+    })
   }
 
   return (

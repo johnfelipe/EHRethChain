@@ -110,13 +110,6 @@ function PatientHome() {
             }
             content={
               <PatientProfile
-                button={
-                  <BtnContainer>
-                    <Btn type="button" onClick={() => setReload(!reload)}>
-                      Update Keys
-                    </Btn>
-                  </BtnContainer>
-                }
                 fullname={name}
                 address={address}
               />
@@ -203,13 +196,6 @@ function PatientHome() {
             }
             content={
               <PatientProfile
-                button={
-                  <BtnContainer>
-                    <Btn type="button" onClick={() => setReload(!reload)}>
-                      Update Keys
-                    </Btn>
-                  </BtnContainer>
-                }
                 fullname={name}
                 address={address}
               />
@@ -218,28 +204,6 @@ function PatientHome() {
         </Route>
         <Route path="*" component={PageNotFound} />
       </Switch>
-
-      {/* <Modal
-        title="Enter Your Keys"
-        centered
-        visible={isModalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        <PromptFormContainer>
-          <div>
-            <Label>Symmetric Key</Label>
-          </div>
-          <div>
-            <TextArea
-              rows={3}
-              type="text"
-              onChange={(e) => setSymmK(e.target.value)}
-              value={symmk}
-            />
-          </div>
-        </PromptFormContainer>
-      </Modal> */}
     </>
   );
 }

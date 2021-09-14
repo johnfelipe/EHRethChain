@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 
 import { message, notification } from "antd";
+import AccessPermissionType from "../../components/AccessPermissionType";
 
 
 
@@ -26,6 +27,11 @@ export default function ShareRecords() {
     // ? 3. Check record exists
     // ? 4. Share record with Entity
   };
+
+  function handleMenuClick(e) {
+    message.info("Click on menu item.");
+  }
+
   return (
     <>
       <Row style={{ padding: "90px" }}>
@@ -70,9 +76,17 @@ export default function ShareRecords() {
               </Form.Group>
             </Row>
 
-            <Button variant="primary" type="button" onClick={handleSubmit}>
-              Share
-            </Button>
+            
+
+            <Row>
+              <Col sm={3}>
+                <Button variant="primary" type="button" onClick={handleSubmit}>
+                Share
+              </Button>
+              </Col>
+              <Col sm={9}> <AccessPermissionType handleClick={handleMenuClick}/> </Col>
+            </Row>
+            
           </Form>
         </Col>
         <Col sm={1}></Col>

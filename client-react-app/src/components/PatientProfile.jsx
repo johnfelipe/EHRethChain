@@ -28,7 +28,7 @@ function PatientProfile(props) {
               <p style={{ color: "#1890FF" }}>Patient </p>
             </div>
           </Col>
-          <Col> {props.button}</Col>
+     
         </Row>
         <Row>
           <Col style={{ textAlign: "center" }}>
@@ -38,7 +38,7 @@ function PatientProfile(props) {
               Patient can view his own medical records, grant access to health
               providers to access their records and do CRUD operation on those
               records that are created by the doctors, patient can also share
-              records with third party entites such as researchers, and can
+              records with third party entities such as researchers, and can
               revoke access from providers or from entities
             </p>
           </Col>

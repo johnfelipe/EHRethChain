@@ -30,7 +30,7 @@ function Navbar({ toggle, ...restProps }) {
   useEffect(() => {
     window.addEventListener("scroll", changeNav);
     return () => {
-      window.removeEventListener("scroll", changeNav, false);
+      window.removeEventListener("scroll", changeNav);
     };
   }, []);
 
@@ -104,7 +104,7 @@ function Navbar({ toggle, ...restProps }) {
               </NavItem>
             </NavMenu>
             <NavBtn onClick={restProps.connectOnClick}>
-              <NavBtnLink primary={true}>Connect</NavBtnLink>
+              <NavBtnLink primary={"true"}>Connect</NavBtnLink>
             </NavBtn>
           </NavbarContainer>
         </Nav>

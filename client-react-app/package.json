@@ -70,6 +70,7 @@
     "loaderjs": "^1.0.0",
     "localbase": "^0.7.5",
     "make-fetch-happen": "^9.0.4",
+    "random-words": "^1.1.1",
     "react": "^17.0.2",
     "react-avatar-edit": "^1.0.0",
     "react-blockies": "^1.4.1",

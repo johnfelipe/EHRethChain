@@ -32,7 +32,7 @@ function Modal({ showModal, setShowModal, children, ...restProps }) {
             onClick={closeModel}
             ref={modalRef}
           >
-            <div className="myModal-container" showModal={showModal}>
+            <div className="myModal-container" >
               {children}
               <MdClose
                 className="myModel-close-button "

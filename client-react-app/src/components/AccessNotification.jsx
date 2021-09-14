@@ -17,7 +17,7 @@ const openNotification = (message, placement) => {
   });
 };
 
-function AccessNotification() {
+function AccessNotification({accessType, ...restProps}) {
   const [showMessage, setShowMessage] = useState(true);
 
   function handleGrant() {
@@ -26,7 +26,7 @@ function AccessNotification() {
   }
 
   function handleDeny() {
-    openNotification("request access denyed !", "bottomRight");
+    openNotification("request access denied !", "bottomRight");
     setShowMessage(false);
   }
 
@@ -47,6 +47,7 @@ function AccessNotification() {
             variant="light"
           >
             <Alert.Heading>Request Access</Alert.Heading>
+            <p style={{float:"right"}}>Access Type: {accessType} </p>
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Ethereum Address</Form.Label>
