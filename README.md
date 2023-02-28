@@ -4,7 +4,7 @@
 Youtube Demo Video (Click on the image to view video) or via link https://www.youtube.com/watch?v=TI9b3nxaX9U
 
 
- [![EHRethChain](https://github.com/mohammedfajer/EHRethChain/blob/main/Screenshot%202021-09-14%20at%2023.55.54.png)](https://www.youtube.com/watch?v=TI9b3nxaX9U)
+ [![EHRethChain](https://github.com/johnfelipe/EHRethChain/blob/main/Screenshot%202021-09-14%20at%2023.55.54.png)](https://www.youtube.com/watch?v=TI9b3nxaX9U)
  
 
 
@@ -15,12 +15,12 @@ Youtube Demo Video (Click on the image to view video) or via link https://www.yo
 <p align="center">
 
   <br>
-  <img src="https://github.com/mohammedfajer/EHRethChain/blob/main/ethereum.png" width="30%"/><br>
+  <img src="https://github.com/johnfelipe/EHRethChain/blob/main/ethereum.png" width="30%"/><br>
   <b>EHRethChain: Blockchain Based Electronic Health Record Web Application</b><br>
   <a href="https://ethereum.org/en/">Ethereum Platform</a> |
   <a href="https://github.com/mohammedfajer/Storj-REST-API">Storj RESTful API</a>
   <br><br>
-  <img src="https://github.com/mohammedfajer/EHRethChain/blob/main/EHRethChain.gif" />
+  <img src="https://github.com/johnfelipe/EHRethChain/blob/main/EHRethChain.gif" />
 </p>
 
 # EHRethChain
@@ -70,14 +70,14 @@ The project aims to develop a web application using blockchain technology for he
 - Infura - Ethereum API (for testnets and mainnet)
 - Hardhat - ethereum development environment for professional
 - Waffle - smart contrac testing
-- Storj API [Here](https://github.com/mohammedfajer/Storj-REST-API)
+- Storj API [Here](https://github.com/johnfelipe/Storj-REST-API)
 
 ### 2.1 Installation Instruction <a name="subparagraph1"></a>
 
 #### Software Dependencies:
 - Node.js https://nodejs.org/en/download/
 
-The rest of software dependencies are Javascript libraries listed in this file [package.json](https://github.com/mohammedfajer/EHRethChain/blob/main/client-react-app/package.json)
+The rest of software dependencies are Javascript libraries listed in this file [package.json](https://github.com/johnfelipe/EHRethChain/blob/main/client-react-app/package.json)
 
 
 ### 2.2 Run Instruction <a name="subparagraph2"></a>
